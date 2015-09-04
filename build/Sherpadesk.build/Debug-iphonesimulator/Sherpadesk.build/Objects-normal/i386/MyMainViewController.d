@@ -1,0 +1,26 @@
+dependencies: \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Plugins/com.telerik.plugins.wkwebview/MyMainViewController.m \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Plugins/com.telerik.plugins.wkwebview/MyMainViewController.h \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Classes/MainViewController.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVViewController.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVAvailability.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVAvailabilityDeprecated.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVInvokedUrlCommand.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegate.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVCommandQueue.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVWhitelist.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVScreenOrientationDelegate.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVPlugin.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVPluginResult.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/NSMutableArray+QueueAdditions.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegateImpl.h \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Plugins/com.telerik.plugins.wkwebview/CDVWebViewOperationsDelegate.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVTimer.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVLocalStorage.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVUserAgentUtil.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVWebViewDelegate.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVURLProtocol.h \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Plugins/com.telerik.plugins.wkwebview/CDVWebViewUIDelegate.h \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Plugins/com.telerik.plugins.wkwebview/ReroutingUIWebView.h \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Plugins/com.telerik.plugins.wkwebview/AppDelegate+WKWebViewPolyfill.h \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Classes/AppDelegate.h

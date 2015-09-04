@@ -1,0 +1,33 @@
+dependencies: \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Plugins/com.telerik.plugins.wkwebview/AppDelegate+WKWebViewPolyfill.m \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Classes/AppDelegate.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVViewController.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVAvailability.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVAvailabilityDeprecated.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVInvokedUrlCommand.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegate.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVCommandQueue.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVWhitelist.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVScreenOrientationDelegate.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVPlugin.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVPluginResult.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/NSMutableArray+QueueAdditions.h \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Plugins/com.telerik.plugins.wkwebview/MyMainViewController.h \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Classes/MainViewController.h \
+  /users/MacBook/documents/Micajah/cordova-ios/sherpadesk/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegateImpl.h \
+  /Users/MacBook/Documents/Micajah/cordova-ios/sherpadesk/platforms/ios/Sherpadesk/Plugins/com.telerik.plugins.wkwebview/CDVWebViewOperationsDelegate.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServer.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerRequest.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerResponse.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerPrivate.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerHTTPStatusCodes.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerFunctions.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerConnection.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerDataRequest.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerFileRequest.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerMultiPartFormRequest.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerURLEncodedFormRequest.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerDataResponse.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerErrorResponse.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerFileResponse.h \
+  Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework/Headers/GCDWebServerStreamedResponse.h
