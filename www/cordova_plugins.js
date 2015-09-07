@@ -43,6 +43,13 @@ module.exports = [
         "clobbers": [
             "cookies"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-app-preferences/www/apppreferences.js",
+        "id": "cordova-plugin-app-preferences.apppreferences",
+        "clobbers": [
+            "plugins.appPreferences"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -54,6 +61,7 @@ module.exports.metadata =
     "nl.x-services.plugins.launchmyapp": "3.2.2",
     "org.apache.cordova.inappbrowser": "0.6.0",
     "com.triarc.cookies": "0.0.1",
+    "cordova-plugin-app-preferences": "0.7.1",
     "de.appplant.cordova.common.registerusernotificationsettings": "1.0.1"
 }
 // BOTTOM OF METADATA

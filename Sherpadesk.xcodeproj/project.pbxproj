@@ -41,6 +41,7 @@
 		A114B8DC5A12431B96981DF4 /* APPBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = C431A57A422C404DA046B62E /* APPBadge.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		DEA6761D54264D18840A821D /* CDVCookies.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F9F544C2248BE9DBECFCF /* CDVCookies.m */; };
+		E78BDA49A53B4DFF988FC4D7 /* AppPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = A7DE280053D54C5291C7B688 /* AppPreferences.m */; };
 		FA2687E31B832BDC00DA30D9 /* TextTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2687E21B832BDC00DA30D9 /* TextTableRowController.swift */; };
 		FA3C5FEB1B83266800623BEF /* AddTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C5FEA1B83266800623BEF /* AddTime.swift */; };
 		FA65C5CE1B70EA2D004E6CCD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6009679A53DE46318BAF2499 /* SystemConfiguration.framework */; };
@@ -163,6 +164,7 @@
 		3A56591332A643D2A6C8F80D /* CDVWebViewUIDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVWebViewUIDelegate.m; path = com.telerik.plugins.wkwebview/CDVWebViewUIDelegate.m; sourceTree = "<group>"; };
 		46367BC62EAC45B88F0C896C /* ReroutingUIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReroutingUIWebView.h; path = com.telerik.plugins.wkwebview/ReroutingUIWebView.h; sourceTree = "<group>"; };
 		47AD85DDBE9E4A049D9382F1 /* Foundation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		513116B38E1D4CEFB6123E0A /* AppPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppPreferences.h; path = "cordova-plugin-app-preferences/AppPreferences.h"; sourceTree = "<group>"; };
 		521699A428534A7A89ECE0DA /* libz.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5BA90471EF18407998987F25 /* ReroutingUIWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReroutingUIWebView.m; path = com.telerik.plugins.wkwebview/ReroutingUIWebView.m; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 		8E83141A9CB64A3599A4AB6B /* CDVConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVConnection.h; path = "org.apache.cordova.network-information/CDVConnection.h"; sourceTree = "<group>"; };
 		A161451004734389B8C0B29F /* GCDWebServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GCDWebServer.framework; path = "Sherpadesk/Plugins/cordova-plugin-webserver/GCDWebServer.framework"; sourceTree = "<group>"; };
 		A7BF7143B4824CF7A80FB04D /* CDVWebViewOperationsDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVWebViewOperationsDelegate.m; path = com.telerik.plugins.wkwebview/CDVWebViewOperationsDelegate.m; sourceTree = "<group>"; };
+		A7DE280053D54C5291C7B688 /* AppPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppPreferences.m; path = "cordova-plugin-app-preferences/AppPreferences.m"; sourceTree = "<group>"; };
 		A9249F5A90F04607902214AE /* CDVWebViewUIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVWebViewUIDelegate.h; path = com.telerik.plugins.wkwebview/CDVWebViewUIDelegate.h; sourceTree = "<group>"; };
 		B07FAA91523A4564B66347C9 /* AppDelegate+APPRegisterUserNotificationSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+APPRegisterUserNotificationSettings.m"; path = "de.appplant.cordova.common.registerusernotificationsettings/AppDelegate+APPRegisterUserNotificationSettings.m"; sourceTree = "<group>"; };
 		B594D4A4EAB9441697BA162F /* WebKit.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -376,6 +379,8 @@
 				E82986B301574ACFA41FC55A /* CDVInAppBrowser.h */,
 				182F9F544C2248BE9DBECFCF /* CDVCookies.m */,
 				FBAF0BDE093C47AEB299299A /* CDVCookies.h */,
+				A7DE280053D54C5291C7B688 /* AppPreferences.m */,
+				513116B38E1D4CEFB6123E0A /* AppPreferences.h */,
 			);
 			name = Plugins;
 			path = Sherpadesk/Plugins;
@@ -742,6 +747,7 @@
 				774673875B684F3BAFEB2518 /* CDVReachability.m in Sources */,
 				1B6B1BC086DF4713BE5E0C32 /* CDVInAppBrowser.m in Sources */,
 				DEA6761D54264D18840A821D /* CDVCookies.m in Sources */,
+				E78BDA49A53B4DFF988FC4D7 /* AppPreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

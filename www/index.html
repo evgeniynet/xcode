@@ -28,7 +28,7 @@
     <script type="text/javascript">
         
         var Site = 'sherpadesk.com/';
-        var MobileSite = 'http://m.sherpadesk.com/';
+        var MobileSite = 'http://m0.sherpadesk.com/';
         var isPhonegap = false;
         var isOnline = false;
         var interval;
@@ -59,14 +59,26 @@
             el.remove();
             document.getElementById("logo").style.display = 'block';
             setTimeout(function(){
-            document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
+            //document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
                        }, 500);
         }
         isOnline = true; };
     
     function onDeviceReady() {
         isPhonegap = true;
-        redirectToPage();
+        function ok (value) { alert ("ok");}
+        function fail (error) {alert("error");}
+        var prefs = plugins.appPreferences;
+        var org = "u0diuk";
+        var inst = "b95s6o";
+        var key = "fzo3fkthioj5xi696jzocabuojekpb5o";
+        var full = "u0diuk-b95s6o:fzo3fkthioj5xi696jzocabuojekpb5o";
+        // cordova interface
+        // store key => value pair
+        // support for iOS suites (untested)
+        var suitePrefs = prefs.iosSuite ("group.io.sherpadesk.mobile");
+        suitePrefs.store (ok, fail, 'org', full);
+        //redirectToPage();
     };
     
     function redirectToPage() {
