@@ -36,11 +36,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         {
         let urlPath: String = "http://" + Properties.org +
             //u0diuk-b95s6o:fzo3fkthioj5xi696jzocabuojekpb5o
-        "@api.beta.sherpadesk.com/tickets?status=open&role=user&limit=1&sort_by=updated"
+        "@api.beta.sherpadesk.com/tickets?status=open&role=user&limit=3&sort_by=updated"
             //print(urlPath)
         let url: NSURL = NSURL(string: urlPath)!
         let info: String = "http";
-        return;
+        //return;
         post(urlPath, info: info) {
             responseString, error in
             
@@ -50,14 +50,28 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 return
             }
             
-            //print("sting during post: \(responseString)")
-            //let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-
+            /*var output: NSString!
             
-            /*if jsonResult.count>0 && jsonResult["results"].count>0 {
-                var results: NSArray = jsonResult["results"] as NSArray
-                self.tableData = results
-                self.appsTableView.reloadData()*/
+            if responseString != nil {
+             output = NSString(data: responseString!, encoding: NSUTF8StringEncoding)
+            }
+            
+            print("sting during post: \(output)")
+            */
+            var jsonResult: NSArray = NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSArray
+            
+            /*for (index, blogName) in enumerate(jsonResult) {
+                print(blogName)
+                //print(swiftIds[index])
+            }*/
+            
+            if jsonResult.count>0{
+                var number = jsonResult[0]["number"] as! Int,
+                subject = jsonResult[0]["subject"] as! String,
+                key = jsonResult[0]["key"] as! String
+                self.fTicket.setTitle("#\(number): \(subject)", forState: UIControlState.Normal)
+                self.fTicket.setValue( "index.html#ticket="+key, forKeyPath: "page" )
+            }
             
          }
         }
@@ -104,21 +118,23 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @IBAction func Ticket1(sender: AnyObject) {
         let page = (sender as! UIButton).valueForKeyPath("page") as! String
         //let page =  "index.html#ticket=zcmkjo"
-        print(page)
         OpenApp(page)
     }
     @IBAction func Ticket2(sender: AnyObject) {
-        let page =  "index.html#ticket=evbcak"
+                let page = (sender as! UIButton).valueForKeyPath("page") as! String
+        //let page =  "index.html#ticket=evbcak"
         OpenApp(page)
     }
     @IBAction func Ticket3(sender: AnyObject) {
-        let page =  "index.html#ticket=k3n0hk"
+                let page = (sender as! UIButton).valueForKeyPath("page") as! String
+        //let page =  "index.html#ticket=k3n0hk"
         let defaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")
         defaults?.setValue("", forKey: "org")
         //OpenApp(page)
     }
     
     func OpenApp(_page : String) {
+        print(_page)
         let sherpaHooks = "sherpadesk://"
         let url = NSURL(string: sherpaHooks + _page);
         extensionContext!.openURL(url!, completionHandler: nil)
@@ -167,7 +183,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
   }
     
     
-    func post(url: String, info: String, completionHandler: (responseString: NSString!, error: NSError!) -> ()) {
+    func post(url: String, info: String, completionHandler: (responseString: NSData!, error: NSError!) -> ()) {
         let URL: NSURL = NSURL(string: url)!
         let request:NSMutableURLRequest = NSMutableURLRequest(URL:URL)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -179,13 +195,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             
             response, data, error in
             
-            var output: NSString!
+            //var output: NSString!
             
-            if data != nil {
-                output = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            }
+            //if data != nil {
+            //    output = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            //}
             
-            completionHandler(responseString: output, error: error)
+            completionHandler(responseString: data, error: error)
         }
     }
 
