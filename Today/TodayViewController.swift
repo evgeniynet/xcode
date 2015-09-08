@@ -18,7 +18,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @IBOutlet weak var fTicket: UIButton!
     @IBOutlet weak var fLine: UIImageView!
     
-    @IBOutlet weak var sTiket: UIButton!
+    @IBOutlet weak var sTicket: UIButton!
     @IBOutlet weak var sLine: UIImageView!
     
     @IBOutlet weak var tTicket: UIButton!
@@ -28,12 +28,18 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         static var org = ""
     }
     
+    var tickets: NSMutableArray = []
+    
     var updateResult:NCUpdateResult = NCUpdateResult.NoData
     
     func updateWidget()
     {
+        getOrg()
+
         if !Properties.org.isEmpty
         {
+            showTickets(self.tickets)
+            //self.fTicket.setTitle("Looking for recent tickets ...", forState: UIControlState.Normal)
         let urlPath: String = "http://" + Properties.org +
             //u0diuk-b95s6o:fzo3fkthioj5xi696jzocabuojekpb5o
         "@api.beta.sherpadesk.com/tickets?status=open&role=user&limit=3&sort_by=updated"
@@ -58,23 +64,58 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             
             print("sting during post: \(output)")
             */
-            var jsonResult: NSArray = NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSArray
+            self.tickets = NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSMutableArray
             
-            /*for (index, blogName) in enumerate(jsonResult) {
-                print(blogName)
-                //print(swiftIds[index])
-            }*/
-            
-            if jsonResult.count>0{
-                var number = jsonResult[0]["number"] as! Int,
-                subject = jsonResult[0]["subject"] as! String,
-                key = jsonResult[0]["key"] as! String
-                self.fTicket.setTitle("#\(number): \(subject)", forState: UIControlState.Normal)
-                self.fTicket.setValue( "index.html#ticket="+key, forKeyPath: "page" )
-            }
+            self.showTickets(self.tickets)
             
          }
         }
+    }
+    
+    func showTickets(jsonResult : NSMutableArray)
+    {
+        if jsonResult.count>0{
+            let defaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")
+            self.tickets = []
+            var number = jsonResult[0]["number"] as! Int,
+            subject = jsonResult[0]["subject"] as! String,
+            key = jsonResult[0]["key"] as! String
+            self.fTicket.setTitle("#\(number): \(subject)", forState: UIControlState.Normal)
+            self.fTicket.setValue( "index.html#ticket="+key, forKeyPath: "page" )
+            self.fTicket.hidden = false
+            self.fLine.hidden = false
+            self.tickets.addObject([ "number" : number, "subject" : subject, "key" : key])
+            
+            if jsonResult.count>1{
+                number = jsonResult[1]["number"] as! Int
+                subject = jsonResult[1]["subject"] as! String
+                key = jsonResult[1]["key"] as! String
+                self.sTicket.setTitle("#\(number): \(subject)", forState: UIControlState.Normal)
+                self.sTicket.setValue( "index.html#ticket="+key, forKeyPath: "page" )
+                self.sTicket.hidden = false
+                self.sLine.hidden = false
+                
+                self.tickets.addObject([ "number" : number, "subject" : subject, "key" : key])
+                
+                if jsonResult.count>2{
+                    number = jsonResult[2]["number"] as! Int
+                    subject = jsonResult[2]["subject"] as! String
+                    key = jsonResult[2]["key"] as! String
+                    self.tTicket.setTitle("#\(number): \(subject)", forState: UIControlState.Normal)
+                    self.tTicket.setValue( "index.html#ticket="+key, forKeyPath: "page" )
+                    self.tTicket.hidden = false
+                    self.tLine.hidden = false
+                    self.tickets.addObject([ "number" : number, "subject" : subject, "key" : key])
+                }
+            }
+            
+            defaults?.setObject(self.tickets, forKey: "tickets")
+        }
+        else
+        {
+            self.fTicket.setTitle("No recent tickets yet", forState: UIControlState.Normal)
+        }
+
     }
     
     override func viewWillAppear(animated: Bool)
@@ -123,7 +164,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @IBAction func Ticket2(sender: AnyObject) {
                 let page = (sender as! UIButton).valueForKeyPath("page") as! String
         //let page =  "index.html#ticket=evbcak"
-        OpenApp(page)
+        let defaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")
+        defaults?.setObject([], forKey: "tickets")
+        //OpenApp(page)
     }
     @IBAction func Ticket3(sender: AnyObject) {
                 let page = (sender as! UIButton).valueForKeyPath("page") as! String
@@ -159,28 +202,33 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     // If an error is encountered, use NCUpdateResult.Failed
     // If there's no update required, use NCUpdateResult.NoData
     // If there's an update, use NCUpdateResult.NewData
-
-    self.fTicket.setTitle("Login to SherpaDesk app first", forState: UIControlState.Normal)
-    self.fTicket.setValue("index.html", forKeyPath: "page")
-      let defaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")
-      if let timeString:String = defaults?.objectForKey("org") as? String
-      {
-        if (!timeString.isEmpty){
-        //print(timeString)t
-         Properties.org = timeString
-            self.fTicket.setTitle("#1330: sherpadesk Code: " + timeString, forState: UIControlState.Normal)
-            self.fTicket.setValue( "index.html#ticket=zcmkjo", forKeyPath: "page" )
-            self.fLine.hidden = false
-            self.sTiket.hidden = false
-            self.sLine.hidden = false
-            self.tTicket.hidden=false
-            self.tLine.hidden=false
+    getOrg()
+    if !Properties.org.isEmpty
+    {
         self.updateWidget()
-        }
     }
     
     completionHandler(NCUpdateResult.NewData)
   }
+    
+    func getOrg(){
+        let defaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")
+        if let org:String = defaults?.objectForKey("org") as? String
+        {
+                Properties.org = org
+        }
+        
+        if let tkts:NSMutableArray = defaults?.objectForKey("tickets") as? NSMutableArray
+        {
+            tickets = tkts
+        }
+        
+    }
+    
+    func logout(){
+        self.fTicket.setTitle("Login to SherpaDesk app first", forState: UIControlState.Normal)
+        self.fTicket.setValue("index.html", forKeyPath: "page")
+    }
     
     
     func post(url: String, info: String, completionHandler: (responseString: NSData!, error: NSError!) -> ()) {

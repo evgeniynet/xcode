@@ -56,6 +56,12 @@
           <string>sherpadesk</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>sherpadesk</string>
+        </array>
+      </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>4.1.4</string>

@@ -62,7 +62,7 @@
                                 <rect key="frame" x="0.0" y="173" width="320" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="#1316: add Time">
+                                <state key="normal">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -76,7 +76,7 @@
                                 <rect key="frame" x="0.0" y="135" width="320" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="#1276: test Firefox dsfsgs dfsg df g sdfgdf g sdf g sdf g sg sdhtjykdl">
+                                <state key="normal">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -93,7 +93,7 @@
                                 <rect key="frame" x="0.0" y="102" width="320" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="#1330: sherpadesk_error ">
+                                <state key="normal" title="Login to SherpaDesk app please">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -138,7 +138,7 @@
                         <outlet property="fLine" destination="RNT-gM-kN4" id="AU7-iD-Wiw"/>
                         <outlet property="fTicket" destination="v4O-7y-8wT" id="TNE-mD-ih9"/>
                         <outlet property="sLine" destination="a7Z-5Y-dW1" id="IUv-Jf-2Tk"/>
-                        <outlet property="sTiket" destination="FWE-zA-WHC" id="2hP-tJ-RfF"/>
+                        <outlet property="sTicket" destination="FWE-zA-WHC" id="1I1-dD-QB3"/>
                         <outlet property="tLine" destination="GM5-2z-j5f" id="gsc-Sd-bnF"/>
                         <outlet property="tTicket" destination="0cT-pM-S1a" id="YzS-tw-qrE"/>
                     </connections>
