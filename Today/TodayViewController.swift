@@ -24,6 +24,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @IBOutlet weak var tTicket: UIButton!
     @IBOutlet weak var tLine: UIImageView!
     
+    var defaults : NSUserDefaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")!
+    
     struct Properties {
         static var org = ""
     }
@@ -34,49 +36,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     func updateWidget()
     {
-        getOrg()
-
-        if !Properties.org.isEmpty
-        {
-            showTickets(self.tickets)
-            //self.fTicket.setTitle("Looking for recent tickets ...", forState: UIControlState.Normal)
-        let urlPath: String = "http://" + Properties.org +
-            //u0diuk-b95s6o:fzo3fkthioj5xi696jzocabuojekpb5o
-        "@api.beta.sherpadesk.com/tickets?status=open&role=user&limit=3&sort_by=updated"
-            //print(urlPath)
-        let url: NSURL = NSURL(string: urlPath)!
-        let info: String = "http";
-        //return;
-        post(urlPath, info: info) {
-            responseString, error in
-            
-            if responseString == nil {
-                self.updateResult = NCUpdateResult.Failed
-                print("Error during post: \(error)")
-                return
-            }
-            
-            /*var output: NSString!
-            
-            if responseString != nil {
-             output = NSString(data: responseString!, encoding: NSUTF8StringEncoding)
-            }
-            
-            print("sting during post: \(output)")
-            */
-            self.tickets = NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSMutableArray
-            
-            self.showTickets(self.tickets)
-            
-         }
-        }
     }
     
     func showTickets(jsonResult : NSMutableArray)
     {
+        print("show: \(jsonResult.count)")
+        var showtickets: NSMutableArray = []
         if jsonResult.count>0{
-            let defaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")
-            self.tickets = []
             var number = jsonResult[0]["number"] as! Int,
             subject = jsonResult[0]["subject"] as! String,
             key = jsonResult[0]["key"] as! String
@@ -84,7 +50,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             self.fTicket.setValue( "index.html#ticket="+key, forKeyPath: "page" )
             self.fTicket.hidden = false
             self.fLine.hidden = false
-            self.tickets.addObject([ "number" : number, "subject" : subject, "key" : key])
+            showtickets.addObject([ "number" : number, "subject" : subject, "key" : key])
             
             if jsonResult.count>1{
                 number = jsonResult[1]["number"] as! Int
@@ -95,7 +61,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 self.sTicket.hidden = false
                 self.sLine.hidden = false
                 
-                self.tickets.addObject([ "number" : number, "subject" : subject, "key" : key])
+                showtickets.addObject([ "number" : number, "subject" : subject, "key" : key])
                 
                 if jsonResult.count>2{
                     number = jsonResult[2]["number"] as! Int
@@ -105,17 +71,20 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                     self.tTicket.setValue( "index.html#ticket="+key, forKeyPath: "page" )
                     self.tTicket.hidden = false
                     self.tLine.hidden = false
-                    self.tickets.addObject([ "number" : number, "subject" : subject, "key" : key])
+                    showtickets.addObject([ "number" : number, "subject" : subject, "key" : key])
                 }
             }
-            
-            defaults?.setObject(self.tickets, forKey: "tickets")
         }
-        else
+        else if !Properties.org.isEmpty
         {
             self.fTicket.setTitle("No recent tickets yet", forState: UIControlState.Normal)
+            self.fLine.hidden = true
+            self.sTicket.hidden = true
+            self.sLine.hidden = true
+            self.tTicket.hidden = true
+            self.tLine.hidden = true
         }
-
+        defaults.setObject(showtickets, forKey: "tickets")
     }
     
     override func viewWillAppear(animated: Bool)
@@ -164,15 +133,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @IBAction func Ticket2(sender: AnyObject) {
                 let page = (sender as! UIButton).valueForKeyPath("page") as! String
         //let page =  "index.html#ticket=evbcak"
-        let defaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")
-        defaults?.setObject([], forKey: "tickets")
+        defaults.setObject([], forKey: "tickets")
         //OpenApp(page)
     }
     @IBAction func Ticket3(sender: AnyObject) {
                 let page = (sender as! UIButton).valueForKeyPath("page") as! String
         //let page =  "index.html#ticket=k3n0hk"
-        let defaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")
-        defaults?.setValue("", forKey: "org")
+        defaults.setValue("", forKey: "org")
         //OpenApp(page)
     }
     
@@ -205,24 +172,65 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     getOrg()
     if !Properties.org.isEmpty
     {
-        self.updateWidget()
+        var showtickets: NSMutableArray = []
+
+            showtickets = self.tickets
+            showTickets(showtickets)
+            //self.fTicket.setTitle("Looking for recent tickets ...", forState: UIControlState.Normal)
+            let urlPath: String = "http://" + Properties.org +
+                //u0diuk-b95s6o:fzo3fkthioj5xi696jzocabuojekpb5o
+            "@api.beta.sherpadesk.com/tickets?status=open&role=user&limit=3&sort_by=updated"
+            //print(urlPath)
+            let url: NSURL = NSURL(string: urlPath)!
+            let info: String = "http";
+            //return;
+            post(urlPath, info: info) {
+                responseString, error in
+                
+                if responseString == nil {
+                    self.updateResult = NCUpdateResult.Failed
+                    print("Error during post: \(error)")
+                    return
+                }
+                
+                /*var output: NSString!
+                
+                if responseString != nil {
+                    output = NSString(data: responseString!, encoding: NSUTF8StringEncoding)
+                }
+                */
+                
+                showtickets = NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSMutableArray
+                
+                print("sting during post: \(showtickets.count)")
+                
+                self.showTickets(showtickets)
+                completionHandler(NCUpdateResult.NewData)
+            }
     }
-    
-    completionHandler(NCUpdateResult.NewData)
+    else {
+        completionHandler(NCUpdateResult.NoData)}
   }
     
     func getOrg(){
-        let defaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")
-        if let org:String = defaults?.objectForKey("org") as? String
+        if let org:String = defaults.objectForKey("org") as? String
         {
-                Properties.org = org
+            Properties.org = org
+        }
+        else
+        {
+            Properties.org = ""
+        }
+        if !Properties.org.isEmpty{
+        if let tkts:NSMutableArray = defaults.objectForKey("tickets") as? NSMutableArray
+        {
+            self.tickets = tkts
+            return
+        }
         }
         
-        if let tkts:NSMutableArray = defaults?.objectForKey("tickets") as? NSMutableArray
-        {
-            tickets = tkts
-        }
-        
+        self.tickets = []
+        defaults.setObject([], forKey: "tickets")
     }
     
     func logout(){
