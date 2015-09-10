@@ -41,7 +41,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     func showTickets(jsonResult : NSMutableArray)
     {
         print("show: \(jsonResult.count)")
-        var showtickets: NSMutableArray = []
         if jsonResult.count>0{
             var number = jsonResult[0]["number"] as! Int,
             subject = jsonResult[0]["subject"] as! String,
@@ -50,7 +49,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             self.fTicket.setValue( "index.html#ticket="+key, forKeyPath: "page" )
             self.fTicket.hidden = false
             self.fLine.hidden = false
-            showtickets.addObject([ "number" : number, "subject" : subject, "key" : key])
             
             if jsonResult.count>1{
                 number = jsonResult[1]["number"] as! Int
@@ -61,36 +59,60 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 self.sTicket.hidden = false
                 self.sLine.hidden = false
                 
-                showtickets.addObject([ "number" : number, "subject" : subject, "key" : key])
-                
                 if jsonResult.count>2{
                     number = jsonResult[2]["number"] as! Int
                     subject = jsonResult[2]["subject"] as! String
                     key = jsonResult[2]["key"] as! String
                     self.tTicket.setTitle("#\(number): \(subject)", forState: UIControlState.Normal)
+                    self.tTicket.setTitle("#\(number): \(subject)", forState: UIControlState.Normal)
                     self.tTicket.setValue( "index.html#ticket="+key, forKeyPath: "page" )
                     self.tTicket.hidden = false
                     self.tLine.hidden = false
-                    showtickets.addObject([ "number" : number, "subject" : subject, "key" : key])
                 }
             }
         }
         else if !Properties.org.isEmpty
         {
-            self.fTicket.setTitle("No recent tickets yet", forState: UIControlState.Normal)
+            self.fTicket.setTitle("No recent tickets yet ...", forState: UIControlState.Normal)
             self.fLine.hidden = true
             self.sTicket.hidden = true
             self.sLine.hidden = true
             self.tTicket.hidden = true
             self.tLine.hidden = true
         }
+    }
+    
+    func saveTickets(jsonResult: NSMutableArray, org:String)
+    {
+        var showtickets: NSMutableArray = []
+        if jsonResult.count>0{
+            var number = jsonResult[0]["number"] as! Int,
+            subject = jsonResult[0]["subject"] as! String,
+            key = jsonResult[0]["key"] as! String
+            showtickets.addObject([ "number" : number, "subject" : subject, "key" : key, "org" : org])
+            
+            if jsonResult.count>1{
+                number = jsonResult[1]["number"] as! Int
+                subject = jsonResult[1]["subject"] as! String
+                key = jsonResult[1]["key"] as! String
+                showtickets.addObject([ "number" : number, "subject" : subject, "key" : key, "org" : org])
+                
+                if jsonResult.count>2{
+                    number = jsonResult[2]["number"] as! Int
+                    subject = jsonResult[2]["subject"] as! String
+                    key = jsonResult[2]["key"] as! String
+                    showtickets.addObject([ "number" : number, "subject" : subject, "key" : key, "org" : org])
+                }
+            }
+        }
+        self.tickets = showtickets
         defaults.setObject(showtickets, forKey: "tickets")
     }
     
     override func viewWillAppear(animated: Bool)
     {
-        var currentSize: CGSize = self.preferredContentSize
-        currentSize.height = 220.0
+        //var currentSize: CGSize = self.preferredContentSize
+        //currentSize.height = 120.0
 //        self.preferredContentSize = currentSize
     }
     
@@ -102,8 +124,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    //defaults.setObject([], forKey: "tickets")
     // Do any additional setup after loading the view from its nib.
     //print("widget view did load")
+            preferredContentSize = CGSizeMake(CGFloat(0), CGFloat(205.0))
   }
   
     @IBAction func OpenUrl(sender: AnyObject) {
@@ -131,16 +155,16 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         OpenApp(page)
     }
     @IBAction func Ticket2(sender: AnyObject) {
-                let page = (sender as! UIButton).valueForKeyPath("page") as! String
+        let page = (sender as! UIButton).valueForKeyPath("page") as! String
         //let page =  "index.html#ticket=evbcak"
-        defaults.setObject([], forKey: "tickets")
-        //OpenApp(page)
+        //defaults.setObject([], forKey: "tickets")
+        OpenApp(page)
     }
     @IBAction func Ticket3(sender: AnyObject) {
-                let page = (sender as! UIButton).valueForKeyPath("page") as! String
+        let page = (sender as! UIButton).valueForKeyPath("page") as! String
         //let page =  "index.html#ticket=k3n0hk"
-        defaults.setValue("", forKey: "org")
-        //OpenApp(page)
+        //defaults.setValue("", forKey: "org")
+        OpenApp(page)
     }
     
     func OpenApp(_page : String) {
@@ -173,7 +197,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     if !Properties.org.isEmpty
     {
         var showtickets: NSMutableArray = []
-
             showtickets = self.tickets
             showTickets(showtickets)
             //self.fTicket.setTitle("Looking for recent tickets ...", forState: UIControlState.Normal)
@@ -203,13 +226,14 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 showtickets = NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSMutableArray
                 
                 print("sting during post: \(showtickets.count)")
-                
+                self.saveTickets(showtickets, org: Properties.org)
                 self.showTickets(showtickets)
                 completionHandler(NCUpdateResult.NewData)
             }
     }
     else {
-        completionHandler(NCUpdateResult.NoData)}
+        //completionHandler(NCUpdateResult.NoData)
+    }
   }
     
     func getOrg(){
@@ -224,13 +248,22 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         if !Properties.org.isEmpty{
         if let tkts:NSMutableArray = defaults.objectForKey("tickets") as? NSMutableArray
         {
-            self.tickets = tkts
-            return
+            if tkts.count>0 {
+            if let org = tkts[0]["org"] as? String
+            {
+                print("org\(org)prop\(Properties.org)")
+                if (org == Properties.org){
+                    self.tickets = tkts
+                    print("set\(self.tickets.count)")
+                    return
+                }
+                }
+            }
         }
         }
-        
         self.tickets = []
         defaults.setObject([], forKey: "tickets")
+        print("unset\(self.tickets.count)")
     }
     
     func logout(){
