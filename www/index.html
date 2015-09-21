@@ -58,15 +58,32 @@
             if (el)
             el.remove();
             document.getElementById("logo").style.display = 'block';
-            setTimeout(function(){
-            document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
+            setTimeout(function(){ ;
+            //document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
                        }, 500);
         }
         isOnline = true; };
     
+    function initOrgPreferences(value)
+    {
+        var prefs = plugins.appPreferences;
+        var suitePrefs = prefs.iosSuite("group.io.sherpadesk.mobile");
+        suitePrefs.store (ok, fail, 'accounts', value);
+    }
+    
+    function ok (value) { alert(value);
+    }
+    function fail (error) {alert(error);}
+    
+
+    
     function onDeviceReady() {
+        var accounts = [{"id":1033,"name":"Test FreshBooks"},{"id":1225,"name":"Test Salesforce Account 1"},{"id":19,"name":"test112"},{"id":1247,"name":"thishouldnotexistandhopefullyitwillnot"},{"id":3,"name":"True North Design"},{"id":1038,"name":"TTTeee"},{"id":1230,"name":"United Oil & Gas Corp."},{"id":1234,"name":"United Oil & Gas, Singapore"},{"id":1233,"name":"United Oil & Gas, UK"},{"id":1232,"name":"University of Arizona"},{"id":1034,"name":"Willy's"}];
+        initOrgPreferences(accounts);
         isPhonegap = true;
-        redirectToPage();
+        cordova.plugins.backgroundMode.enable();
+        alert(2);
+        //redirectToPage();
     };
     
     function redirectToPage() {
@@ -95,7 +112,7 @@
     
     function handleOpenURL(url) {
         ios_action = url.substring(13);
-        redirectToPage();
+        //redirectToPage();
         //document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
     }
     </script>
