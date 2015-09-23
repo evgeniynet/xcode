@@ -14,6 +14,8 @@ class SelectProjectInterfaceController: WKInterfaceController {
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
     
+    var account_id: Int = 0;
+    
     let swiftBlogs = ["Test Project", "api.sherpadesk.com", "Create SEO Plan", "Finish Chargify Integration", "New Mobile App"]
     
     let swiftIds = [1, 2, 3, 4, 5, 6, 7]
@@ -24,7 +26,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
             //print(blogName)
             let row = timeTable.rowControllerAtIndex(index) as! ProjectTableRowController
             row.recordLabel.setText(blogName)
-            print(swiftIds[index])
+            //print(swiftIds[index])
         }
     }
     
@@ -34,11 +36,13 @@ class SelectProjectInterfaceController: WKInterfaceController {
         loadTableData()
     }
     
-    
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        // Configure interface objects here.
+        if let id = context as? Int {
+            account_id = id
+            print(account_id)
+        }
     }
     
     override func willActivate() {

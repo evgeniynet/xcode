@@ -14,7 +14,7 @@
                             <color key="titleColor" red="0.40000000596046448" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="22"/>
                             <connections>
-                                <segue destination="eKX-4H-gyr" kind="push" id="LQc-6h-uDF"/>
+                                <segue destination="eKX-4H-gyr" kind="push" identifier="ToAccounts" id="LQc-6h-uDF"/>
                             </connections>
                         </button>
                         <table alignment="left" id="4f1-ia-rDE">
@@ -114,7 +114,7 @@
         <!--Account-->
         <scene sceneID="fWz-Nm-jYc">
             <objects>
-                <controller title="Account" id="eKX-4H-gyr" customClass="SelectAccountInterfaceController" customModule="Sherpadesk_WatchKit_Extension">
+                <controller identifier="AccountList" title="Account" id="eKX-4H-gyr" customClass="SelectAccountInterfaceController" customModule="Sherpadesk_WatchKit_Extension">
                     <items>
                         <table alignment="left" id="KI4-3R-k82">
                             <items>
@@ -128,7 +128,7 @@
                                     </group>
                                     <connections>
                                         <outlet property="recordLabel" destination="EUJ-Vn-u6W" id="6il-dW-Dsi"/>
-                                        <segue destination="tnQ-Rg-Zvy" kind="push" id="92g-8L-U5y"/>
+                                        <segue destination="tnQ-Rg-Zvy" kind="push" identifier="ToProject" id="9DA-Fx-7ew"/>
                                     </connections>
                                 </tableRow>
                             </items>
@@ -144,7 +144,7 @@
         <!--Project-->
         <scene sceneID="shL-MJ-LXe">
             <objects>
-                <controller title="Project" id="tnQ-Rg-Zvy" customClass="SelectProjectInterfaceController" customModule="Sherpadesk_WatchKit_Extension">
+                <controller identifier="ProjectList" title="Project" id="tnQ-Rg-Zvy" customClass="SelectProjectInterfaceController" customModule="Sherpadesk_WatchKit_Extension">
                     <items>
                         <table alignment="left" id="QXJ-mj-Vdn">
                             <items>
@@ -158,7 +158,7 @@
                                     </group>
                                     <connections>
                                         <outlet property="recordLabel" destination="baj-y7-HrZ" id="fNt-ui-20u"/>
-                                        <segue destination="6KC-PE-zf4" kind="push" id="3Dr-TT-ny3"/>
+                                        <segue destination="6KC-PE-zf4" kind="push" identifier="ToTaskType" id="3Dr-TT-ny3"/>
                                     </connections>
                                 </tableRow>
                             </items>

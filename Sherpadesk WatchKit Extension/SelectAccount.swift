@@ -28,20 +28,32 @@ class SelectAccountInterfaceController: WKInterfaceController {
             //print(blogName)
             let row = timeTable.rowControllerAtIndex(index) as! RecordTableRowController
             row.recordLabel.setText((account["name"] as! String))
-            print(account["id"] as! Int)
+            //print(account["id"] as! Int)
         }
+    }
+    
+    override func contextForSegueWithIdentifier(segueIdentifier: String,
+        inTable table: WKInterfaceTable, rowIndex: Int) -> AnyObject? {
+            let sequeId = "ToProject"
+            let acc  = accounts as NSMutableArray
+            if segueIdentifier == sequeId {
+                let id = acc[rowIndex]["id"] as! Int
+                return id
+            }
+            
+            return nil
     }
     
     override init() {
         super.init()
         
         getOrg()
-        //loadTableData()
+        loadTableData()
         
         var showtickets: NSMutableArray = []
         //self.fTicket.setTitle("Looking for recent tickets ...", forState: UIControlState.Normal)
-        let urlPath: String = "http://u0diuk-b95s6o:fzo3fkthioj5xi696jzocabuojekpb5o@api.beta.sherpadesk.com/tickets?status=open&role=user&limit=3&sort_by=updated"
-        //print(urlPath)
+        let urlPath: String = "http://u0diuk-b95s6o:fzo3fkthioj5xi696jzocabuojekpb5o@api.beta.sherpadesk.com/accounts"
+        print(urlPath)
         let url: NSURL = NSURL(string: urlPath)!
         let info: String = "http";
         //return;
@@ -64,6 +76,8 @@ class SelectAccountInterfaceController: WKInterfaceController {
             showtickets = NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSMutableArray
             
             print("sting during post: \(showtickets.count)")
+            self.accounts = showtickets
+            self.loadTableData()
         }
     }
     
@@ -79,14 +93,14 @@ class SelectAccountInterfaceController: WKInterfaceController {
             
             response, data, error in
             
-            var output: NSString!
+            /*var output: NSString!
             
             if data != nil {
                 output = NSString(data: data!, encoding: NSUTF8StringEncoding)
             }
             
             print(output)
-            
+            */
             completionHandler(responseString: data, error: error)
         }
     }
