@@ -245,6 +245,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         {
             Properties.org = ""
         }
+        print(Properties.org)
         if !Properties.org.isEmpty{
         if let tkts:NSMutableArray = defaults.objectForKey("tickets") as? NSMutableArray
         {

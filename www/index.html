@@ -59,7 +59,7 @@
             el.remove();
             document.getElementById("logo").style.display = 'block';
             setTimeout(function(){ ;
-            //document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
+            document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
                        }, 500);
         }
         isOnline = true; };
@@ -71,7 +71,7 @@
         suitePrefs.store (ok, fail, 'accounts', value);
     }
     
-    function ok (value) { alert(value);
+    function ok (value) { //alert(value);
     }
     function fail (error) {alert(error);}
     
@@ -82,8 +82,8 @@
         initOrgPreferences(accounts);
         isPhonegap = true;
         cordova.plugins.backgroundMode.enable();
-        alert(2);
-        //redirectToPage();
+        //alert(2);
+        redirectToPage();
     };
     
     function redirectToPage() {
@@ -112,7 +112,7 @@
     
     function handleOpenURL(url) {
         ios_action = url.substring(13);
-        //redirectToPage();
+        redirectToPage();
         //document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
     }
     </script>
