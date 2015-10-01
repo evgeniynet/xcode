@@ -70,6 +70,8 @@
 		FAEF217E1B9508D7001C3C94 /* SelectProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEF217D1B9508D7001C3C94 /* SelectProject.swift */; };
 		FAEF21801B950AB7001C3C94 /* TypeTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEF217F1B950AB7001C3C94 /* TypeTableRowController.swift */; };
 		FAEF21821B950AF1001C3C94 /* SelectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEF21811B950AF1001C3C94 /* SelectType.swift */; };
+		FAFABC0B1BBD37DD00FF11D8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD6F69CB04FF95B3666029E /* Pods.framework */; settings = {ASSET_TAGS = (); }; };
+		FAFABC0C1BBD37E300FF11D8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD6F69CB04FF95B3666029E /* Pods.framework */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -254,6 +256,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFABC0B1BBD37DD00FF11D8 /* Pods.framework in Frameworks */,
 				FA93E6901B71203F00BE50F1 /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +265,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFABC0C1BBD37E300FF11D8 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
