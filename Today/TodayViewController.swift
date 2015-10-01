@@ -12,6 +12,7 @@ class MyButton: UIButton {
 
 import UIKit
 import NotificationCenter
+import SwiftHTTP
 
 class TodayViewController: UIViewController, NCWidgetProviding {
     
