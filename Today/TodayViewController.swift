@@ -40,6 +40,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     func showTickets(jsonResult : NSMutableArray)
     {
+        dispatch_async(dispatch_get_main_queue(), {
         print("show: \(jsonResult.count)")
         if jsonResult.count>0{
             var number = jsonResult[0]["number"] as! Int,
@@ -80,6 +81,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             self.tTicket.hidden = true
             self.tLine.hidden = true
         }
+            })
     }
     
     func saveTickets(jsonResult: NSMutableArray, org:String)
@@ -223,7 +225,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 }
                 */
                 
-                showtickets = NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSMutableArray
+                
+                do {
+                    showtickets = try NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers) as! NSMutableArray
+                } catch {
+                    // failure
+                    print("Fetch failed: \((error as NSError).localizedDescription)")
+                }
                 
                 print("sting during post: \(showtickets.count)")
                 self.saveTickets(showtickets, org: Properties.org)

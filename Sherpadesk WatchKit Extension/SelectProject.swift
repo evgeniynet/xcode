@@ -22,7 +22,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
     
     func loadTableData() {
         timeTable.setNumberOfRows(swiftBlogs.count, withRowType: "ProjectTableRowController")
-        for (index, blogName) in enumerate(swiftBlogs) {
+        for (index, blogName) in swiftBlogs.enumerate() {
             //print(blogName)
             let row = timeTable.rowControllerAtIndex(index) as! ProjectTableRowController
             row.recordLabel.setText(blogName)

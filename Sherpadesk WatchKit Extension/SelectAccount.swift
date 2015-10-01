@@ -24,7 +24,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
     
     func loadTableData() {
         timeTable.setNumberOfRows(accounts.count, withRowType: "RecordTableRowController")
-        for (index, account) in enumerate(accounts) {
+        for (index, account) in accounts.enumerate() {
             //print(blogName)
             let row = timeTable.rowControllerAtIndex(index) as! RecordTableRowController
             row.recordLabel.setText((account["name"] as! String))
@@ -73,7 +73,14 @@ class SelectAccountInterfaceController: WKInterfaceController {
             }
             */
             
-            showtickets = NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSMutableArray
+            do {
+                showtickets = try NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers) as! NSMutableArray
+            } catch {
+                // failure
+                print("Fetch failed: \((error as NSError).localizedDescription)")
+            }
+            
+            
             
             print("sting during post: \(showtickets.count)")
             self.accounts = showtickets
@@ -118,7 +125,8 @@ class SelectAccountInterfaceController: WKInterfaceController {
         if !Properties.org.isEmpty{
             if let acct:NSData = defaults.objectForKey("accounts") as? NSData
             {
-                if let accts = NSJSONSerialization.JSONObjectWithData(acct, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSMutableArray
+                do {
+                if let accts = try NSJSONSerialization.JSONObjectWithData(acct, options: NSJSONReadingOptions.MutableContainers) as? NSMutableArray
                 {
                 if accts.count>0 {
                     if let org = accts[0]["org"] as? String
@@ -130,8 +138,13 @@ class SelectAccountInterfaceController: WKInterfaceController {
                             return
                         }
                     }
+                    }
+                    }
                 }
-             }
+                catch {
+                        // failure
+                        print("Fetch failed: \((error as NSError).localizedDescription)")
+                    }
             }
         }
         self.accounts = []

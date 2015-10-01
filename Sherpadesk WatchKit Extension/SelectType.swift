@@ -20,7 +20,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
     
     func loadTableData() {
         timeTable.setNumberOfRows(swiftBlogs.count, withRowType: "TypeTableRowController")
-        for (index, blogName) in enumerate(swiftBlogs) {
+        for (index, blogName) in swiftBlogs.enumerate() {
             //print(blogName)
             let row = timeTable.rowControllerAtIndex(index) as! TypeTableRowController
             row.recordLabel.setText(blogName)
