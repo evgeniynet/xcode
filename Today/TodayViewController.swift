@@ -47,7 +47,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         //}
         
         init(_ decoder: JSONDecoder) {
-            number = String(decoder["number"].integer)
+            number = String(decoder["number"].integer!)
             subject = decoder["subject"].string!
             key = decoder["key"].string!
             org = ""
