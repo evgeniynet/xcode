@@ -48,7 +48,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         
         init(_ decoder: JSONDecoder) {
             number = String(decoder["number"].integer!)
-            subject = decoder["subject"].string!
+            subject = decoder["subject"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             key = decoder["key"].string!
             org = ""
         }
@@ -88,15 +88,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     func updateWidget()
     {
-    }
-    
-    func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)) {
-        //print("widgetPerformUpdateWithCompletionHandler")
-        // Perform any setup necessary in order to update the view.
-        // If an error is encountered, use NCUpdateResult.Failed
-        // If there's no update required, use NCUpdateResult.NoData
-        // If there's an update, use NCUpdateResult.NewData
-        getOrg()
         if !Properties.org.isEmpty
         {
             showTickets(self.tickets)
@@ -119,12 +110,28 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                         print("sting during post: \(self.tickets.count)")
                         self.defaults.setObject(self.tickets, forKey: "tickets")
                         self.showTickets(self.tickets)
-                        completionHandler(NCUpdateResult.NewData)
+                        //print(resp.records)
                     }
                 }
             } catch let error {
                 print("got an error creating the request: \(error)")
             }
+        }
+    }
+    
+    func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)) {
+        //print("widgetPerformUpdateWithCompletionHandler")
+        // Perform any setup necessary in order to update the view.
+        // If an error is encountered, use NCUpdateResult.Failed
+        // If there's no update required, use NCUpdateResult.NoData
+        // If there's an update, use NCUpdateResult.NewData
+        //updateWidget()
+        getOrg()
+        return
+        if !Properties.org.isEmpty
+        {
+          completionHandler(NCUpdateResult.NewData)
+    
         }
         else {
             //completionHandler(NCUpdateResult.NoData)
@@ -132,6 +139,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     func getOrg(){
+        defaults.synchronize()
         if let org:String = defaults.objectForKey("org") as? String
         {
             Properties.org = org
@@ -156,16 +164,25 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                     }
                 }
             }
+            showMessage("No recent tickets yet ...")
         }
+        else
+        {showMessage("Login to SherpaDesk app first")}
         self.tickets = []
         defaults.setObject([], forKey: "tickets")
         print("unset\(self.tickets.count)")
+        
     }
     
-    func logout(){
+    func showMessage(message : String ){
         self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center;
-        self.fTicket.setTitle("Login to SherpaDesk app first", forState: UIControlState.Normal)
+        self.fTicket.setTitle(message, forState: UIControlState.Normal)
         self.fTicket.setValue("index.html", forKeyPath: "page")
+        self.fLine.hidden = true
+        self.sTicket.hidden = true
+        self.sLine.hidden = true
+        self.tTicket.hidden = true
+        self.tLine.hidden = true
     }
     
     func showTickets(jsonResult : NSMutableArray)
@@ -196,16 +213,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 }
             }
         }
-        else if !Properties.org.isEmpty
+        /*else if !Properties.org.isEmpty
         {
-            self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center;
-            self.fTicket.setTitle("No recent tickets yet ...", forState: UIControlState.Normal)
-            self.fLine.hidden = true
-            self.sTicket.hidden = true
-            self.sLine.hidden = true
-            self.tTicket.hidden = true
-            self.tLine.hidden = true
-        }
+            self.showMessage("No recent tickets yet ...")
+        }*/
             })
     }
     
@@ -214,13 +225,15 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         //var currentSize: CGSize = self.preferredContentSize
         //currentSize.height = 120.0
 //        self.preferredContentSize = currentSize
+        getOrg()
+        self.updateWidget()
     }
     
     override func viewDidAppear(animated: Bool)
     {
         super.viewDidAppear(animated)
-        //self.updateWidget()
-    }
+        getOrg()
+     }
   
   override func viewDidLoad() {
     super.viewDidLoad()

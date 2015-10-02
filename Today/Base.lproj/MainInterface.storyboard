@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="M4Y-Lb-cyx">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -24,35 +23,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcL-FH-zPp">
-                                <rect key="frame" x="87" y="20" width="79" height="78"/>
-                                <state key="normal" image="Create Ticket"/>
-                                <connections>
-                                    <action selector="AddTicket:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="hQR-ia-oON"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWB-hH-euI">
-                                <rect key="frame" x="158" y="20" width="77" height="81"/>
-                                <state key="normal" image="My Tickets"/>
-                                <connections>
-                                    <action selector="MyTickets:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="pQc-t2-nVK"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rgh-bQ-Dnt">
-                                <rect key="frame" x="238" y="20" width="62" height="80"/>
-                                <state key="normal" image="All Open"/>
-                                <connections>
-                                    <action selector="AllTickets:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="xm4-d8-4KM"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="43E-1O-3Ok">
-                                <rect key="frame" x="7" y="20" width="68" height="78"/>
-                                <state key="normal" backgroundImage="Add Time"/>
-                                <state key="selected" backgroundImage="Add Time"/>
-                                <connections>
-                                    <action selector="OpenUrl:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="9wS-um-8d0"/>
-                                </connections>
-                            </button>
                             <imageView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" misplaced="YES" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="RNT-gM-kN4">
                                 <rect key="frame" x="0.0" y="130" width="1440" height="2"/>
                             </imageView>
@@ -104,29 +74,58 @@
                                     <action selector="Ticket1:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="Vd1-do-oDr"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalSpacing" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="oYP-JP-ahF">
+                                <rect key="frame" x="0.0" y="0.0" width="298" height="81"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="43E-1O-3Ok">
+                                        <rect key="frame" x="0.0" y="0.0" width="68" height="78"/>
+                                        <state key="normal" backgroundImage="Add Time"/>
+                                        <state key="selected" backgroundImage="Add Time"/>
+                                        <connections>
+                                            <action selector="OpenUrl:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="9wS-um-8d0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcL-FH-zPp">
+                                        <rect key="frame" x="72" y="0.0" width="79" height="78"/>
+                                        <state key="normal" image="Create Ticket"/>
+                                        <connections>
+                                            <action selector="AddTicket:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="hQR-ia-oON"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWB-hH-euI">
+                                        <rect key="frame" x="155" y="0.0" width="77" height="81"/>
+                                        <state key="normal" image="My Tickets"/>
+                                        <connections>
+                                            <action selector="MyTickets:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="pQc-t2-nVK"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rgh-bQ-Dnt">
+                                        <rect key="frame" x="236" y="0.0" width="62" height="80"/>
+                                        <state key="normal" image="All Open"/>
+                                        <connections>
+                                            <action selector="AllTickets:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="xm4-d8-4KM"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="dcL-FH-zPp" firstAttribute="leading" secondItem="43E-1O-3Ok" secondAttribute="leading" constant="72" id="19a-ki-3y9"/>
-                            <constraint firstItem="a7Z-5Y-dW1" firstAttribute="top" secondItem="FWE-zA-WHC" secondAttribute="baseline" constant="6" id="7Hr-iQ-KrH"/>
+                            <constraint firstItem="a7Z-5Y-dW1" firstAttribute="top" secondItem="FWE-zA-WHC" secondAttribute="baseline" constant="7" id="7Hr-iQ-KrH"/>
                             <constraint firstItem="RNT-gM-kN4" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="7eH-fp-E0p"/>
-                            <constraint firstItem="Rgh-bQ-Dnt" firstAttribute="leading" secondItem="wWB-hH-euI" secondAttribute="trailing" constant="5" id="9kK-Sx-Tn5"/>
-                            <constraint firstItem="43E-1O-3Ok" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="10" id="9ol-Vu-SQc"/>
+                            <constraint firstItem="oYP-JP-ahF" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="98K-dW-D9b"/>
                             <constraint firstItem="0cT-pM-S1a" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="I3i-q7-Gk5"/>
+                            <constraint firstItem="oYP-JP-ahF" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="5" id="IhA-VJ-7y2"/>
                             <constraint firstItem="RNT-gM-kN4" firstAttribute="top" secondItem="v4O-7y-8wT" secondAttribute="baseline" constant="6" id="IyY-jP-OV6"/>
-                            <constraint firstItem="wWB-hH-euI" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="10" id="KMS-cH-CGU"/>
                             <constraint firstItem="0cT-pM-S1a" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="M9N-Jo-qBF"/>
                             <constraint firstItem="v4O-7y-8wT" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="Obb-0k-cbs"/>
-                            <constraint firstItem="GM5-2z-j5f" firstAttribute="top" secondItem="0cT-pM-S1a" secondAttribute="baseline" constant="6" id="S1i-Fw-21O"/>
-                            <constraint firstItem="0cT-pM-S1a" firstAttribute="top" secondItem="FWE-zA-WHC" secondAttribute="bottom" constant="6" id="VDm-Uc-oaK"/>
-                            <constraint firstItem="FWE-zA-WHC" firstAttribute="top" secondItem="v4O-7y-8wT" secondAttribute="bottom" constant="6" id="VgW-oG-TNr"/>
-                            <constraint firstItem="v4O-7y-8wT" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="90" id="YeD-ar-Cd9"/>
+                            <constraint firstItem="GM5-2z-j5f" firstAttribute="top" secondItem="0cT-pM-S1a" secondAttribute="baseline" constant="10" id="S1i-Fw-21O"/>
+                            <constraint firstItem="oYP-JP-ahF" firstAttribute="centerX" secondItem="S3S-Oj-5AN" secondAttribute="centerX" id="V34-K0-X9w"/>
+                            <constraint firstItem="0cT-pM-S1a" firstAttribute="top" secondItem="FWE-zA-WHC" secondAttribute="bottom" constant="8" id="VDm-Uc-oaK"/>
+                            <constraint firstItem="FWE-zA-WHC" firstAttribute="top" secondItem="v4O-7y-8wT" secondAttribute="bottom" constant="4" id="VgW-oG-TNr"/>
+                            <constraint firstItem="v4O-7y-8wT" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="93" id="YeD-ar-Cd9"/>
                             <constraint firstItem="a7Z-5Y-dW1" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="afk-Xn-K6C"/>
-                            <constraint firstItem="wWB-hH-euI" firstAttribute="centerX" secondItem="S3S-Oj-5AN" secondAttribute="centerX" constant="41" id="djS-WR-YXX"/>
                             <constraint firstItem="FWE-zA-WHC" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="isk-jw-GPx"/>
                             <constraint firstItem="GM5-2z-j5f" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="mfQ-v7-y5F"/>
-                            <constraint firstItem="wWB-hH-euI" firstAttribute="leading" secondItem="dcL-FH-zPp" secondAttribute="leading" constant="82" id="ofP-YU-E1L"/>
-                            <constraint firstItem="Rgh-bQ-Dnt" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="10" id="tmQ-Hp-tFH"/>
-                            <constraint firstItem="dcL-FH-zPp" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="10" id="vM6-GK-MIk"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
