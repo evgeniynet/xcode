@@ -107,7 +107,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                     let resp = Records(JSONDecoder(response.data))
                     if resp.records.count > 0 {
                         self.tickets = resp.records
-                        print("sting during post: \(self.tickets.count)")
+                        //print("sting during post: \(self.tickets.count)")
                         self.defaults.setObject(self.tickets, forKey: "tickets")
                         self.showTickets(self.tickets)
                         //print(resp.records)
@@ -148,17 +148,17 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         {
             Properties.org = ""
         }
-        print(Properties.org)
+        //print(Properties.org)
         if !Properties.org.isEmpty{
             if let tkts:NSMutableArray = defaults.objectForKey("tickets") as? NSMutableArray
             {
                 if tkts.count>0 {
                     if let org = tkts[0]["org"] as? String
                     {
-                        print("org\(org)prop\(Properties.org)")
+                        //print("org\(org)prop\(Properties.org)")
                         if (org == Properties.org){
                             self.tickets = tkts
-                            print("set\(self.tickets.count)")
+                            //print("set\(self.tickets.count)")
                             return
                         }
                     }
@@ -170,7 +170,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         {showMessage("Login to SherpaDesk app first")}
         self.tickets = []
         defaults.setObject([], forKey: "tickets")
-        print("unset\(self.tickets.count)")
+        //print("unset\(self.tickets.count)")
         
     }
     
@@ -188,7 +188,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     func showTickets(jsonResult : NSMutableArray)
     {
         dispatch_async(dispatch_get_main_queue(), {
-        print("show: \(jsonResult.count)")
+        //print("show: \(jsonResult.count)")
         if jsonResult.count>0{
             var rec = Record(jsonResult[0])
             self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Fill;
@@ -213,10 +213,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 }
             }
         }
-        /*else if !Properties.org.isEmpty
-        {
-            self.showMessage("No recent tickets yet ...")
-        }*/
             })
     }
     
@@ -281,7 +277,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     func OpenApp(_page : String) {
-        print(_page)
+        //print(_page)
         let sherpaHooks = "sherpadesk://"
         let url = NSURL(string: sherpaHooks + _page);
         extensionContext!.openURL(url!, completionHandler: nil)
