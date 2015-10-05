@@ -56,6 +56,7 @@
 		FA93E69A1B71203F00BE50F1 /* Today.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FA93E68E1B71203F00BE50F1 /* Today.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA93E6A31B7124B400BE50F1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA93E6A21B7124B400BE50F1 /* Media.xcassets */; };
 		FA9B938A1B6FD2B400AFCB52 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA9B93891B6FD2B400AFCB52 /* Images.xcassets */; };
+		FAD258E11BC2EE1400711F10 /* Pods.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD6F69CB04FF95B3666029E /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAEC7A081B946A5D006090D9 /* RecordTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC7A071B946A5C006090D9 /* RecordTableRowController.swift */; };
 		FAEC7A0A1B946AD2006090D9 /* SelectAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC7A091B946AD2006090D9 /* SelectAccount.swift */; };
 		FAED2AA81B8316F8008F5FCC /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAED2AA71B8316F8008F5FCC /* InterfaceController.swift */; };
@@ -133,6 +134,17 @@
 				FAED2ABF1B8316F8008F5FCC /* Sherpadesk WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAD258E21BC2EE1400711F10 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FAD258E11BC2EE1400711F10 /* Pods.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -525,6 +537,7 @@
 				FA93E69E1B71203F00BE50F1 /* Embed App Extensions */,
 				8C649AF6C23DF1BEF09B3A81 /* Embed Pods Frameworks */,
 				45128EB91AFC442CE56429A5 /* Copy Pods Resources */,
+				FAD258E21BC2EE1400711F10 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -924,6 +937,7 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Sherpadesk/Sherpadesk-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -968,6 +982,7 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Sherpadesk/Sherpadesk-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1125,8 +1140,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Today/Today.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: bigWebApps, Inc. (ULP5NZPYZX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: bigWebApps, Inc. (ULP5NZPYZX)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
