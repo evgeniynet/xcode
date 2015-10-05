@@ -57,6 +57,15 @@
 		FA93E6A31B7124B400BE50F1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA93E6A21B7124B400BE50F1 /* Media.xcassets */; };
 		FA9B938A1B6FD2B400AFCB52 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA9B93891B6FD2B400AFCB52 /* Images.xcassets */; };
 		FAD258E11BC2EE1400711F10 /* Pods.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD6F69CB04FF95B3666029E /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAD258EC1BC2F6FD00711F10 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD258EB1BC2F6FD00711F10 /* Pods.framework */; settings = {ASSET_TAGS = (); }; };
+		FAD258ED1BC2F6FD00711F10 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD258EB1BC2F6FD00711F10 /* Pods.framework */; settings = {ASSET_TAGS = (); }; };
+		FAD258EE1BC2F6FD00711F10 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD258EB1BC2F6FD00711F10 /* Pods.framework */; settings = {ASSET_TAGS = (); }; };
+		FAD258F11BC2F84E00711F10 /* JSONJoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD258EF1BC2F84E00711F10 /* JSONJoy.framework */; settings = {ASSET_TAGS = (); }; };
+		FAD258F21BC2F84E00711F10 /* JSONJoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD258EF1BC2F84E00711F10 /* JSONJoy.framework */; settings = {ASSET_TAGS = (); }; };
+		FAD258F31BC2F84E00711F10 /* JSONJoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD258EF1BC2F84E00711F10 /* JSONJoy.framework */; settings = {ASSET_TAGS = (); }; };
+		FAD258F41BC2F84E00711F10 /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD258F01BC2F84E00711F10 /* SwiftHTTP.framework */; settings = {ASSET_TAGS = (); }; };
+		FAD258F51BC2F84E00711F10 /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD258F01BC2F84E00711F10 /* SwiftHTTP.framework */; settings = {ASSET_TAGS = (); }; };
+		FAD258F61BC2F84E00711F10 /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD258F01BC2F84E00711F10 /* SwiftHTTP.framework */; settings = {ASSET_TAGS = (); }; };
 		FAEC7A081B946A5D006090D9 /* RecordTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC7A071B946A5C006090D9 /* RecordTableRowController.swift */; };
 		FAEC7A0A1B946AD2006090D9 /* SelectAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC7A091B946AD2006090D9 /* SelectAccount.swift */; };
 		FAED2AA81B8316F8008F5FCC /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAED2AA71B8316F8008F5FCC /* InterfaceController.swift */; };
@@ -228,6 +237,9 @@
 		FA93E6A21B7124B400BE50F1 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		FA9B93851B6FADC900AFCB52 /* Sherpadesk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Sherpadesk.entitlements; path = Sherpadesk/Sherpadesk.entitlements; sourceTree = "<group>"; };
 		FA9B93891B6FD2B400AFCB52 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Sherpadesk/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		FAD258EB1BC2F6FD00711F10 /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Pods.framework; sourceTree = "<group>"; };
+		FAD258EF1BC2F84E00711F10 /* JSONJoy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JSONJoy.framework; sourceTree = "<group>"; };
+		FAD258F01BC2F84E00711F10 /* SwiftHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftHTTP.framework; sourceTree = "<group>"; };
 		FAEC7A071B946A5C006090D9 /* RecordTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordTableRowController.swift; sourceTree = "<group>"; };
 		FAEC7A091B946AD2006090D9 /* SelectAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAccount.swift; sourceTree = "<group>"; };
 		FAED2AA21B8316F7008F5FCC /* Sherpadesk WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Sherpadesk WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -256,7 +268,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA65C5CE1B70EA2D004E6CCD /* SystemConfiguration.framework in Frameworks */,
+				FAD258F11BC2F84E00711F10 /* JSONJoy.framework in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
+				FAD258F41BC2F84E00711F10 /* SwiftHTTP.framework in Frameworks */,
+				FAD258EC1BC2F6FD00711F10 /* Pods.framework in Frameworks */,
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
@@ -268,6 +283,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAD258F51BC2F84E00711F10 /* SwiftHTTP.framework in Frameworks */,
+				FAD258ED1BC2F6FD00711F10 /* Pods.framework in Frameworks */,
+				FAD258F21BC2F84E00711F10 /* JSONJoy.framework in Frameworks */,
 				FAFABC0B1BBD37DD00FF11D8 /* Pods.framework in Frameworks */,
 				FA93E6901B71203F00BE50F1 /* NotificationCenter.framework in Frameworks */,
 			);
@@ -277,6 +295,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAD258F61BC2F84E00711F10 /* SwiftHTTP.framework in Frameworks */,
+				FAD258EE1BC2F6FD00711F10 /* Pods.framework in Frameworks */,
+				FAD258F31BC2F84E00711F10 /* JSONJoy.framework in Frameworks */,
 				FAFABC0C1BBD37E300FF11D8 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,6 +398,9 @@
 				47AD85DDBE9E4A049D9382F1 /* Foundation.framework */,
 				FA93E68F1B71203F00BE50F1 /* NotificationCenter.framework */,
 				7DD6F69CB04FF95B3666029E /* Pods.framework */,
+				FAD258EF1BC2F84E00711F10 /* JSONJoy.framework */,
+				FAD258F01BC2F84E00711F10 /* SwiftHTTP.framework */,
+				FAD258EB1BC2F6FD00711F10 /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -927,7 +951,8 @@
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"Sherpadesk/Plugins/cordova-plugin-webserver\"",
+					"Sherpadesk/Plugins/cordova-plugin-webserver",
+					"$(PROJECT_DIR)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -974,7 +999,8 @@
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"Sherpadesk/Plugins/cordova-plugin-webserver\"",
+					"Sherpadesk/Plugins/cordova-plugin-webserver",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sherpadesk/Sherpadesk-Prefix.pch";
@@ -1105,6 +1131,10 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1146,6 +1176,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1180,6 +1214,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1221,6 +1259,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
