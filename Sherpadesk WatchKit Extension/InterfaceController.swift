@@ -152,15 +152,11 @@ class InterfaceController: WKInterfaceController {
     
     override init() {
         super.init()
-        
-        getOrg()
+    
     }
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-        
-        getOrg()
-        updateWidget()
         
         /*if let text = context as? String {
             let indexSet = NSMutableIndexSet()
@@ -178,6 +174,8 @@ class InterfaceController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        getOrg()
+        updateWidget()
     }
 
     override func didDeactivate() {

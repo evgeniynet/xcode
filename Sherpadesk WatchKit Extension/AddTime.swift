@@ -76,7 +76,7 @@ class AddTimeInterfaceController: WKInterfaceController {
     @IBAction func popButtonPressed() {
         //self.popToRootController()
         updateWidget()
-        self.pushControllerWithName("Main1", context: val)
+        self.pushControllerWithName("Main1", context: nil)
     }
     
     override func awakeWithContext(context: AnyObject?) {

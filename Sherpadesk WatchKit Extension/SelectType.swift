@@ -99,6 +99,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
         }
         else
         {//showMessage("Login to SherpaDesk app first")
+             self.pushControllerWithName("Main1", context: nil)
         }
         self.tasktypes = []
         defaults.setObject([], forKey: "tasktypes")

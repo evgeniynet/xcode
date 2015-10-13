@@ -100,6 +100,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
         }
         else
         {//showMessage("Login to SherpaDesk app first")
+             self.pushControllerWithName("Main1", context: nil)
         }
         self.projects = []
         defaults.setObject([], forKey: "projects")
