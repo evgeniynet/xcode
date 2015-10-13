@@ -70,11 +70,12 @@ class AddTimeInterfaceController: WKInterfaceController {
     @IBAction func sliderDidChange(value: Float)
     {
         val = String(format: "%2.2f", value)
-        label.setTitle(val+" hrs");
+        label.setTitle(val);
     }
     
     @IBAction func popButtonPressed() {
         //self.popToRootController()
+        updateWidget()
         self.pushControllerWithName("Main1", context: val)
     }
     

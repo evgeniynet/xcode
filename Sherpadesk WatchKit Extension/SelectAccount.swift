@@ -128,11 +128,24 @@ class SelectAccountInterfaceController: WKInterfaceController {
                     }
                     let resp = Records(JSONDecoder(response.data))
                     if resp.records.count > 0 {
+                        let oldcount =  self.accounts.count
+                        var oldorg = false;
+                        if oldcount > 0 {
+                            if let org = self.accounts[0]["org"] as? String
+                            {
+                                if (org != Properties.org){
+                                    oldorg = true
+                                }
+                            }
+                        }
                         self.accounts = resp.records
                         //print("sting during post: \(self.tickets.count)")
                         self.defaults.setObject(self.accounts, forKey: "accounts")
-                        self.loadTableData()
-                        //print(resp.records)
+                        if oldcount !=  self.accounts.count || oldorg
+                        {
+                             print("doubleupdate")
+                             self.loadTableData()
+                        }
                     }
                 }
             } catch let error {
