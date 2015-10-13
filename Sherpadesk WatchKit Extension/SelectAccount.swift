@@ -8,11 +8,52 @@
 
 import WatchKit
 import Foundation
+import SwiftHTTP
+import JSONJoy
 
 
 class SelectAccountInterfaceController: WKInterfaceController {
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
+    
+    struct Record : JSONJoy {
+        var id: Int
+        var name: String
+        var org: String
+        //init() {
+        //}
+        
+        init(_ decoder: JSONDecoder) {
+            id = decoder["id"].integer!
+            name = decoder["name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            org = ""
+        }
+        init(_ array: AnyObject) {
+            id = (array["id"] as? Int)!
+            name = (array["name"] as? String)!
+            org = (array["org"] as? String)!
+        }
+    }
+    
+    struct Records : JSONJoy {
+        var records: NSMutableArray = []
+        init() {
+        }
+        init(_ decoder: JSONDecoder) {
+            //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
+            if let recrds = decoder.array {
+                records = []
+                if recrds.count < 1 {
+                    records.addObject(["id" : -1, "name" : "Default", "org" : Properties.org])
+                }
+                for rDecoder in recrds {
+                    let rec = Record(rDecoder)
+                    records.addObject([ "id" : rec.id, "name" : rec.name, "org" : Properties.org])
+                }
+            }
+        }
+    }
+
     
     var defaults : NSUserDefaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")!
     
@@ -20,15 +61,94 @@ class SelectAccountInterfaceController: WKInterfaceController {
         static var org = ""
     }
     
+    var AddTimeData = ["org" : "",
+        "account": "-1",
+        "project": "0",
+        "tasktype": "0",
+        "isproject": "true",
+        "isaccount": "true"
+    ]
+    
     var accounts: NSMutableArray = []
+    
+    func getOrg(){
+        defaults.synchronize()
+        if let org:String = defaults.objectForKey("org") as? String
+        {
+            Properties.org = org
+        }
+        else
+        {
+            Properties.org = ""
+        }
+        //print(Properties.org)
+        if !Properties.org.isEmpty{
+            if let accts:NSMutableArray = defaults.objectForKey("accounts") as? NSMutableArray
+            {
+                if accts.count>0 {
+                    if let org = accts[0]["org"] as? String
+                    {
+                        //print("org\(org)prop\(Properties.org)")
+                        if (org == Properties.org){
+                            self.accounts = accts
+                            //print("set\(self.tickets.count)")
+                            return
+                        }
+                    }
+                }
+            }
+            //showMessage("No recent tickets yet ...")
+        }
+        else
+        {//showMessage("Login to SherpaDesk app first")
+        }
+        self.accounts = []
+        defaults.setObject([], forKey: "accounts")
+        //print("unset\(self.tickets.count)")
+        
+    }
+    
+    func updateWidget()
+    {
+        if !Properties.org.isEmpty
+        {
+            loadTableData()
+            
+            do {
+                let command = "accounts" + "?is_with_statistics=false"
+                let params = ["", ""]
+                let urlPath: String = "http://" + Properties.org +
+                    "@api.beta.sherpadesk.com/" + command
+                
+                let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])
+                opt.start { response in
+                    if let err = response.error {
+                        print("error: \(err.localizedDescription)")
+                        return //also notify app of failure as needed
+                    }
+                    let resp = Records(JSONDecoder(response.data))
+                    if resp.records.count > 0 {
+                        self.accounts = resp.records
+                        //print("sting during post: \(self.tickets.count)")
+                        self.defaults.setObject(self.accounts, forKey: "accounts")
+                        self.loadTableData()
+                        //print(resp.records)
+                    }
+                }
+            } catch let error {
+                print("got an error creating the request: \(error)")
+            }
+        }
+    }
+
     
     func loadTableData() {
         timeTable.setNumberOfRows(accounts.count, withRowType: "RecordTableRowController")
         for (index, account) in accounts.enumerate() {
             //print(blogName)
             let row = timeTable.rowControllerAtIndex(index) as! RecordTableRowController
-            row.recordLabel.setText((account["name"] as! String))
-            //print(account["id"] as! Int)
+            let rec = Record(account)
+            row.recordLabel.setText(rec.name)
         }
     }
     
@@ -37,8 +157,10 @@ class SelectAccountInterfaceController: WKInterfaceController {
             let sequeId = "ToProject"
             let acc  = accounts as NSMutableArray
             if segueIdentifier == sequeId {
-                let id = acc[rowIndex]["id"] as! Int
-                return id
+                let rec = Record(acc[rowIndex])
+                AddTimeData["account"] = String(rec.id)
+                AddTimeData["org"] = Properties.org
+                return AddTimeData
             }
             
             return nil
@@ -48,110 +170,8 @@ class SelectAccountInterfaceController: WKInterfaceController {
         super.init()
         
         getOrg()
-        loadTableData()
-        
-        var showtickets: NSMutableArray = []
-        //self.fTicket.setTitle("Looking for recent tickets ...", forState: UIControlState.Normal)
-        let urlPath: String = "http://u0diuk-b95s6o:fzo3fkthioj5xi696jzocabuojekpb5o@api.beta.sherpadesk.com/accounts"
-        print(urlPath)
-        let url: NSURL = NSURL(string: urlPath)!
-        let info: String = "http";
-        //return;
-        post(urlPath, info: info) {
-            responseString, error in
-            
-            if responseString == nil {
-                //self.updateResult = NCUpdateResult.Failed
-                print("Error during post: \(error)")
-                return
-            }
-            
-            /*var output: NSString!
-            
-            if responseString != nil {
-            output = NSString(data: responseString!, encoding: NSUTF8StringEncoding)
-            }
-            */
-            
-            do {
-                showtickets = try NSJSONSerialization.JSONObjectWithData(responseString, options: NSJSONReadingOptions.MutableContainers) as! NSMutableArray
-            } catch {
-                // failure
-                print("Fetch failed: \((error as NSError).localizedDescription)")
-            }
-            
-            
-            
-            print("sting during post: \(showtickets.count)")
-            self.accounts = showtickets
-            self.loadTableData()
-        }
+        updateWidget()
     }
-    
-    func post(url: String, info: String, completionHandler: (responseString: NSData!, error: NSError!) -> ()) {
-        let URL: NSURL = NSURL(string: url)!
-        let request:NSMutableURLRequest = NSMutableURLRequest(URL:URL)
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        //let bodyData = info;
-        //request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding);
-        
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue()){
-            
-            response, data, error in
-            
-            /*var output: NSString!
-            
-            if data != nil {
-                output = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            }
-            
-            print(output)
-            */
-            completionHandler(responseString: data, error: error)
-        }
-    }
-    
-    func getOrg(){
-        if let org:String = defaults.objectForKey("org") as? String
-        {
-            print(org)
-            Properties.org = org
-        }
-        else
-        {
-            Properties.org = ""
-        }
-        if !Properties.org.isEmpty{
-            if let acct:NSData = defaults.objectForKey("accounts") as? NSData
-            {
-                do {
-                if let accts = try NSJSONSerialization.JSONObjectWithData(acct, options: NSJSONReadingOptions.MutableContainers) as? NSMutableArray
-                {
-                if accts.count>0 {
-                    if let org = accts[0]["org"] as? String
-                    {
-                        print("org\(org)prop\(Properties.org)")
-                        if (org == Properties.org){
-                            self.accounts = accts
-                            print("set\(self.accounts.count)")
-                            return
-                        }
-                    }
-                    }
-                    }
-                }
-                catch {
-                        // failure
-                        print("Fetch failed: \((error as NSError).localizedDescription)")
-                    }
-            }
-        }
-        self.accounts = []
-        defaults.setObject([], forKey: "accounts")
-        print("unset\(self.accounts.count)")
-    }
-    
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
