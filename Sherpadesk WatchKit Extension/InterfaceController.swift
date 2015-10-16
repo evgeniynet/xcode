@@ -152,7 +152,15 @@ class InterfaceController: WKInterfaceController {
     
     override init() {
         super.init()
-    
+        /*let z = [Int](1...40)
+        
+        var test = z.map({
+            (number: Int) -> Float in
+            let result =  Float(number) * Float(0.25)
+            return result
+        })
+        
+        print(test) */
     }
 
     override func awakeWithContext(context: AnyObject?) {

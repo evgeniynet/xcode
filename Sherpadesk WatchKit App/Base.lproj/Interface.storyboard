@@ -68,9 +68,11 @@
                                 <action selector="popButtonPressed" destination="rcX-DK-MK0" id="Y3Q-Qb-cP5"/>
                             </connections>
                         </button>
+                        <picker width="1" height="100" alignment="left" hidden="YES" id="Unc-co-U4Z"/>
                     </items>
                     <connections>
                         <outlet property="label" destination="rh3-l3-VRi" id="sG0-x1-2a5"/>
+                        <outlet property="picker" destination="Unc-co-U4Z" id="nul-oY-4gQ"/>
                         <outlet property="slider" destination="T7K-Mk-mdb" id="oVg-dW-lfr"/>
                     </connections>
                 </controller>

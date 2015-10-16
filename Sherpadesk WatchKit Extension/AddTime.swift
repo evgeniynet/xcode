@@ -17,6 +17,8 @@ class AddTimeInterfaceController: WKInterfaceController {
     
     @IBOutlet weak var slider: WKInterfaceSlider!
     
+    //@IBOutlet var picker: WKInterfacePicker!
+    
     var AddTimeData = ["org" : "",
         "account": "-1",
         "project": "0",
@@ -88,6 +90,21 @@ class AddTimeInterfaceController: WKInterfaceController {
             Properties.org = AddTimeData["org"]!
             
         }
+    }
+    
+    override init() {
+        super.init()
+        /*
+        let z = [Int](1...40)
+        
+        var test = z.map({
+            (number: Int) -> Float in
+            let result =  Float(number) * Float(0.25)
+            return result
+        })
+        
+        print(test)
+*/
     }
     
     override func willActivate() {
