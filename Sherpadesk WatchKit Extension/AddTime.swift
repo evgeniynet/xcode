@@ -25,6 +25,8 @@ class AddTimeInterfaceController: WKInterfaceController {
         "isaccount": "true"
     ]
     
+    var  sliderValue:Float = 0.25
+    
     struct Properties {
         static var org = ""
     }
@@ -43,7 +45,7 @@ class AddTimeInterfaceController: WKInterfaceController {
                     "ticket_key": "0",
                     "note_text": "added by iWatch",
                     "task_type_id": AddTimeData["tasktype"]!,
-                    "hours": val,
+                    "hours": String(format: "%2.2f", sliderValue),
                     "is_billable": "true"
                 ]
                 print(params)
@@ -65,12 +67,10 @@ class AddTimeInterfaceController: WKInterfaceController {
     }
 
     
-    var val : String = ""
-    
     @IBAction func sliderDidChange(value: Float)
     {
-        val = String(format: "%2.2f", value)
-        label.setTitle(val);
+        sliderValue = value
+        label.setTitle(String(format: "%2.2f", sliderValue))
     }
     
     @IBAction func popButtonPressed() {
@@ -93,6 +93,7 @@ class AddTimeInterfaceController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        slider.setValue(0.25)
     }
     
     override func didDeactivate() {

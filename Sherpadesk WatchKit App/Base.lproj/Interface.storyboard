@@ -11,7 +11,8 @@
                 <controller identifier="Main1" title="Main" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Sherpadesk_WatchKit_Extension">
                     <items>
                         <button width="1" height="49" alignment="left" title="+ Add Time " id="ZRQ-1W-Sk0">
-                            <color key="titleColor" red="0.40000000596046448" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.26663510810000002" green="0.5700256239" blue="0.23567388510000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="22"/>
                             <connections>
                                 <segue destination="eKX-4H-gyr" kind="push" identifier="ToAccounts" id="LQc-6h-uDF"/>
@@ -51,16 +52,17 @@
             <objects>
                 <controller title="Add Time" id="rcX-DK-MK0" customClass="AddTimeInterfaceController" customModule="Sherpadesk_WatchKit_Extension">
                     <items>
-                        <button width="1" alignment="left" title="1.00" enabled="NO" id="rh3-l3-VRi">
+                        <button width="1" alignment="left" title="0.25" enabled="NO" id="rh3-l3-VRi">
                             <fontDescription key="font" type="system" pointSize="40"/>
                         </button>
-                        <slider width="1" alignment="center" verticalAlignment="center" value="1" minimum="0.25" maximum="10" steps="39" id="T7K-Mk-mdb">
+                        <slider width="1" alignment="center" verticalAlignment="center" value="0.25" minimum="0.25" maximum="10" steps="39" id="T7K-Mk-mdb">
                             <connections>
                                 <action selector="sliderDidChange:" destination="rcX-DK-MK0" id="C8r-Bl-2hu"/>
                             </connections>
                         </slider>
                         <button width="1" height="0.5" heightAdjustment="-24" alignment="center" verticalAlignment="bottom" title="Save" id="PNw-io-BEO">
-                            <color key="titleColor" red="0.40000000596046448" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.26663510807568075" green="0.57002562388787881" blue="0.23567388507408404" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="35"/>
                             <connections>
                                 <action selector="popButtonPressed" destination="rcX-DK-MK0" id="Y3Q-Qb-cP5"/>
