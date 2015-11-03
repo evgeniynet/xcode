@@ -118,7 +118,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
                 let params = ["account": AddTimeData["account"]!, "project" : AddTimeData["project"]!]
                 print(params)
                 let urlPath: String = "http://" + Properties.org +
-                    "@api.beta.sherpadesk.com/" + command
+                    "@api.sherpadesk.com/" + command
                 
                 let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])
                 opt.start { response in

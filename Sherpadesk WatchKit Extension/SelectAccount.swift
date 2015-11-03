@@ -119,7 +119,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
                 let command = "accounts" + "?is_with_statistics=false"
                 let params = ["", ""]
                 let urlPath: String = "http://" + Properties.org +
-                    "@api.beta.sherpadesk.com/" + command
+                    "@api.sherpadesk.com/" + command
                 
                 let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])
                 opt.start { response in
