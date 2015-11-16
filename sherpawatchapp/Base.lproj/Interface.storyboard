@@ -50,7 +50,7 @@
         <!--Add Time-->
         <scene sceneID="bMM-Yh-Osg">
             <objects>
-                <controller title="Add Time" id="rcX-DK-MK0" customClass="AddTimeInterfaceController" customModule="sherpawatchapp_Extension">
+                <controller identifier="AddTime" title="Add Time" id="rcX-DK-MK0" customClass="AddTimeInterfaceController" customModule="sherpawatchapp_Extension">
                     <items>
                         <button width="1" alignment="left" title="0.25" enabled="NO" id="rh3-l3-VRi">
                             <fontDescription key="font" type="system" pointSize="40"/>
@@ -176,7 +176,7 @@
         <!--Task Type-->
         <scene sceneID="qlM-Sl-lOX">
             <objects>
-                <controller title="Task Type" id="6KC-PE-zf4" customClass="SelectTypeInterfaceController" customModule="sherpawatchapp_Extension">
+                <controller identifier="TypesList" title="Task Type" id="6KC-PE-zf4" customClass="SelectTypeInterfaceController" customModule="sherpawatchapp_Extension">
                     <items>
                         <table alignment="left" id="WXO-Hg-RUm">
                             <items>

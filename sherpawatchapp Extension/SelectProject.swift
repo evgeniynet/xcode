@@ -125,11 +125,11 @@ class SelectProjectInterfaceController: WKInterfaceController {
                         return //also notify app of failure as needed
                     }
                     let resp = Records(JSONDecoder(response.data))
-                    if resp.records.count > 0 {
-                        self.projects = resp.records
-                        //print("sting during post: \(self.tickets.count)")
-                        self.loadTableData()
-                        //print(resp.records)
+                    self.projects = resp.records
+                    self.loadTableData()
+                    if resp.records.count < 2 {
+                        self.AddTimeData["project"] = String(Record(resp.records[0]).id)
+                        self.pushControllerWithName("TypesList", context: self.AddTimeData)
                     }
                 }
             } catch let error {

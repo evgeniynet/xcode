@@ -125,12 +125,13 @@ class SelectTypeInterfaceController: WKInterfaceController {
                         return //also notify app of failure as needed
                     }
                     let resp = Records(JSONDecoder(response.data))
-                    if resp.records.count > 0 {
                         self.tasktypes = resp.records
-                        //print("sting during post: \(self.tickets.count)")
                         self.loadTableData()
-                        //print(resp.records)
+                    if resp.records.count < 2 {
+                        self.AddTimeData["tasktype"] = String(Record(resp.records[0]).id)
+                        self.pushControllerWithName("AddTime", context: self.AddTimeData)
                     }
+                    
                 }
             } catch let error {
                 print("got an error creating the request: \(error)")
@@ -139,7 +140,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
     }
     
     func loadTableData() {
-        timeTable.setNumberOfRows(tasktypes.count+1, withRowType: "TypeTableRowController")
+        timeTable.setNumberOfRows(tasktypes.count, withRowType: "TypeTableRowController")
         for (index, project) in tasktypes.enumerate() {
             //print(blogName)
             let row = timeTable.rowControllerAtIndex(index) as! TypeTableRowController

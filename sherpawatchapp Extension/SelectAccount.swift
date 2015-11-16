@@ -144,6 +144,11 @@ class SelectAccountInterfaceController: WKInterfaceController {
                              print("doubleupdate")
                              self.loadTableData()
                         }
+                        if self.accounts.count < 2 {
+                            self.AddTimeData["account"] = String(Record(resp.records[0]).id)
+                            self.AddTimeData["org"] = Properties.org
+                            self.pushControllerWithName("ProjectList", context: self.AddTimeData)
+                        }
                     }
                 }
             } catch let error {

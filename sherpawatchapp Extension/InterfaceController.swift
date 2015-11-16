@@ -66,11 +66,13 @@ class InterfaceController: WKInterfaceController {
         if let org:String = defaults.objectForKey("org") as? String
         {
             Properties.org = org
+            Properties.org = "zwoja4-ms2asm:mvjfea52fd5whjg3zpmhodfpoed5txco"
         }
         else
         {
-            Properties.org = ""
+            Properties.org = "zwoja4-ms2asm:mvjfea52fd5whjg3zpmhodfpoed5txco"
         }
+                    defaults.setObject(Properties.org, forKey: "org")
         //print(Properties.org)
         if !Properties.org.isEmpty{
             button.setEnabled(true);
