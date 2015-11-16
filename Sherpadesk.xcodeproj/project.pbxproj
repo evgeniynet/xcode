@@ -72,7 +72,7 @@
 		FAE88D3C1BF9FFE6000FC37A /* TypeTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D341BF9FFE6000FC37A /* TypeTableRowController.swift */; settings = {ASSET_TAGS = (); }; };
 		FAE88D3D1BF9FFE6000FC37A /* ProjectTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D351BF9FFE6000FC37A /* ProjectTableRowController.swift */; settings = {ASSET_TAGS = (); }; };
 		FAE88D3E1BF9FFE6000FC37A /* RecordTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D361BF9FFE6000FC37A /* RecordTableRowController.swift */; settings = {ASSET_TAGS = (); }; };
-		FAE88D591BFA0AF2000FC37A /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D581BFA0AF2000FC37A /* Upload.swift */; settings = {ASSET_TAGS = (); }; };
+		FAE88D591BFA0AF2000FC37A /* SwiftHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D581BFA0AF2000FC37A /* SwiftHTTP.swift */; settings = {ASSET_TAGS = (); }; };
 		FAE88D5B1BFA0CE4000FC37A /* JSONJoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D5A1BFA0CE4000FC37A /* JSONJoy.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -269,7 +269,7 @@
 		FAE88D341BF9FFE6000FC37A /* TypeTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeTableRowController.swift; sourceTree = "<group>"; };
 		FAE88D351BF9FFE6000FC37A /* ProjectTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectTableRowController.swift; sourceTree = "<group>"; };
 		FAE88D361BF9FFE6000FC37A /* RecordTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordTableRowController.swift; sourceTree = "<group>"; };
-		FAE88D581BFA0AF2000FC37A /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
+		FAE88D581BFA0AF2000FC37A /* SwiftHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHTTP.swift; sourceTree = "<group>"; };
 		FAE88D5A1BFA0CE4000FC37A /* JSONJoy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONJoy.swift; sourceTree = "<group>"; };
 		FBAF0BDE093C47AEB299299A /* CDVCookies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVCookies.h; path = com.triarc.cookies/CDVCookies.h; sourceTree = "<group>"; };
 		FC53DF3E23BE49B7B1195219 /* APPBackgroundMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPBackgroundMode.m; path = "de.appplant.cordova.plugin.background-mode/APPBackgroundMode.m"; sourceTree = "<group>"; };
@@ -500,7 +500,7 @@
 			isa = PBXGroup;
 			children = (
 				FAE88D5A1BFA0CE4000FC37A /* JSONJoy.swift */,
-				FAE88D581BFA0AF2000FC37A /* Upload.swift */,
+				FAE88D581BFA0AF2000FC37A /* SwiftHTTP.swift */,
 				FAE88D2F1BF9FFE6000FC37A /* AddTime.swift */,
 				FAE88D301BF9FFE6000FC37A /* SelectAccount.swift */,
 				FAE88D311BF9FFE6000FC37A /* SelectProject.swift */,
@@ -874,7 +874,7 @@
 				FA1173591BF9DC6E00D430C8 /* ExtensionDelegate.swift in Sources */,
 				FAE88D3D1BF9FFE6000FC37A /* ProjectTableRowController.swift in Sources */,
 				FAE88D3C1BF9FFE6000FC37A /* TypeTableRowController.swift in Sources */,
-				FAE88D591BFA0AF2000FC37A /* Upload.swift in Sources */,
+				FAE88D591BFA0AF2000FC37A /* SwiftHTTP.swift in Sources */,
 				FA1173571BF9DC6E00D430C8 /* InterfaceController.swift in Sources */,
 				FAE88D5B1BFA0CE4000FC37A /* JSONJoy.swift in Sources */,
 				FAE88D371BF9FFE6000FC37A /* AddTime.swift in Sources */,
