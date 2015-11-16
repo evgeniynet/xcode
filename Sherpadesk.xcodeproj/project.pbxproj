@@ -48,6 +48,15 @@
 		DEA6761D54264D18840A821D /* CDVCookies.m in Sources */ = {isa = PBXBuildFile; fileRef = 182F9F544C2248BE9DBECFCF /* CDVCookies.m */; };
 		E78BDA49A53B4DFF988FC4D7 /* AppPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = A7DE280053D54C5291C7B688 /* AppPreferences.m */; };
 		FA1173401BF9DB0D00D430C8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11733F1BF9DB0D00D430C8 /* Pods.framework */; };
+		FA1173471BF9DC6D00D430C8 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA1173451BF9DC6D00D430C8 /* Interface.storyboard */; };
+		FA1173491BF9DC6D00D430C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA1173481BF9DC6D00D430C8 /* Assets.xcassets */; };
+		FA1173501BF9DC6E00D430C8 /* sherpawatchapp Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FA11734F1BF9DC6E00D430C8 /* sherpawatchapp Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FA1173571BF9DC6E00D430C8 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1173561BF9DC6E00D430C8 /* InterfaceController.swift */; };
+		FA1173591BF9DC6E00D430C8 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1173581BF9DC6E00D430C8 /* ExtensionDelegate.swift */; };
+		FA11735B1BF9DC6E00D430C8 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA11735A1BF9DC6E00D430C8 /* NotificationController.swift */; };
+		FA11735D1BF9DC6E00D430C8 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA11735C1BF9DC6E00D430C8 /* GlanceController.swift */; };
+		FA11735F1BF9DC6E00D430C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA11735E1BF9DC6E00D430C8 /* Assets.xcassets */; };
+		FA1173631BF9DC6E00D430C8 /* sherpawatchapp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FA1173431BF9DC6D00D430C8 /* sherpawatchapp.app */; };
 		FA65C5CE1B70EA2D004E6CCD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6009679A53DE46318BAF2499 /* SystemConfiguration.framework */; };
 		FA93E6901B71203F00BE50F1 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA93E68F1B71203F00BE50F1 /* NotificationCenter.framework */; };
 		FA93E6931B71203F00BE50F1 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93E6921B71203F00BE50F1 /* TodayViewController.swift */; };
@@ -72,6 +81,20 @@
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = CordovaLib;
 		};
+		FA1173511BF9DC6E00D430C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA11734E1BF9DC6E00D430C8;
+			remoteInfo = "sherpawatchapp Extension";
+		};
+		FA1173611BF9DC6E00D430C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA1173421BF9DC6D00D430C8;
+			remoteInfo = sherpawatchapp;
+		};
 		FA93E6981B71203F00BE50F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -82,12 +105,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		FA1173671BF9DC6E00D430C8 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FA1173501BF9DC6E00D430C8 /* sherpawatchapp Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FA93E67E1B70FC8600BE50F1 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
+				FA1173631BF9DC6E00D430C8 /* sherpawatchapp.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,6 +218,18 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = Sherpadesk/config.xml; sourceTree = "<group>"; };
 		FA11733F1BF9DB0D00D430C8 /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
+		FA1173431BF9DC6D00D430C8 /* sherpawatchapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sherpawatchapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA1173461BF9DC6D00D430C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		FA1173481BF9DC6D00D430C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FA11734A1BF9DC6D00D430C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA11734F1BF9DC6E00D430C8 /* sherpawatchapp Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "sherpawatchapp Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA1173551BF9DC6E00D430C8 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		FA1173561BF9DC6E00D430C8 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		FA1173581BF9DC6E00D430C8 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		FA11735A1BF9DC6E00D430C8 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		FA11735C1BF9DC6E00D430C8 /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
+		FA11735E1BF9DC6E00D430C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FA1173601BF9DC6E00D430C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA93E68E1B71203F00BE50F1 /* Today.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Today.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA93E68F1B71203F00BE50F1 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		FA93E6921B71203F00BE50F1 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -207,6 +254,13 @@
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				7E3F0401F8EEB7FA37850520 /* Pods.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA11734C1BF9DC6E00D430C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +294,8 @@
 			children = (
 				1D6058910D05DD3D006BFB54 /* Sherpadesk.app */,
 				FA93E68E1B71203F00BE50F1 /* Today.appex */,
+				FA1173431BF9DC6D00D430C8 /* sherpawatchapp.app */,
+				FA11734F1BF9DC6E00D430C8 /* sherpawatchapp Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -267,6 +323,8 @@
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				FA93E6911B71203F00BE50F1 /* Today */,
+				FA1173441BF9DC6D00D430C8 /* sherpawatchapp */,
+				FA1173531BF9DC6E00D430C8 /* sherpawatchapp Extension */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				2664F44681B454782A3D1FE3 /* Pods */,
@@ -395,6 +453,38 @@
 			name = Staging;
 			sourceTree = "<group>";
 		};
+		FA1173441BF9DC6D00D430C8 /* sherpawatchapp */ = {
+			isa = PBXGroup;
+			children = (
+				FA1173451BF9DC6D00D430C8 /* Interface.storyboard */,
+				FA1173481BF9DC6D00D430C8 /* Assets.xcassets */,
+				FA11734A1BF9DC6D00D430C8 /* Info.plist */,
+			);
+			path = sherpawatchapp;
+			sourceTree = "<group>";
+		};
+		FA1173531BF9DC6E00D430C8 /* sherpawatchapp Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FA1173561BF9DC6E00D430C8 /* InterfaceController.swift */,
+				FA1173581BF9DC6E00D430C8 /* ExtensionDelegate.swift */,
+				FA11735A1BF9DC6E00D430C8 /* NotificationController.swift */,
+				FA11735C1BF9DC6E00D430C8 /* GlanceController.swift */,
+				FA11735E1BF9DC6E00D430C8 /* Assets.xcassets */,
+				FA1173601BF9DC6E00D430C8 /* Info.plist */,
+				FA1173541BF9DC6E00D430C8 /* Supporting Files */,
+			);
+			path = "sherpawatchapp Extension";
+			sourceTree = "<group>";
+		};
+		FA1173541BF9DC6E00D430C8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA1173551BF9DC6E00D430C8 /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		FA93E6911B71203F00BE50F1 /* Today */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,11 +520,46 @@
 			dependencies = (
 				301BF551109A68C00062928A /* PBXTargetDependency */,
 				FA93E6991B71203F00BE50F1 /* PBXTargetDependency */,
+				FA1173621BF9DC6E00D430C8 /* PBXTargetDependency */,
 			);
 			name = Sherpadesk;
 			productName = Sherpadesk;
 			productReference = 1D6058910D05DD3D006BFB54 /* Sherpadesk.app */;
 			productType = "com.apple.product-type.application";
+		};
+		FA1173421BF9DC6D00D430C8 /* sherpawatchapp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA1173681BF9DC6E00D430C8 /* Build configuration list for PBXNativeTarget "sherpawatchapp" */;
+			buildPhases = (
+				FA1173411BF9DC6D00D430C8 /* Resources */,
+				FA1173671BF9DC6E00D430C8 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA1173521BF9DC6E00D430C8 /* PBXTargetDependency */,
+			);
+			name = sherpawatchapp;
+			productName = sherpawatchapp;
+			productReference = FA1173431BF9DC6D00D430C8 /* sherpawatchapp.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		FA11734E1BF9DC6E00D430C8 /* sherpawatchapp Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA1173641BF9DC6E00D430C8 /* Build configuration list for PBXNativeTarget "sherpawatchapp Extension" */;
+			buildPhases = (
+				FA11734B1BF9DC6E00D430C8 /* Sources */,
+				FA11734C1BF9DC6E00D430C8 /* Frameworks */,
+				FA11734D1BF9DC6E00D430C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sherpawatchapp Extension";
+			productName = "sherpawatchapp Extension";
+			productReference = FA11734F1BF9DC6E00D430C8 /* sherpawatchapp Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 		FA93E68D1B71203F00BE50F1 /* Today */ = {
 			isa = PBXNativeTarget;
@@ -471,6 +596,14 @@
 								enabled = 1;
 							};
 						};
+					};
+					FA1173421BF9DC6D00D430C8 = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = ULP5NZPYZX;
+					};
+					FA11734E1BF9DC6E00D430C8 = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = ULP5NZPYZX;
 					};
 					FA93E68D1B71203F00BE50F1 = {
 						CreatedOnToolsVersion = 7.0;
@@ -512,6 +645,8 @@
 			targets = (
 				1D6058900D05DD3D006BFB54 /* Sherpadesk */,
 				FA93E68D1B71203F00BE50F1 /* Today */,
+				FA1173421BF9DC6D00D430C8 /* sherpawatchapp */,
+				FA11734E1BF9DC6E00D430C8 /* sherpawatchapp Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -554,6 +689,23 @@
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
 				BF933E555BBA448DB68CAF93 /* appbeep.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA1173411BF9DC6D00D430C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA1173491BF9DC6D00D430C8 /* Assets.xcassets in Resources */,
+				FA1173471BF9DC6D00D430C8 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA11734D1BF9DC6E00D430C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA11735F1BF9DC6E00D430C8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +804,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FA11734B1BF9DC6E00D430C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA11735B1BF9DC6E00D430C8 /* NotificationController.swift in Sources */,
+				FA1173591BF9DC6E00D430C8 /* ExtensionDelegate.swift in Sources */,
+				FA1173571BF9DC6E00D430C8 /* InterfaceController.swift in Sources */,
+				FA11735D1BF9DC6E00D430C8 /* GlanceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FA93E68A1B71203F00BE50F1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -668,6 +831,16 @@
 			name = CordovaLib;
 			targetProxy = 301BF550109A68C00062928A /* PBXContainerItemProxy */;
 		};
+		FA1173521BF9DC6E00D430C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA11734E1BF9DC6E00D430C8 /* sherpawatchapp Extension */;
+			targetProxy = FA1173511BF9DC6E00D430C8 /* PBXContainerItemProxy */;
+		};
+		FA1173621BF9DC6E00D430C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA1173421BF9DC6D00D430C8 /* sherpawatchapp */;
+			targetProxy = FA1173611BF9DC6E00D430C8 /* PBXContainerItemProxy */;
+		};
 		FA93E6991B71203F00BE50F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FA93E68D1B71203F00BE50F1 /* Today */;
@@ -676,6 +849,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		FA1173451BF9DC6D00D430C8 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA1173461BF9DC6D00D430C8 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
 		FA93E6941B71203F00BE50F1 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -869,6 +1050,162 @@
 			};
 			name = Release;
 		};
+		FA1173651BF9DC6E00D430C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "sherpawatchapp Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.sherpawatchapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "3bd4a00f-7207-40b3-a58b-565f4860de4d";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		FA1173661BF9DC6E00D430C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "sherpawatchapp Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.sherpawatchapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "3bd4a00f-7207-40b3-a58b-565f4860de4d";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		FA1173691BF9DC6E00D430C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jon Vickers (9KF4DJHBSJ)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				IBSC_MODULE = sherpawatchapp_Extension;
+				INFOPLIST_FILE = sherpawatchapp/Info.plist;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.sherpawatchapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3270a2da-cdf0-45c5-baff-ddf3e72afb13";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		FA11736A1BF9DC6E00D430C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: bigWebApps, Inc. (ULP5NZPYZX)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				IBSC_MODULE = sherpawatchapp_Extension;
+				INFOPLIST_FILE = sherpawatchapp/Info.plist;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.sherpawatchapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3270a2da-cdf0-45c5-baff-ddf3e72afb13";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
 		FA93E69B1B71203F00BE50F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -975,6 +1312,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		FA1173641BF9DC6E00D430C8 /* Build configuration list for PBXNativeTarget "sherpawatchapp Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA1173651BF9DC6E00D430C8 /* Debug */,
+				FA1173661BF9DC6E00D430C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		FA1173681BF9DC6E00D430C8 /* Build configuration list for PBXNativeTarget "sherpawatchapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA1173691BF9DC6E00D430C8 /* Debug */,
+				FA11736A1BF9DC6E00D430C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		FA93E69D1B71203F00BE50F1 /* Build configuration list for PBXNativeTarget "Today" */ = {
 			isa = XCConfigurationList;
