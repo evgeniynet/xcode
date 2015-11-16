@@ -1,6 +1,6 @@
 //
-//  InterfaceController.swift
-//  Sherpadesk WatchKit Extension
+//  AddTime.swift
+//  Sherpadesk
 //
 //  Created by Евгений on 18.08.15.
 //
@@ -9,30 +9,25 @@
 import WatchKit
 import Foundation
 
-class InterfaceController: WKInterfaceController {
+class SelectAccountInterfaceController: WKInterfaceController {
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
-    
-    @IBOutlet weak var button: WKInterfaceButton!
     
     struct Record : JSONJoy {
         var id: Int
         var name: String
-        var hours: Float
         var org: String
         //init() {
         //}
         
         init(_ decoder: JSONDecoder) {
-            id = decoder["time_id"].integer!
-            name = decoder["user_name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) + "\n" + decoder["account_name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            hours = decoder["hours"].float!
+            id = decoder["id"].integer!
+            name = decoder["name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             org = ""
         }
         init(_ array: AnyObject) {
             id = (array["id"] as? Int)!
             name = (array["name"] as? String)!
-            hours = (array["hours"] as? Float)!
             org = (array["org"] as? String)!
         }
     }
@@ -45,21 +40,33 @@ class InterfaceController: WKInterfaceController {
             //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
             if let recrds = decoder.array {
                 records = []
+                if recrds.count < 1 {
+                    records.addObject(["id" : -1, "name" : "Default", "org" : Properties.org])
+                }
                 for rDecoder in recrds {
                     let rec = Record(rDecoder)
-                    records.addObject([ "id" : rec.id, "name" : rec.name, "hours" : rec.hours, "org" : Properties.org])
+                    records.addObject([ "id" : rec.id, "name" : rec.name, "org" : Properties.org])
                 }
             }
         }
     }
+
     
     var defaults : NSUserDefaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")!
     
     struct Properties {
         static var org = ""
     }
-
-    var timelogs: NSMutableArray = []
+    
+    var AddTimeData = ["org" : "",
+        "account": "-1",
+        "project": "0",
+        "tasktype": "0",
+        "isproject": "true",
+        "isaccount": "true"
+    ]
+    
+    var accounts: NSMutableArray = []
     
     func getOrg(){
         defaults.synchronize()
@@ -73,16 +80,15 @@ class InterfaceController: WKInterfaceController {
         }
         //print(Properties.org)
         if !Properties.org.isEmpty{
-            button.setEnabled(true);
-            if let timelgs:NSMutableArray = defaults.objectForKey("timelogs") as? NSMutableArray
+            if let accts:NSMutableArray = defaults.objectForKey("accounts") as? NSMutableArray
             {
-                if timelgs.count>0 {
-                    if let org = timelgs[0]["org"] as? String
+                if accts.count>0 {
+                    if let org = accts[0]["org"] as? String
                     {
                         //print("org\(org)prop\(Properties.org)")
                         if (org == Properties.org){
-                            self.timelogs = timelgs
-                            print("set\(self.timelogs.count)")
+                            self.accounts = accts
+                            //print("set\(self.tickets.count)")
                             return
                         }
                     }
@@ -91,14 +97,11 @@ class InterfaceController: WKInterfaceController {
             //showMessage("No recent tickets yet ...")
         }
         else
-        {
-            button.setEnabled(false);
-            timeTable.setNumberOfRows(1, withRowType: "TextTableRowController")
-            let row = timeTable.rowControllerAtIndex(0) as! TextTableRowController
-            row.nameLabel.setText("Login to Sherpadesk")
+        {//showMessage("Login to SherpaDesk app first")
+             self.pushControllerWithName("Main1", context: nil)
         }
-        self.timelogs = []
-        defaults.setObject([], forKey: "timelogs")
+        self.accounts = []
+        defaults.setObject([], forKey: "accounts")
         //print("unset\(self.tickets.count)")
         
     }
@@ -110,8 +113,8 @@ class InterfaceController: WKInterfaceController {
             loadTableData()
             
             do {
-                let command = "time"
-                let params = ["limit":"25"]
+                let command = "accounts" + "?is_with_statistics=false"
+                let params = ["", ""]
                 let urlPath: String = "http://" + Properties.org +
                     "@api.sherpadesk.com/" + command
                 
@@ -123,11 +126,24 @@ class InterfaceController: WKInterfaceController {
                     }
                     let resp = Records(JSONDecoder(response.data))
                     if resp.records.count > 0 {
-                        self.timelogs = resp.records
+                        let oldcount =  self.accounts.count
+                        var oldorg = false;
+                        if oldcount > 0 {
+                            if let org = self.accounts[0]["org"] as? String
+                            {
+                                if (org != Properties.org){
+                                    oldorg = true
+                                }
+                            }
+                        }
+                        self.accounts = resp.records
                         //print("sting during post: \(self.tickets.count)")
-                        self.defaults.setObject(self.timelogs, forKey: "timelogs")
-                        self.loadTableData()
-                        //print(resp.records)
+                        self.defaults.setObject(self.accounts, forKey: "accounts")
+                        if oldcount !=  self.accounts.count || oldorg
+                        {
+                             print("doubleupdate")
+                             self.loadTableData()
+                        }
                     }
                 }
             } catch let error {
@@ -135,57 +151,53 @@ class InterfaceController: WKInterfaceController {
             }
         }
     }
+
     
     func loadTableData() {
-        timeTable.setNumberOfRows(timelogs.count+1, withRowType: "TextTableRowController")
-        for (index, timelgs) in timelogs.enumerate() {
+        timeTable.setNumberOfRows(accounts.count, withRowType: "RecordTableRowController")
+        for (index, account) in accounts.enumerate() {
             //print(blogName)
-            let row = timeTable.rowControllerAtIndex(index) as! TextTableRowController
-            let rec = Record(timelgs)
-            row.nameLabel.setText(rec.name)
-            row.hoursLabel.setText(String(format: "%2.2f", rec.hours))
+            let row = timeTable.rowControllerAtIndex(index) as! RecordTableRowController
+            let rec = Record(account)
+            row.recordLabel.setText(rec.name)
         }
+    }
+    
+    override func contextForSegueWithIdentifier(segueIdentifier: String,
+        inTable table: WKInterfaceTable, rowIndex: Int) -> AnyObject? {
+            let sequeId = "ToProject"
+            let acc  = accounts as NSMutableArray
+            if segueIdentifier == sequeId {
+                let rec = Record(acc[rowIndex])
+                AddTimeData["account"] = String(rec.id)
+                AddTimeData["org"] = Properties.org
+                return AddTimeData
+            }
+            
+            return nil
     }
     
     override init() {
         super.init()
-        /*let z = [Int](1...40)
         
-        var test = z.map({
-            (number: Int) -> Float in
-            let result =  Float(number) * Float(0.25)
-            return result
-        })
-        
-        print(test) */
-    }
-
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
-        
-        /*if let text = context as? String {
-            let indexSet = NSMutableIndexSet()
-            indexSet.addIndex(0)
-            
-            timeTable.insertRowsAtIndexes(indexSet,
-                withRowType: "TextTableRowController")
-            let row = timeTable.rowControllerAtIndex(0) as! TextTableRowController
-            row.nameLabel.setText("Jon Vickers\nbigWebApps")
-            row.hoursLabel.setText(text)
-        }
-        */
-    }
-
-    override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
         getOrg()
         updateWidget()
     }
-
+    
+    override func awakeWithContext(context: AnyObject?) {
+        super.awakeWithContext(context)
+        
+        // Configure interface objects here.
+    }
+    
+    override func willActivate() {
+        // This method is called when watch view controller is about to be visible to user
+        super.willActivate()
+    }
+    
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
-
+    
 }

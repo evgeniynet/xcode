@@ -64,6 +64,16 @@
 		FA93E69A1B71203F00BE50F1 /* Today.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FA93E68E1B71203F00BE50F1 /* Today.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA93E6A31B7124B400BE50F1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA93E6A21B7124B400BE50F1 /* Media.xcassets */; };
 		FA9B938A1B6FD2B400AFCB52 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA9B93891B6FD2B400AFCB52 /* Images.xcassets */; };
+		FAE88D371BF9FFE6000FC37A /* AddTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D2F1BF9FFE6000FC37A /* AddTime.swift */; settings = {ASSET_TAGS = (); }; };
+		FAE88D381BF9FFE6000FC37A /* SelectAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D301BF9FFE6000FC37A /* SelectAccount.swift */; settings = {ASSET_TAGS = (); }; };
+		FAE88D391BF9FFE6000FC37A /* SelectProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D311BF9FFE6000FC37A /* SelectProject.swift */; settings = {ASSET_TAGS = (); }; };
+		FAE88D3A1BF9FFE6000FC37A /* SelectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D321BF9FFE6000FC37A /* SelectType.swift */; settings = {ASSET_TAGS = (); }; };
+		FAE88D3B1BF9FFE6000FC37A /* TextTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D331BF9FFE6000FC37A /* TextTableRowController.swift */; settings = {ASSET_TAGS = (); }; };
+		FAE88D3C1BF9FFE6000FC37A /* TypeTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D341BF9FFE6000FC37A /* TypeTableRowController.swift */; settings = {ASSET_TAGS = (); }; };
+		FAE88D3D1BF9FFE6000FC37A /* ProjectTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D351BF9FFE6000FC37A /* ProjectTableRowController.swift */; settings = {ASSET_TAGS = (); }; };
+		FAE88D3E1BF9FFE6000FC37A /* RecordTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D361BF9FFE6000FC37A /* RecordTableRowController.swift */; settings = {ASSET_TAGS = (); }; };
+		FAE88D591BFA0AF2000FC37A /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D581BFA0AF2000FC37A /* Upload.swift */; settings = {ASSET_TAGS = (); }; };
+		FAE88D5B1BFA0CE4000FC37A /* JSONJoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE88D5A1BFA0CE4000FC37A /* JSONJoy.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +149,16 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FAD258E21BC2EE1400711F10 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE88D561BFA03AD000FC37A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
@@ -241,6 +261,16 @@
 		FA93E6A21B7124B400BE50F1 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		FA9B93851B6FADC900AFCB52 /* Sherpadesk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Sherpadesk.entitlements; path = Sherpadesk/Sherpadesk.entitlements; sourceTree = "<group>"; };
 		FA9B93891B6FD2B400AFCB52 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Sherpadesk/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		FAE88D2F1BF9FFE6000FC37A /* AddTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTime.swift; sourceTree = "<group>"; };
+		FAE88D301BF9FFE6000FC37A /* SelectAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAccount.swift; sourceTree = "<group>"; };
+		FAE88D311BF9FFE6000FC37A /* SelectProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectProject.swift; sourceTree = "<group>"; };
+		FAE88D321BF9FFE6000FC37A /* SelectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectType.swift; sourceTree = "<group>"; };
+		FAE88D331BF9FFE6000FC37A /* TextTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextTableRowController.swift; sourceTree = "<group>"; };
+		FAE88D341BF9FFE6000FC37A /* TypeTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeTableRowController.swift; sourceTree = "<group>"; };
+		FAE88D351BF9FFE6000FC37A /* ProjectTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectTableRowController.swift; sourceTree = "<group>"; };
+		FAE88D361BF9FFE6000FC37A /* RecordTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordTableRowController.swift; sourceTree = "<group>"; };
+		FAE88D581BFA0AF2000FC37A /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
+		FAE88D5A1BFA0CE4000FC37A /* JSONJoy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONJoy.swift; sourceTree = "<group>"; };
 		FBAF0BDE093C47AEB299299A /* CDVCookies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVCookies.h; path = com.triarc.cookies/CDVCookies.h; sourceTree = "<group>"; };
 		FC53DF3E23BE49B7B1195219 /* APPBackgroundMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPBackgroundMode.m; path = "de.appplant.cordova.plugin.background-mode/APPBackgroundMode.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -469,6 +499,16 @@
 		FA1173531BF9DC6E00D430C8 /* sherpawatchapp Extension */ = {
 			isa = PBXGroup;
 			children = (
+				FAE88D5A1BFA0CE4000FC37A /* JSONJoy.swift */,
+				FAE88D581BFA0AF2000FC37A /* Upload.swift */,
+				FAE88D2F1BF9FFE6000FC37A /* AddTime.swift */,
+				FAE88D301BF9FFE6000FC37A /* SelectAccount.swift */,
+				FAE88D311BF9FFE6000FC37A /* SelectProject.swift */,
+				FAE88D321BF9FFE6000FC37A /* SelectType.swift */,
+				FAE88D331BF9FFE6000FC37A /* TextTableRowController.swift */,
+				FAE88D341BF9FFE6000FC37A /* TypeTableRowController.swift */,
+				FAE88D351BF9FFE6000FC37A /* ProjectTableRowController.swift */,
+				FAE88D361BF9FFE6000FC37A /* RecordTableRowController.swift */,
 				FA11736C1BF9EF2800D430C8 /* sherpawatchapp Extension.entitlements */,
 				FA1173561BF9DC6E00D430C8 /* InterfaceController.swift */,
 				FA1173581BF9DC6E00D430C8 /* ExtensionDelegate.swift */,
@@ -555,6 +595,7 @@
 				FA11734B1BF9DC6E00D430C8 /* Sources */,
 				FA11734C1BF9DC6E00D430C8 /* Frameworks */,
 				FA11734D1BF9DC6E00D430C8 /* Resources */,
+				FAE88D561BFA03AD000FC37A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -827,10 +868,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAE88D3E1BF9FFE6000FC37A /* RecordTableRowController.swift in Sources */,
 				FA11735B1BF9DC6E00D430C8 /* NotificationController.swift in Sources */,
+				FAE88D3B1BF9FFE6000FC37A /* TextTableRowController.swift in Sources */,
 				FA1173591BF9DC6E00D430C8 /* ExtensionDelegate.swift in Sources */,
+				FAE88D3D1BF9FFE6000FC37A /* ProjectTableRowController.swift in Sources */,
+				FAE88D3C1BF9FFE6000FC37A /* TypeTableRowController.swift in Sources */,
+				FAE88D591BFA0AF2000FC37A /* Upload.swift in Sources */,
 				FA1173571BF9DC6E00D430C8 /* InterfaceController.swift in Sources */,
+				FAE88D5B1BFA0CE4000FC37A /* JSONJoy.swift in Sources */,
+				FAE88D371BF9FFE6000FC37A /* AddTime.swift in Sources */,
+				FAE88D391BF9FFE6000FC37A /* SelectProject.swift in Sources */,
+				FAE88D3A1BF9FFE6000FC37A /* SelectType.swift in Sources */,
 				FA11735D1BF9DC6E00D430C8 /* GlanceController.swift in Sources */,
+				FAE88D381BF9FFE6000FC37A /* SelectAccount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1085,6 +1136,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks_watch",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1127,6 +1182,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks_watch",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1343,6 +1402,7 @@
 				FA1173661BF9DC6E00D430C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FA1173681BF9DC6E00D430C8 /* Build configuration list for PBXNativeTarget "sherpawatchapp" */ = {
 			isa = XCConfigurationList;
@@ -1351,6 +1411,7 @@
 				FA11736A1BF9DC6E00D430C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FA93E69D1B71203F00BE50F1 /* Build configuration list for PBXNativeTarget "Today" */ = {
 			isa = XCConfigurationList;

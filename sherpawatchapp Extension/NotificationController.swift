@@ -1,8 +1,8 @@
 //
 //  NotificationController.swift
-//  sherpawatchapp Extension
+//  Sherpadesk WatchKit Extension
 //
-//  Created by Евгений on 16.11.15.
+//  Created by Евгений on 18.08.15.
 //
 //
 

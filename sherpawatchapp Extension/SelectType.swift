@@ -1,6 +1,6 @@
 //
-//  InterfaceController.swift
-//  Sherpadesk WatchKit Extension
+//  AddTime.swift
+//  Sherpadesk
 //
 //  Created by Евгений on 18.08.15.
 //
@@ -9,30 +9,25 @@
 import WatchKit
 import Foundation
 
-class InterfaceController: WKInterfaceController {
+class SelectTypeInterfaceController: WKInterfaceController {
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
-    
-    @IBOutlet weak var button: WKInterfaceButton!
     
     struct Record : JSONJoy {
         var id: Int
         var name: String
-        var hours: Float
         var org: String
         //init() {
         //}
         
         init(_ decoder: JSONDecoder) {
-            id = decoder["time_id"].integer!
-            name = decoder["user_name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) + "\n" + decoder["account_name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            hours = decoder["hours"].float!
+            id = decoder["id"].integer!
+            name = decoder["name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             org = ""
         }
         init(_ array: AnyObject) {
             id = (array["id"] as? Int)!
             name = (array["name"] as? String)!
-            hours = (array["hours"] as? Float)!
             org = (array["org"] as? String)!
         }
     }
@@ -45,9 +40,12 @@ class InterfaceController: WKInterfaceController {
             //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
             if let recrds = decoder.array {
                 records = []
+                if recrds.count < 1 {
+                    records.addObject(["id" : 0, "name" : "Default", "org" : Properties.org])
+                }
                 for rDecoder in recrds {
                     let rec = Record(rDecoder)
-                    records.addObject([ "id" : rec.id, "name" : rec.name, "hours" : rec.hours, "org" : Properties.org])
+                    records.addObject([ "id" : rec.id, "name" : rec.name, "org" : Properties.org])
                 }
             }
         }
@@ -58,8 +56,16 @@ class InterfaceController: WKInterfaceController {
     struct Properties {
         static var org = ""
     }
-
-    var timelogs: NSMutableArray = []
+    
+    var AddTimeData = ["org" : "",
+        "account": "-1",
+        "project": "0",
+        "tasktype": "0",
+        "isproject": "true",
+        "isaccount": "true"
+    ]
+    
+    var tasktypes: NSMutableArray = []
     
     func getOrg(){
         defaults.synchronize()
@@ -73,16 +79,15 @@ class InterfaceController: WKInterfaceController {
         }
         //print(Properties.org)
         if !Properties.org.isEmpty{
-            button.setEnabled(true);
-            if let timelgs:NSMutableArray = defaults.objectForKey("timelogs") as? NSMutableArray
+            if let tasktps:NSMutableArray = defaults.objectForKey("tasktypes") as? NSMutableArray
             {
-                if timelgs.count>0 {
-                    if let org = timelgs[0]["org"] as? String
+                if tasktps.count>0 {
+                    if let org = tasktps[0]["org"] as? String
                     {
                         //print("org\(org)prop\(Properties.org)")
                         if (org == Properties.org){
-                            self.timelogs = timelgs
-                            print("set\(self.timelogs.count)")
+                            self.tasktypes = tasktps
+                            //print("set\(self.tickets.count)")
                             return
                         }
                     }
@@ -91,14 +96,11 @@ class InterfaceController: WKInterfaceController {
             //showMessage("No recent tickets yet ...")
         }
         else
-        {
-            button.setEnabled(false);
-            timeTable.setNumberOfRows(1, withRowType: "TextTableRowController")
-            let row = timeTable.rowControllerAtIndex(0) as! TextTableRowController
-            row.nameLabel.setText("Login to Sherpadesk")
+        {//showMessage("Login to SherpaDesk app first")
+             self.pushControllerWithName("Main1", context: nil)
         }
-        self.timelogs = []
-        defaults.setObject([], forKey: "timelogs")
+        self.tasktypes = []
+        defaults.setObject([], forKey: "tasktypes")
         //print("unset\(self.tickets.count)")
         
     }
@@ -110,8 +112,9 @@ class InterfaceController: WKInterfaceController {
             loadTableData()
             
             do {
-                let command = "time"
-                let params = ["limit":"25"]
+                let command = "task_types"
+                let params = ["account": AddTimeData["account"]!, "project" : AddTimeData["project"]!]
+                print(params)
                 let urlPath: String = "http://" + Properties.org +
                     "@api.sherpadesk.com/" + command
                 
@@ -123,9 +126,8 @@ class InterfaceController: WKInterfaceController {
                     }
                     let resp = Records(JSONDecoder(response.data))
                     if resp.records.count > 0 {
-                        self.timelogs = resp.records
+                        self.tasktypes = resp.records
                         //print("sting during post: \(self.tickets.count)")
-                        self.defaults.setObject(self.timelogs, forKey: "timelogs")
                         self.loadTableData()
                         //print(resp.records)
                     }
@@ -137,55 +139,53 @@ class InterfaceController: WKInterfaceController {
     }
     
     func loadTableData() {
-        timeTable.setNumberOfRows(timelogs.count+1, withRowType: "TextTableRowController")
-        for (index, timelgs) in timelogs.enumerate() {
+        timeTable.setNumberOfRows(tasktypes.count+1, withRowType: "TypeTableRowController")
+        for (index, project) in tasktypes.enumerate() {
             //print(blogName)
-            let row = timeTable.rowControllerAtIndex(index) as! TextTableRowController
-            let rec = Record(timelgs)
-            row.nameLabel.setText(rec.name)
-            row.hoursLabel.setText(String(format: "%2.2f", rec.hours))
+            let row = timeTable.rowControllerAtIndex(index) as! TypeTableRowController
+            let rec = Record(project)
+            row.recordLabel.setText(rec.name)
         }
+    }
+    
+    override func contextForSegueWithIdentifier(segueIdentifier: String,
+        inTable table: WKInterfaceTable, rowIndex: Int) -> AnyObject? {
+            let sequeId = "ToAddTime"
+            let tasktps  = tasktypes as NSMutableArray
+            if segueIdentifier == sequeId {
+                let rec = Record(tasktps[rowIndex])
+                AddTimeData["tasktype"] = String(rec.id)
+                return AddTimeData
+            }
+            
+            return nil
     }
     
     override init() {
         super.init()
-        /*let z = [Int](1...40)
-        
-        var test = z.map({
-            (number: Int) -> Float in
-            let result =  Float(number) * Float(0.25)
-            return result
-        })
-        
-        print(test) */
-    }
 
+        getOrg()
+    }
+    
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        /*if let text = context as? String {
-            let indexSet = NSMutableIndexSet()
-            indexSet.addIndex(0)
-            
-            timeTable.insertRowsAtIndexes(indexSet,
-                withRowType: "TextTableRowController")
-            let row = timeTable.rowControllerAtIndex(0) as! TextTableRowController
-            row.nameLabel.setText("Jon Vickers\nbigWebApps")
-            row.hoursLabel.setText(text)
+        let dict = context as? [String : String]
+        if dict != nil {
+            AddTimeData = dict!
+            print(AddTimeData["project"]!)
         }
-        */
+        updateWidget()
     }
-
+    
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        getOrg()
-        updateWidget()
     }
-
+    
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
-
+    
 }
