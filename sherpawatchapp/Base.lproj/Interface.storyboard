@@ -8,7 +8,7 @@
         <!--Main-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller identifier="Main1" title="Main" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Sherpadesk_WatchKit_Extension">
+                <controller identifier="Main1" title="Main" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="sherpawatchapp_Extension">
                     <items>
                         <button width="1" height="49" alignment="left" title="+ Add Time " id="ZRQ-1W-Sk0">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -20,7 +20,7 @@
                         </button>
                         <table alignment="left" id="4f1-ia-rDE">
                             <items>
-                                <tableRow identifier="TextTableRowController" id="8wu-rg-r8n" customClass="TextTableRowController" customModule="Sherpadesk_WatchKit_Extension">
+                                <tableRow identifier="TextTableRowController" id="8wu-rg-r8n" customClass="TextTableRowController" customModule="sherpawatchapp_Extension">
                                     <group key="rootItem" width="1" alignment="left" id="e9a-3F-eJT">
                                         <items>
                                             <label width="42" height="39" alignment="right" textAlignment="center" id="fvp-cz-UZd">
@@ -50,7 +50,7 @@
         <!--Add Time-->
         <scene sceneID="bMM-Yh-Osg">
             <objects>
-                <controller title="Add Time" id="rcX-DK-MK0" customClass="AddTimeInterfaceController" customModule="Sherpadesk_WatchKit_Extension">
+                <controller title="Add Time" id="rcX-DK-MK0" customClass="AddTimeInterfaceController" customModule="sherpawatchapp_Extension">
                     <items>
                         <button width="1" alignment="left" title="0.25" enabled="NO" id="rh3-l3-VRi">
                             <fontDescription key="font" type="system" pointSize="40"/>
@@ -116,11 +116,11 @@
         <!--Account-->
         <scene sceneID="fWz-Nm-jYc">
             <objects>
-                <controller identifier="AccountList" title="Account" id="eKX-4H-gyr" customClass="SelectAccountInterfaceController" customModule="Sherpadesk_WatchKit_Extension">
+                <controller identifier="AccountList" title="Account" id="eKX-4H-gyr" customClass="SelectAccountInterfaceController" customModule="sherpawatchapp_Extension">
                     <items>
                         <table alignment="left" id="KI4-3R-k82">
                             <items>
-                                <tableRow identifier="RecordTableRowController" id="EYM-n7-oH5" customClass="RecordTableRowController" customModule="Sherpadesk_WatchKit_Extension">
+                                <tableRow identifier="RecordTableRowController" id="EYM-n7-oH5" customClass="RecordTableRowController" customModule="sherpawatchapp_Extension">
                                     <group key="rootItem" width="1" alignment="left" id="UP7-0q-yFg">
                                         <items>
                                             <label height="38" alignment="left" verticalAlignment="center" id="EUJ-Vn-u6W">
@@ -146,11 +146,11 @@
         <!--Project-->
         <scene sceneID="shL-MJ-LXe">
             <objects>
-                <controller identifier="ProjectList" title="Project" id="tnQ-Rg-Zvy" customClass="SelectProjectInterfaceController" customModule="Sherpadesk_WatchKit_Extension">
+                <controller identifier="ProjectList" title="Project" id="tnQ-Rg-Zvy" customClass="SelectProjectInterfaceController" customModule="sherpawatchapp_Extension">
                     <items>
                         <table alignment="left" id="QXJ-mj-Vdn">
                             <items>
-                                <tableRow identifier="ProjectTableRowController" id="ao9-ew-681" customClass="ProjectTableRowController" customModule="Sherpadesk_WatchKit_Extension">
+                                <tableRow identifier="ProjectTableRowController" id="ao9-ew-681" customClass="ProjectTableRowController" customModule="sherpawatchapp_Extension">
                                     <group key="rootItem" width="1" alignment="left" id="HHp-Bg-hV2">
                                         <items>
                                             <label height="38" alignment="left" verticalAlignment="center" id="baj-y7-HrZ">
@@ -176,11 +176,11 @@
         <!--Task Type-->
         <scene sceneID="qlM-Sl-lOX">
             <objects>
-                <controller title="Task Type" id="6KC-PE-zf4" customClass="SelectTypeInterfaceController" customModule="Sherpadesk_WatchKit_Extension">
+                <controller title="Task Type" id="6KC-PE-zf4" customClass="SelectTypeInterfaceController" customModule="sherpawatchapp_Extension">
                     <items>
                         <table alignment="left" id="WXO-Hg-RUm">
                             <items>
-                                <tableRow identifier="TypeTableRowController" id="wNK-fr-Wnb" customClass="TypeTableRowController" customModule="Sherpadesk_WatchKit_Extension">
+                                <tableRow identifier="TypeTableRowController" id="wNK-fr-Wnb" customClass="TypeTableRowController" customModule="sherpawatchapp_Extension">
                                     <group key="rootItem" width="1" alignment="left" id="hQe-jF-SvA">
                                         <items>
                                             <label height="38" alignment="left" verticalAlignment="center" id="e1J-Zu-h4G">
