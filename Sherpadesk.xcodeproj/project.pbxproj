@@ -230,6 +230,8 @@
 		FA11735C1BF9DC6E00D430C8 /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
 		FA11735E1BF9DC6E00D430C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA1173601BF9DC6E00D430C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA11736B1BF9EF0D00D430C8 /* sherpawatchapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = sherpawatchapp.entitlements; sourceTree = "<group>"; };
+		FA11736C1BF9EF2800D430C8 /* sherpawatchapp Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "sherpawatchapp Extension.entitlements"; sourceTree = "<group>"; };
 		FA93E68E1B71203F00BE50F1 /* Today.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Today.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA93E68F1B71203F00BE50F1 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		FA93E6921B71203F00BE50F1 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 		FA1173441BF9DC6D00D430C8 /* sherpawatchapp */ = {
 			isa = PBXGroup;
 			children = (
+				FA11736B1BF9EF0D00D430C8 /* sherpawatchapp.entitlements */,
 				FA1173451BF9DC6D00D430C8 /* Interface.storyboard */,
 				FA1173481BF9DC6D00D430C8 /* Assets.xcassets */,
 				FA11734A1BF9DC6D00D430C8 /* Info.plist */,
@@ -466,6 +469,7 @@
 		FA1173531BF9DC6E00D430C8 /* sherpawatchapp Extension */ = {
 			isa = PBXGroup;
 			children = (
+				FA11736C1BF9EF2800D430C8 /* sherpawatchapp Extension.entitlements */,
 				FA1173561BF9DC6E00D430C8 /* InterfaceController.swift */,
 				FA1173581BF9DC6E00D430C8 /* ExtensionDelegate.swift */,
 				FA11735A1BF9DC6E00D430C8 /* NotificationController.swift */,
@@ -588,6 +592,7 @@
 				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = ULP5NZPYZX;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -600,13 +605,27 @@
 					FA1173421BF9DC6D00D430C8 = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = ULP5NZPYZX;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					FA11734E1BF9DC6E00D430C8 = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = ULP5NZPYZX;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					FA93E68D1B71203F00BE50F1 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = ULP5NZPYZX;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -1060,6 +1079,7 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = "sherpawatchapp Extension/sherpawatchapp Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -1079,9 +1099,9 @@
 				INFOPLIST_FILE = "sherpawatchapp Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.sherpawatchapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "3bd4a00f-7207-40b3-a58b-565f4860de4d";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1100,8 +1120,9 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
+				CODE_SIGN_ENTITLEMENTS = "sherpawatchapp Extension/sherpawatchapp Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: bigWebApps, Inc. (ULP5NZPYZX)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution: bigWebApps, Inc. (ULP5NZPYZX)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1114,9 +1135,9 @@
 				INFOPLIST_FILE = "sherpawatchapp Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.sherpawatchapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "3bd4a00f-7207-40b3-a58b-565f4860de4d";
+				PROVISIONING_PROFILE = "a7e27a64-da3c-4df4-88e1-51343de1ffe6";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1136,6 +1157,7 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = sherpawatchapp/sherpawatchapp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jon Vickers (9KF4DJHBSJ)";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
@@ -1157,9 +1179,9 @@
 				IBSC_MODULE = sherpawatchapp_Extension;
 				INFOPLIST_FILE = sherpawatchapp/Info.plist;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.sherpawatchapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3270a2da-cdf0-45c5-baff-ddf3e72afb13";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1179,9 +1201,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = sherpawatchapp/sherpawatchapp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: bigWebApps, Inc. (ULP5NZPYZX)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: bigWebApps, Inc. (ULP5NZPYZX)";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution: bigWebApps, Inc. (ULP5NZPYZX)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -1195,9 +1218,9 @@
 				IBSC_MODULE = sherpawatchapp_Extension;
 				INFOPLIST_FILE = sherpawatchapp/Info.plist;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.sherpawatchapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3270a2da-cdf0-45c5-baff-ddf3e72afb13";
+				PROVISIONING_PROFILE = "2c4272ac-45fb-45c2-8694-c8fe0f1749ed";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
