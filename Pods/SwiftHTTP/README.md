@@ -127,7 +127,7 @@ Custom HTTP headers can be add to a request with the standard NSMutableRequest A
 
 ```swift
 do {
-    let opt = HTTP.GET("https://domain.com", parameters: ["hello": "there"], headers: ["header": "value"])
+    let opt = try HTTP.GET("https://domain.com", parameters: ["hello": "there"], headers: ["header": "value"])
     opt.start { response in
         //do stuff
     }
@@ -142,7 +142,7 @@ SSL Pinning is also supported in SwiftHTTP.
 
 ```swift
 do {
-    let opt = try HTTP.GET("https://domain.com", parameters: nil)
+    let opt = try HTTP.GET("https://domain.com")
     opt.security = HTTPSecurity(certs: [HTTPSSLCert(data: data)], usePublicKeys: true)
 	//opt.security = HTTPSecurity() //uses the .cer files in your app's bundle
     opt.start { response in
@@ -164,7 +164,7 @@ SwiftHTTP supports authentication through [NSURLCredential](https://developer.ap
 
 ```swift
 do {
-    let opt = try HTTP.GET("https://domain.com", parameters: nil)
+    let opt = try HTTP.GET("https://domain.com")
     //the auth closures will continually be called until a successful auth or rejection
 	var attempted = false
 	opt.auth = { challenge in
@@ -186,7 +186,7 @@ Allow all certificates example:
 
 ```swift
 do {
-    let opt = try HTTP.GET("https://domain.com", parameters: nil)
+    let opt = try HTTP.GET("https://domain.com")
     //the auth closures will continually be called until a successful auth or rejection
 	var attempted = false
 	opt.auth = { challenge in
@@ -212,7 +212,7 @@ Operation queues are also supported in SwiftHTTP.
 let operationQueue = NSOperationQueue()
 operationQueue.maxConcurrentOperationCount = 2
 do {
-    let opt = try HTTP.New("https://google.com", parameters: nil)
+    let opt = try HTTP.New("https://google.com", method: .GET)
     opt.onFinish = { response in
     //do stuff
     }
@@ -236,7 +236,7 @@ Request parameters can also be serialized to JSON as needed. By default request 
 
 ```swift
 do {
-    let opt = try HTTP.New("https://google.com", parameters: nil, requestSerializer: JSONParameterSerializer())
+    let opt = try HTTP.New("https://google.com", method: .GET, requestSerializer: JSONParameterSerializer())
     opt.onFinish = { response in
     	if let err = response.error {
 			print("error: \(err.localizedDescription)")
@@ -246,6 +246,44 @@ do {
     }
 } catch let error {
     print("got an error creating the request: \(error)")
+}
+```
+
+### Progress
+
+SwiftHTTP can monitor the progress of a request.
+
+```swift
+do {
+    let opt = try HTTP.GET("https://domain.com/somefile")
+    opt.progress = { progress in
+        print("progress: \(progress)") //this will be between 0 and 1.
+    }
+    opt.start { response in
+    //do stuff
+    }
+} catch let error {
+    print("got an error creating the request: \(error)")
+}
+```
+
+
+### Global handlers
+
+SwiftHTTP also has global handlers, to reduce the requirement of repeat HTTP modifiers, such as a auth header or setting `NSMutableURLRequest` properties such as `timeoutInterval`. 
+
+```swift
+//modify NSMutableURLRequest for any Factory method call (e.g. HTTP.GET, HTTP.POST, HTTP.New, etc).
+HTTP.globalRequest { req in
+    req.timeoutInterval = 5
+}
+
+//set a global SSL pinning setting
+HTTP.globalSecurity(HTTPSecurity()) //see the SSL section for more info
+
+//set global auth handler. See the Auth section for more info
+HTTP.globalAuth { challenge in
+    return NSURLCredential(user: "user", password: "passwd", persistence: .ForSession)
 }
 ```
 
@@ -284,7 +322,7 @@ struct Response: JSONJoy {
 }
 
 do {
-    let opt = try HTTP.GET("http://localhost:8080/bar", parameters: nil)
+    let opt = try HTTP.GET("http://localhost:8080/bar")
     opt.start { response in
         if let error = response.error {
             print("got an error: \(error)")

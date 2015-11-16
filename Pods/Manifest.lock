@@ -1,13 +1,13 @@
 PODS:
   - JSONJoy-Swift (1.0.0)
-  - SwiftHTTP (1.0.1)
+  - SwiftHTTP (1.0.2)
 
 DEPENDENCIES:
   - JSONJoy-Swift (~> 1.0.0)
-  - SwiftHTTP (~> 1.0.0)
+  - SwiftHTTP (~> 1.0.2)
 
 SPEC CHECKSUMS:
   JSONJoy-Swift: 3e8129c282470614da69759208e9c923732f6cb4
-  SwiftHTTP: 1c8bb7cf3969c750721392fac1e40a6415e8526e
+  SwiftHTTP: 6d8ca031a9ce613a01e8f18b497503887b0b50c0
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
