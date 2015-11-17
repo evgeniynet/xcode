@@ -80,12 +80,23 @@
         <!--Glance Interface Controller-->
         <scene sceneID="BOz-TT-tkC">
             <objects>
-                <glanceController spacing="0.0" id="0uZ-2p-rRc" customClass="GlanceController" customModule="sherpawatchapp" customModuleProvider="target">
+                <glanceController spacing="0.0" topTemplateType="groupLeftLarge" id="0uZ-2p-rRc" customClass="GlanceController" customModule="sherpawatchapp" customModuleProvider="target">
                     <items>
-                        <group alignment="left" id="t8f-Gd-c4y"/>
-                        <group alignment="left" id="uCw-4Q-Ouw"/>
+                        <group alignment="left" backgroundImage="Image" id="cOK-fB-93n"/>
+                        <label alignment="left" hidden="YES" text="Sherpadesk" baselineAdjustment="alignCenters" id="2Qd-ny-tsU"/>
+                        <label alignment="left" text="Sherpadesk" baselineAdjustment="alignCenters" id="Ocf-gQ-TkP"/>
+                        <label alignment="left" hidden="YES" text="      Login" id="CQi-dJ-YGc"/>
+                        <group alignment="left" contentMode="center" id="uCw-4Q-Ouw">
+                            <items>
+                                <imageView alignment="center" verticalAlignment="center" image="Image-1" id="lKm-ad-m05"/>
+                            </items>
+                        </group>
                     </items>
                     <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
+                    <connections>
+                        <outlet property="AddTime" destination="lKm-ad-m05" id="58Y-p8-Hcy"/>
+                        <outlet property="label" destination="Ocf-gQ-TkP" id="gLa-eB-I6i"/>
+                    </connections>
                 </glanceController>
             </objects>
             <point key="canvasLocation" x="235" y="672"/>

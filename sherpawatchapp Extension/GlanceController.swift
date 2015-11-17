@@ -11,7 +11,11 @@ import Foundation
 
 
 class GlanceController: WKInterfaceController {
-
+    
+    @IBOutlet var label: WKInterfaceLabel!
+    
+    @IBOutlet var AddTime: WKInterfaceImage!
+    
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
@@ -21,6 +25,8 @@ class GlanceController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        updateUserActivity("com.sherpadesk.mobile.watchkit",
+            userInfo: ["controller": 1], webpageURL: nil)
     }
 
     override func didDeactivate() {

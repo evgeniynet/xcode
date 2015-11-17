@@ -15,6 +15,11 @@ class InterfaceController: WKInterfaceController {
     
     @IBOutlet weak var button: WKInterfaceButton!
     
+    func displayDetailScene(index: Int) {
+      pushControllerWithName("AccountList",
+            context: index)
+    }
+    
     struct Record : JSONJoy {
         var id: Int
         var name: String
@@ -66,13 +71,12 @@ class InterfaceController: WKInterfaceController {
         if let org:String = defaults.objectForKey("org") as? String
         {
             Properties.org = org
-            Properties.org = "zwoja4-ms2asm:mvjfea52fd5whjg3zpmhodfpoed5txco"
         }
         else
         {
-            Properties.org = "zwoja4-ms2asm:mvjfea52fd5whjg3zpmhodfpoed5txco"
+            Properties.org = ""
         }
-                    defaults.setObject(Properties.org, forKey: "org")
+        //defaults.setObject(Properties.org, forKey: "org")
         //print(Properties.org)
         if !Properties.org.isEmpty{
             button.setEnabled(true);

@@ -9,6 +9,19 @@
 import WatchKit
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
+    
+    func handleUserActivity(userInfo: [NSObject : AnyObject]?) {
+        
+        let controllerIndex = userInfo!["controller"] as! Int
+        
+        let rootController =
+        WKExtension.sharedExtension().rootInterfaceController
+            as! InterfaceController
+        rootController.popToRootController()
+        
+        rootController.displayDetailScene(controllerIndex)
+    }
+    
 
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
