@@ -25,7 +25,7 @@ class GlanceController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        updateUserActivity("com.sherpadesk.mobile.watchkit",
+        updateUserActivity("com.sherpadesk.mobile.watchkitapp",
             userInfo: ["controller": 1], webpageURL: nil)
     }
 
