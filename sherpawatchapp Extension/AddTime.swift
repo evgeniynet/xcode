@@ -16,7 +16,7 @@ class AddTimeInterfaceController: WKInterfaceController {
     
     @IBOutlet weak var slider: WKInterfaceSlider!
     
-    //@IBOutlet var picker: WKInterfacePicker!
+    @IBOutlet var picker: WKInterfacePicker!
     
     var AddTimeData = ["org" : "",
         "account": "-1",
@@ -27,6 +27,7 @@ class AddTimeInterfaceController: WKInterfaceController {
     ]
     
     var  sliderValue:Float = 0.25
+    var  pickerIndex:Int = 0
     
     struct Properties {
         static var org = ""
@@ -70,8 +71,22 @@ class AddTimeInterfaceController: WKInterfaceController {
     
     @IBAction func sliderDidChange(value: Float)
     {
+        if value > sliderValue
+        {
+            pickerIndex = pickerIndex + 1
+        }
+        else
+        {
+            pickerIndex = pickerIndex - 1
+        }
+        if (pickerIndex < 0){
+            pickerIndex = 0}
+        if (pickerIndex > 40){
+            pickerIndex = 40}
         sliderValue = value
         label.setTitle(String(format: "%2.2f", sliderValue))
+        picker.setSelectedItemIndex(pickerIndex)
+        picker.focus()
     }
     
     @IBAction func popButtonPressed() {
@@ -106,10 +121,34 @@ class AddTimeInterfaceController: WKInterfaceController {
 */
     }
     
+    @IBAction func pickerSelectedItemChanged(value: Int) {
+        pickerIndex = value
+        sliderValue = Float(value+1) * Float(0.25)
+        slider.setValue(sliderValue)
+        label.setTitle(String(format: "%2.2f", sliderValue))
+    }
+    
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         slider.setValue(0.25)
+        let z = [Int](1...40)
+        
+        var test = z.map({
+            (number: Int) -> Float in
+            let result =  Float(number) * Float(0.25)
+            return result
+        })
+        
+        let pickerItems: [WKPickerItem] = z.map {
+            let pickerItem = WKPickerItem()
+            pickerItem.title = String($0)
+            pickerItem.caption = String($0)
+            return pickerItem
+        }
+        self.pickerIndex = 0
+        picker.setItems(pickerItems)
+        picker.focus()
     }
     
     override func didDeactivate() {

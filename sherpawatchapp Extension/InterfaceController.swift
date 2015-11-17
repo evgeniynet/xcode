@@ -15,6 +15,16 @@ class InterfaceController: WKInterfaceController {
     
     @IBOutlet weak var button: WKInterfaceButton!
     
+    @IBOutlet var Login: WKInterfaceButton!
+    
+    
+    
+    
+    @IBAction func phoneBtnTapped() {
+        let url = NSURL(string: "tel:")!
+        WKExtension.sharedExtension().openSystemURL(url)
+    }
+    
     func displayDetailScene(index: Int) {
       pushControllerWithName("AccountList",
             context: index)
@@ -74,9 +84,9 @@ class InterfaceController: WKInterfaceController {
         }
         else
         {
-            Properties.org = ""
+            Properties.org = "zwoja4-ms2asm:7016f101312449f9af132fde519259e9"
         }
-        //defaults.setObject(Properties.org, forKey: "org")
+        defaults.setObject(Properties.org, forKey: "org")
         //print(Properties.org)
         if !Properties.org.isEmpty{
             button.setEnabled(true);

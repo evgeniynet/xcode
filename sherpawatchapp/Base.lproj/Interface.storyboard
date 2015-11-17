@@ -18,6 +18,12 @@
                                 <segue destination="eKX-4H-gyr" kind="push" identifier="ToAccounts" id="LQc-6h-uDF"/>
                             </connections>
                         </button>
+                        <button width="1" alignment="left" hidden="YES" title="Login" id="6GH-2Z-Ffi">
+                            <fontDescription key="font" type="system" pointSize="22"/>
+                            <connections>
+                                <action selector="phoneBtnTapped" destination="AgC-eL-Hgc" id="4Sk-m6-HFW"/>
+                            </connections>
+                        </button>
                         <table alignment="left" id="4f1-ia-rDE">
                             <items>
                                 <tableRow identifier="TextTableRowController" id="8wu-rg-r8n" customClass="TextTableRowController" customModule="sherpawatchapp_Extension">
@@ -40,6 +46,7 @@
                         </table>
                     </items>
                     <connections>
+                        <outlet property="Login" destination="6GH-2Z-Ffi" id="LvI-me-lyp"/>
                         <outlet property="button" destination="ZRQ-1W-Sk0" id="unE-BY-HdA"/>
                         <outlet property="timeTable" destination="4f1-ia-rDE" id="uKk-mA-jUJ"/>
                     </connections>
@@ -55,12 +62,17 @@
                         <button width="1" alignment="left" title="0.25" enabled="NO" id="rh3-l3-VRi">
                             <fontDescription key="font" type="system" pointSize="40"/>
                         </button>
+                        <picker width="2" height="2" alignment="left" id="J8k-jO-wuI">
+                            <connections>
+                                <action selector="pickerSelectedItemChanged:" destination="rcX-DK-MK0" id="lcP-dW-qXf"/>
+                            </connections>
+                        </picker>
                         <slider width="1" alignment="center" verticalAlignment="center" value="0.25" minimum="0.25" maximum="10" steps="39" id="T7K-Mk-mdb">
                             <connections>
                                 <action selector="sliderDidChange:" destination="rcX-DK-MK0" id="C8r-Bl-2hu"/>
                             </connections>
                         </slider>
-                        <button width="1" height="0.5" heightAdjustment="-24" alignment="center" verticalAlignment="bottom" title="Save" id="PNw-io-BEO">
+                        <button width="1" height="42" alignment="center" verticalAlignment="bottom" title="Save" id="PNw-io-BEO">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <color key="backgroundColor" red="0.26663510807568075" green="0.57002562388787881" blue="0.23567388507408404" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="35"/>
@@ -71,6 +83,7 @@
                     </items>
                     <connections>
                         <outlet property="label" destination="rh3-l3-VRi" id="sG0-x1-2a5"/>
+                        <outlet property="picker" destination="J8k-jO-wuI" id="c1E-fh-5ol"/>
                         <outlet property="slider" destination="T7K-Mk-mdb" id="oVg-dW-lfr"/>
                     </connections>
                 </controller>
@@ -93,10 +106,6 @@
                         </group>
                     </items>
                     <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
-                    <connections>
-                        <outlet property="AddTime" destination="lKm-ad-m05" id="58Y-p8-Hcy"/>
-                        <outlet property="label" destination="Ocf-gQ-TkP" id="gLa-eB-I6i"/>
-                    </connections>
                 </glanceController>
             </objects>
             <point key="canvasLocation" x="235" y="672"/>
