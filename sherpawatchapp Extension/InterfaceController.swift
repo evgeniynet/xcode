@@ -84,9 +84,9 @@ class InterfaceController: WKInterfaceController {
         }
         else
         {
-            Properties.org = "zwoja4-ms2asm:7016f101312449f9af132fde519259e9"
+            Properties.org = ""
         }
-        defaults.setObject(Properties.org, forKey: "org")
+        //defaults.setObject(Properties.org, forKey: "org")
         //print(Properties.org)
         if !Properties.org.isEmpty{
             button.setEnabled(true);
@@ -111,7 +111,7 @@ class InterfaceController: WKInterfaceController {
             button.setEnabled(false);
             timeTable.setNumberOfRows(1, withRowType: "TextTableRowController")
             let row = timeTable.rowControllerAtIndex(0) as! TextTableRowController
-            row.nameLabel.setText("Login to Sherpadesk")
+            row.nameLabel.setText("Login to SherpaDesk")
         }
         self.timelogs = []
         defaults.setObject([], forKey: "timelogs")

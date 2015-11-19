@@ -68,7 +68,7 @@
     {
         var prefs = plugins.appPreferences;
         var suitePrefs = prefs.iosSuite("group.io.sherpadesk.mobile");
-        suitePrefs.store (ok, fail, 'accounts', value);
+        suitePrefs.store (ok, fail, 'org', value);
     }
     
     function ok (value) { //alert(value);
@@ -79,8 +79,8 @@
     
     function onDeviceReady() {
         /*var accounts = [{"id":1033,"name":"Test FreshBooks"},{"id":1225,"name":"Test Salesforce Account 1"},{"id":19,"name":"test112"},{"id":1247,"name":"thishouldnotexistandhopefullyitwillnot"},{"id":3,"name":"True North Design"},{"id":1038,"name":"TTTeee"},{"id":1230,"name":"United Oil & Gas Corp."},{"id":1234,"name":"United Oil & Gas, Singapore"},{"id":1233,"name":"United Oil & Gas, UK"},{"id":1232,"name":"University of Arizona"},{"id":1034,"name":"Willy's"}];
-        initOrgPreferences(accounts);
         */
+        //initOrgPreferences("zwoja4-ms2asm:re36rym3mjqxm8ej2cscfajmxpsew33m");
         isPhonegap = true;
         cordova.plugins.backgroundMode.enable();
         //alert(2);

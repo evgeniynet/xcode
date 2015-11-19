@@ -134,12 +134,6 @@ class AddTimeInterfaceController: WKInterfaceController {
         slider.setValue(0.25)
         let z = [Int](1...40)
         
-        var test = z.map({
-            (number: Int) -> Float in
-            let result =  Float(number) * Float(0.25)
-            return result
-        })
-        
         let pickerItems: [WKPickerItem] = z.map {
             let pickerItem = WKPickerItem()
             pickerItem.title = String($0)

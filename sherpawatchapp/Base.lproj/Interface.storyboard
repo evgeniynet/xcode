@@ -97,7 +97,7 @@
                     <items>
                         <group alignment="left" backgroundImage="Image" id="cOK-fB-93n"/>
                         <label alignment="left" hidden="YES" text="Sherpadesk" baselineAdjustment="alignCenters" id="2Qd-ny-tsU"/>
-                        <label alignment="left" text="Sherpadesk" baselineAdjustment="alignCenters" id="Ocf-gQ-TkP"/>
+                        <label alignment="left" text="SherpaDesk" baselineAdjustment="alignCenters" id="Ocf-gQ-TkP"/>
                         <label alignment="left" hidden="YES" text="      Login" id="CQi-dJ-YGc"/>
                         <group alignment="left" contentMode="center" id="uCw-4Q-Ouw">
                             <items>
