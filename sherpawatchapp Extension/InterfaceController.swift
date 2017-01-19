@@ -21,12 +21,12 @@ class InterfaceController: WKInterfaceController {
     
     
     @IBAction func phoneBtnTapped() {
-        let url = NSURL(string: "tel:")!
-        WKExtension.sharedExtension().openSystemURL(url)
+        let url = URL(string: "tel:")!
+        WKExtension.shared().openSystemURL(url)
     }
     
-    func displayDetailScene(index: Int) {
-      pushControllerWithName("AccountList",
+    func displayDetailScene(_ index: Int) {
+      pushController(withName: "AccountList",
             context: index)
     }
     
@@ -38,37 +38,48 @@ class InterfaceController: WKInterfaceController {
         //init() {
         //}
         
-        init(_ decoder: JSONDecoder) {
-            id = decoder["time_id"].integer!
-            name = decoder["user_name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) + "\n" + decoder["account_name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            hours = decoder["hours"].float!
+        init(_ decoder: JSONDecoder) throws {
+            id = try decoder["time_id"].get()
+            name = try decoder["user_name"].get()
+                /*.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\n" + try decoder["account_name"].get().replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)*/
+            hours = try decoder["hours"].get()
             org = ""
         }
         init(_ array: AnyObject) {
-            id = (array["id"] as? Int)!
-            name = (array["name"] as? String)!
-            hours = (array["hours"] as? Float)!
-            org = (array["org"] as? String)!
+            id = 1
+            name = ""
+            hours = 0
+            org = ""
+            if let userDict = array as? NSDictionary {
+            id = (userDict["id"] as? Int)!
+            name = (userDict["name"] as? String)!
+            hours = (userDict["hours"] as? Float)!
+            org = (userDict["org"] as? String)!
+            }
         }
     }
+
     
     struct Records : JSONJoy {
         var records: NSMutableArray = []
         init() {
         }
-        init(_ decoder: JSONDecoder) {
+        init(_ decoder: JSONDecoder) throws {
             //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
-            if let recrds = decoder.array {
+            records = []
+            /*
+                var recrds: NSMutableArray
+                recrds = try decoder.get()
                 records = []
                 for rDecoder in recrds {
                     let rec = Record(rDecoder)
-                    records.addObject([ "id" : rec.id, "name" : rec.name, "hours" : rec.hours, "org" : Properties.org])
+                    records.add([ "id" : rec.id, "name" : rec.name, "hours" : rec.hours, "org" : Properties.org])
                 }
-            }
+ */
         }
     }
     
-    var defaults : NSUserDefaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")!
+    var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
     
     struct Properties {
         static var org = ""
@@ -78,7 +89,7 @@ class InterfaceController: WKInterfaceController {
     
     func getOrg(){
         defaults.synchronize()
-        if let org:String = defaults.objectForKey("org") as? String
+        if let org:String = defaults.object(forKey: "org") as? String
         {
             Properties.org = org
         }
@@ -90,13 +101,15 @@ class InterfaceController: WKInterfaceController {
         //print(Properties.org)
         if !Properties.org.isEmpty{
             button.setEnabled(true);
-            if let timelgs:NSMutableArray = defaults.objectForKey("timelogs") as? NSMutableArray
+            
+            if let timelgs:NSMutableArray = defaults.object(forKey: "timelogs") as? NSMutableArray
             {
                 if timelgs.count>0 {
-                    if let org = timelgs[0]["org"] as? String
+                    if let org = timelgs.object(at: 0) as? NSDictionary {
+                        if let torg = org.object(forKey: "org") as? String
                     {
                         //print("org\(org)prop\(Properties.org)")
-                        if (org == Properties.org){
+                        if (torg == Properties.org){
                             self.timelogs = timelgs
                             print("set\(self.timelogs.count)")
                             return
@@ -110,11 +123,11 @@ class InterfaceController: WKInterfaceController {
         {
             button.setEnabled(false);
             timeTable.setNumberOfRows(1, withRowType: "TextTableRowController")
-            let row = timeTable.rowControllerAtIndex(0) as! TextTableRowController
+            let row = timeTable.rowController(at: 0) as! TextTableRowController
             row.nameLabel.setText("Login to SherpaDesk")
         }
         self.timelogs = []
-        defaults.setObject([], forKey: "timelogs")
+        defaults.set([], forKey: "timelogs")
         //print("unset\(self.tickets.count)")
         
     }
@@ -137,14 +150,16 @@ class InterfaceController: WKInterfaceController {
                         print("error: \(err.localizedDescription)")
                         return //also notify app of failure as needed
                     }
-                    let resp = Records(JSONDecoder(response.data))
+                    /*
+                    let resp = Records(JSONDecoder(response.data as AnyObject))
                     if resp.records.count > 0 {
                         self.timelogs = resp.records
                         //print("sting during post: \(self.tickets.count)")
-                        self.defaults.setObject(self.timelogs, forKey: "timelogs")
-                        self.loadTableData()
+                        self.defaults.set(self.timelogs, forKey: "timelogs")
+                        loadTableData()
                         //print(resp.records)
                     }
+ */
                 }
             } catch let error {
                 print("got an error creating the request: \(error)")
@@ -154,17 +169,48 @@ class InterfaceController: WKInterfaceController {
     
     func loadTableData() {
         timeTable.setNumberOfRows(timelogs.count+1, withRowType: "TextTableRowController")
-        for (index, timelgs) in timelogs.enumerate() {
+        for (index, timelgs) in timelogs.enumerated() {
             //print(blogName)
-            let row = timeTable.rowControllerAtIndex(index) as! TextTableRowController
-            let rec = Record(timelgs)
+            let row = timeTable.rowController(at: index) as! TextTableRowController
+            let rec = Record(timelgs as AnyObject)
             row.nameLabel.setText(rec.name)
             row.hoursLabel.setText(String(format: "%2.2f", rec.hours))
         }
     }
+}
     
-    override init() {
-        super.init()
+        override func awake(withContext context: Any?) {
+            super.awake(withContext: context)
+            
+            /*if let text = context as? String {
+             let indexSet = NSMutableIndexSet()
+             indexSet.addIndex(0)
+             
+             timeTable.insertRowsAtIndexes(indexSet,
+             withRowType: "TextTableRowController")
+             let row = timeTable.rowControllerAtIndex(0) as! TextTableRowController
+             row.nameLabel.setText("Jon Vickers\nbigWebApps")
+             row.hoursLabel.setText(text)
+             }
+             */
+        }
+        
+        override func willActivate() {
+            // This method is called when watch view controller is about to be visible to user
+            super.willActivate()
+            getOrg()
+            //updateWidget()
+        }
+        
+        override func didDeactivate() {
+            // This method is called when watch view controller is no longer visible
+            super.didDeactivate()
+        }
+    }
+
+    
+    /*init() {
+        //super.init()
         /*let z = [Int](1...40)
         
         var test = z.map({
@@ -174,34 +220,8 @@ class InterfaceController: WKInterfaceController {
         })
         
         print(test) */
-    }
+    }*/
 
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
-        
-        /*if let text = context as? String {
-            let indexSet = NSMutableIndexSet()
-            indexSet.addIndex(0)
-            
-            timeTable.insertRowsAtIndexes(indexSet,
-                withRowType: "TextTableRowController")
-            let row = timeTable.rowControllerAtIndex(0) as! TextTableRowController
-            row.nameLabel.setText("Jon Vickers\nbigWebApps")
-            row.hoursLabel.setText(text)
-        }
-        */
-    }
+   
 
-    override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
-        getOrg()
-        updateWidget()
-    }
 
-    override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
-        super.didDeactivate()
-    }
-
-}

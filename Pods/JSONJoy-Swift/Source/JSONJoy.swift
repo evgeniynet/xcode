@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Vluxe. All rights reserved.
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
+
 import Foundation
 
 public protocol JSONBasicType {}
@@ -154,7 +155,7 @@ open class JSONDecoder {
     func createError(_ text: String) -> Error {
         return NSError(domain: "JSONJoy", code: 1002, userInfo: [NSLocalizedDescriptionKey: text]) as Error
     }
-    
+
 }
 
 /**
@@ -162,24 +163,4 @@ open class JSONDecoder {
  */
 public protocol JSONJoy {
     init(_ decoder: JSONDecoder) throws
-}
-
-extension JSONDecoder: CustomStringConvertible {
-    public var description: String {
-        if let value = value {
-            return String(describing: value)
-        } else {
-            return String(describing: value)
-        }
-    }
-}
-
-extension JSONDecoder: CustomDebugStringConvertible {
-    public var debugDescription: String {
-        if let value = value {
-            return String(reflecting: value)
-        } else {
-            return String(reflecting: value)
-        }
-    }
 }

@@ -69,7 +69,7 @@ class AddTimeInterfaceController: WKInterfaceController {
     }
 
     
-    @IBAction func sliderDidChange(value: Float)
+    @IBAction func sliderDidChange(_ value: Float)
     {
         if value > sliderValue
         {
@@ -92,11 +92,11 @@ class AddTimeInterfaceController: WKInterfaceController {
     @IBAction func popButtonPressed() {
         //self.popToRootController()
         updateWidget()
-        self.pushControllerWithName("Main1", context: nil)
+        self.pushController(withName: "Main1", context: nil)
     }
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         let dict = context as? [String : String]
         if dict != nil {
@@ -121,7 +121,7 @@ class AddTimeInterfaceController: WKInterfaceController {
 */
     }
     
-    @IBAction func pickerSelectedItemChanged(value: Int) {
+    @IBAction func pickerSelectedItemChanged(_ value: Int) {
         pickerIndex = value
         sliderValue = Float(value+1) * Float(0.25)
         slider.setValue(sliderValue)

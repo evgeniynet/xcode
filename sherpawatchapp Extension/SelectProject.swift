@@ -20,15 +20,20 @@ class SelectProjectInterfaceController: WKInterfaceController {
         //init() {
         //}
         
-        init(_ decoder: JSONDecoder) {
-            id = decoder["id"].integer!
-            name = decoder["name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        init(_ decoder: JSONDecoder) throws {
+            id = try decoder["id"].get()
+            name = try decoder["name"].get()//.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             org = ""
         }
         init(_ array: AnyObject) {
+            /*
             id = (array["id"] as? Int)!
             name = (array["name"] as? String)!
             org = (array["org"] as? String)!
+ */
+            id = 1
+            name = ""
+            org = ""
         }
     }
     
@@ -38,20 +43,22 @@ class SelectProjectInterfaceController: WKInterfaceController {
         }
         init(_ decoder: JSONDecoder) {
             //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
+            /*
             if let recrds = decoder.array {
                 records = []
                 if recrds.count < 1 {
-                    records.addObject(["id" : 0, "name" : "Default", "org" : Properties.org])
+                    records.add(["id" : 0, "name" : "Default", "org" : Properties.org])
                 }
                 for rDecoder in recrds {
                     let rec = Record(rDecoder)
-                    records.addObject([ "id" : rec.id, "name" : rec.name, "org" : Properties.org])
+                    records.add([ "id" : rec.id, "name" : rec.name, "org" : Properties.org])
                 }
             }
+ */
         }
     }
     
-    var defaults : NSUserDefaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")!
+    var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
     
     struct Properties {
         static var org = ""
@@ -68,8 +75,9 @@ class SelectProjectInterfaceController: WKInterfaceController {
     var projects: NSMutableArray = []
     
     func getOrg(){
+        /*
         defaults.synchronize()
-        if let org:String = defaults.objectForKey("org") as? String
+        if let org:String = defaults.object(forKey: "org") as? String
         {
             Properties.org = org
         }
@@ -79,7 +87,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
         }
         //print(Properties.org)
         if !Properties.org.isEmpty{
-            if let accts:NSMutableArray = defaults.objectForKey("projects") as? NSMutableArray
+            if let accts:NSMutableArray = defaults.object(forKey: "projects") as? NSMutableArray
             {
                 if accts.count>0 {
                     if let org = accts[0]["org"] as? String
@@ -97,11 +105,12 @@ class SelectProjectInterfaceController: WKInterfaceController {
         }
         else
         {//showMessage("Login to SherpaDesk app first")
-             self.pushControllerWithName("Main1", context: nil)
+             self.pushController(withName: "Main1", context: nil)
         }
         self.projects = []
-        defaults.setObject([], forKey: "projects")
+        defaults.set([], forKey: "projects")
         //print("unset\(self.tickets.count)")
+ */
         
     }
     
@@ -127,10 +136,11 @@ class SelectProjectInterfaceController: WKInterfaceController {
                     let resp = Records(JSONDecoder(response.data))
                     self.projects = resp.records
                     self.loadTableData()
-                    if resp.records.count < 2 {
+                    /*if resp.records.count < 2 {
                         self.AddTimeData["project"] = String(Record(resp.records[0]).id)
-                        self.pushControllerWithName("TypesList", context: self.AddTimeData)
+                        self.pushController(withName: "TypesList", context: self.AddTimeData)
                     }
+ */
                 }
             } catch let error {
                 print("got an error creating the request: \(error)")
@@ -140,23 +150,24 @@ class SelectProjectInterfaceController: WKInterfaceController {
 
     func loadTableData() {
         timeTable.setNumberOfRows(projects.count, withRowType: "ProjectTableRowController")
-        for (index, project) in projects.enumerate() {
+        for (index, project) in projects.enumerated() {
             //print(blogName)
-            let row = timeTable.rowControllerAtIndex(index) as! ProjectTableRowController
-            let rec = Record(project)
-            row.recordLabel.setText(rec.name)
+            let row = timeTable.rowController(at: index) as! ProjectTableRowController
+            //let rec = Record(project)
+            //row.recordLabel.setText(rec.name)
         }
     }
     
-    override func contextForSegueWithIdentifier(segueIdentifier: String,
-        inTable table: WKInterfaceTable, rowIndex: Int) -> AnyObject? {
+    override func contextForSegue(withIdentifier segueIdentifier: String,
+        in table: WKInterfaceTable, rowIndex: Int) -> Any? {
             let sequeId = "ToTaskType"
             let prj  = projects as NSMutableArray
-            if segueIdentifier == sequeId {
+            /*if segueIdentifier == sequeId {
                 let rec = Record(prj[rowIndex])
                 AddTimeData["project"] = String(rec.id)
                 return AddTimeData
             }
+ */
             
             return nil
     }
@@ -166,8 +177,8 @@ class SelectProjectInterfaceController: WKInterfaceController {
         getOrg()
     }
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         let dict = context as? [String : String]
         if dict != nil {

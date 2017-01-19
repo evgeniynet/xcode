@@ -20,15 +20,21 @@ class SelectAccountInterfaceController: WKInterfaceController {
         //init() {
         //}
         
-        init(_ decoder: JSONDecoder) {
-            id = decoder["id"].integer!
-            name = decoder["name"].string!.stringByReplacingOccurrencesOfString("\n", withString: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        init(_ decoder: JSONDecoder) throws {
+            id = try decoder["id"].get()
+            name = try decoder["name"].get()//.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             org = ""
         }
         init(_ array: AnyObject) {
-            id = (array["id"] as? Int)!
-            name = (array["name"] as? String)!
-            org = (array["org"] as? String)!
+            /*
+            if let userDict = array as? NSDictionary {
+                id = (userDict["id"] as? Int)!
+                name = (userDict["name"] as? String)!
+                org = (userDict["org"] as? String)!
+            }*/
+            id = 1
+            name = ""
+            org = ""
         }
     }
     
@@ -38,21 +44,23 @@ class SelectAccountInterfaceController: WKInterfaceController {
         }
         init(_ decoder: JSONDecoder) {
             //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
+            /*
             if let recrds = decoder.array {
                 records = []
                 if recrds.count < 1 {
-                    records.addObject(["id" : -1, "name" : "Default", "org" : Properties.org])
+                    records.add(["id" : -1, "name" : "Default", "org" : Properties.org])
                 }
                 for rDecoder in recrds {
                     let rec = Record(rDecoder)
-                    records.addObject([ "id" : rec.id, "name" : rec.name, "org" : Properties.org])
+                    records.add([ "id" : rec.id, "name" : rec.name, "org" : Properties.org])
                 }
             }
+ */
         }
     }
 
     
-    var defaults : NSUserDefaults = NSUserDefaults(suiteName: "group.io.sherpadesk.mobile")!
+    var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
     
     struct Properties {
         static var org = ""
@@ -69,8 +77,9 @@ class SelectAccountInterfaceController: WKInterfaceController {
     var accounts: NSMutableArray = []
     
     func getOrg(){
+        /*
         defaults.synchronize()
-        if let org:String = defaults.objectForKey("org") as? String
+        if let org:String = defaults.object(forKey: "org") as? String
         {
             Properties.org = org
         }
@@ -80,7 +89,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
         }
         //print(Properties.org)
         if !Properties.org.isEmpty{
-            if let accts:NSMutableArray = defaults.objectForKey("accounts") as? NSMutableArray
+            if let accts:NSMutableArray = defaults.object(forKey: "accounts") as? NSMutableArray
             {
                 if accts.count>0 {
                     if let org = accts[0]["org"] as? String
@@ -98,16 +107,17 @@ class SelectAccountInterfaceController: WKInterfaceController {
         }
         else
         {//showMessage("Login to SherpaDesk app first")
-             self.pushControllerWithName("Main1", context: nil)
+             self.pushController(withName: "Main1", context: nil)
         }
         self.accounts = []
-        defaults.setObject([], forKey: "accounts")
+        defaults.set([], forKey: "accounts")
         //print("unset\(self.tickets.count)")
-        
+        */
     }
     
     func updateWidget()
     {
+        /*
         if !Properties.org.isEmpty
         {
             loadTableData()
@@ -124,21 +134,22 @@ class SelectAccountInterfaceController: WKInterfaceController {
                         print("error: \(err.localizedDescription)")
                         return //also notify app of failure as needed
                     }
-                    let resp = Records(JSONDecoder(response.data))
+                    let resp = Records(JSONDecoder(response.data as AnyObject))
                     if resp.records.count > 0 {
                         let oldcount =  self.accounts.count
                         var oldorg = false;
                         if oldcount > 0 {
-                            if let org = self.accounts[0]["org"] as? String
+                            if let org = self.accounts(at: 0) as? NSDictionary {
+                            if let torg = org.object(forKey: "org") as? String
                             {
-                                if (org != Properties.org){
+                                if (torg != Properties.org){
                                     oldorg = true
                                 }
                             }
                         }
                         self.accounts = resp.records
                         //print("sting during post: \(self.tickets.count)")
-                        self.defaults.setObject(self.accounts, forKey: "accounts")
+                        self.defaults.set(self.accounts, forKey: "accounts")
                         if oldcount !=  self.accounts.count || oldorg
                         {
                              print("doubleupdate")
@@ -147,29 +158,32 @@ class SelectAccountInterfaceController: WKInterfaceController {
                         if self.accounts.count < 2 {
                             self.AddTimeData["account"] = String(Record(resp.records[0]).id)
                             self.AddTimeData["org"] = Properties.org
-                            self.pushControllerWithName("ProjectList", context: self.AddTimeData)
+                            self.pushController(withName: "ProjectList", context: self.AddTimeData)
                         }
                     }
                 }
-            } catch let error {
+            }; catch let error {
                 print("got an error creating the request: \(error)")
             }
         }
+ */
     }
 
     
     func loadTableData() {
         timeTable.setNumberOfRows(accounts.count, withRowType: "RecordTableRowController")
-        for (index, account) in accounts.enumerate() {
+        for (index, account) in accounts.enumerated() {
             //print(blogName)
-            let row = timeTable.rowControllerAtIndex(index) as! RecordTableRowController
-            let rec = Record(account)
-            row.recordLabel.setText(rec.name)
+            let row = timeTable.rowController(at: index) as! RecordTableRowController
+            //let rec = Record(account)
+            //row.recordLabel.setText(rec.name)
         }
     }
-    
-    override func contextForSegueWithIdentifier(segueIdentifier: String,
-        inTable table: WKInterfaceTable, rowIndex: Int) -> AnyObject? {
+}
+
+/*
+    override func contextForSegue(withIdentifier segueIdentifier: String,
+        in table: WKInterfaceTable, rowIndex: Int) -> Any? {
             let sequeId = "ToProject"
             let acc  = accounts as NSMutableArray
             if segueIdentifier == sequeId {
@@ -181,7 +195,9 @@ class SelectAccountInterfaceController: WKInterfaceController {
             
             return nil
     }
-    
+
+
+
     override init() {
         super.init()
         
@@ -189,8 +205,8 @@ class SelectAccountInterfaceController: WKInterfaceController {
         updateWidget()
     }
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         // Configure interface objects here.
     }
@@ -204,5 +220,5 @@ class SelectAccountInterfaceController: WKInterfaceController {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
-    
-}
+   */
+

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "74D746023527F3EEA56BFD71F01F77C1"
+               BlueprintIdentifier = "E9E710F048A759A9EA647A7C0BDAA1F6"
                BuildableName = "JSONJoy.framework"
                BlueprintName = "JSONJoy-Swift"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "74D746023527F3EEA56BFD71F01F77C1"
+            BlueprintIdentifier = "E9E710F048A759A9EA647A7C0BDAA1F6"
             BuildableName = "JSONJoy.framework"
             BlueprintName = "JSONJoy-Swift"
             ReferencedContainer = "container:Pods.xcodeproj">

@@ -3,8 +3,6 @@ SwiftHTTP
 
 SwiftHTTP is a thin wrapper around NSURLSession in Swift to simplify HTTP requests.
 
-This is written Swift 2.0 (the latest). If you need older legecy support checkout the Swift-1.2 branch [here](https://github.com/daltoniam/SwiftHTTP/tree/swift-1.2). If you are upgrading from SwiftHTTP and just want the minimal changes to work with Swift 2 checkout the backwards compatibility branch [here](https://github.com/daltoniam/SwiftHTTP/tree/swift-2-bc)
-
 ## Features
 
 - Convenient Closure APIs
@@ -25,7 +23,7 @@ import SwiftHTTP
 
 ### GET
 
-The most basic request. By default an NSData object will be returned for the response.
+The most basic request. By default an Data object will be returned for the response.
 ```swift
 do {
     let opt = try HTTP.GET("https://google.com")
@@ -100,8 +98,15 @@ let opt = try HTTP.DELETE("https://domain.com/1")
 
 ### Download
 
-```
-//TODO finish porting download method
+```swift
+do {
+    let opt = try HTTP.Download("http://www.cbu.edu.zm/downloads/pdf-sample.pdf", completion: { (url) in
+        //move the temp file to desired location...
+    })
+    opt.start()
+} catch let error {
+    print("got an error creating the request: \(error)")
+}
 ```
 
 ### Upload
@@ -109,7 +114,7 @@ let opt = try HTTP.DELETE("https://domain.com/1")
 File uploads can be done using the `Upload` object. All files to upload should be wrapped in a Upload object and added as a parameter.
 
 ```swift
-let fileUrl = NSURL(fileURLWithPath: "/Users/dalton/Desktop/testfile")!
+let fileUrl = URL(fileURLWithPath: "/Users/dalton/Desktop/testfile")!
 do {
     let opt = try HTTP.POST("https://domain.com/new", parameters: ["aParam": "aValue", "file": Upload(fileUrl: fileUrl)])
     opt.start { response in
@@ -119,7 +124,7 @@ do {
     print("got an error creating the request: \(error)")
 }
 ```
-`Upload` comes in both a on disk fileUrl version and a NSData version.
+`Upload` comes in both a on disk fileUrl version and a Data version.
 
 ### Custom Headers
 
@@ -156,7 +161,7 @@ do {
     print("got an error creating the request: \(error)")
 }
 ```
-You load either a `NSData` blob of your certificate or you can use a `SecKeyRef` if you have a public key you want to use. The `usePublicKeys` bool is whether to use the certificates for validation or the public keys. The public keys will be extracted from the certificates automatically if `usePublicKeys` is choosen.
+You load either a `Data` blob of your certificate or you can use a `SecKeyRef` if you have a public key you want to use. The `usePublicKeys` bool is whether to use the certificates for validation or the public keys. The public keys will be extracted from the certificates automatically if `usePublicKeys` is choosen.
 
 ### Authentication
 
@@ -385,7 +390,7 @@ struct Response: JSONJoy {
 }
 
 do {
-    let url = NSURL(fileURLWithPath: "/Users/dalton/Desktop/dalton.jpeg")
+    let url = URL(fileURLWithPath: "/Users/dalton/Desktop/dalton.jpeg")
     let opt = try HTTP.POST("http://localhost:8080/bar", parameters: ["test": "value", "file": Upload(fileUrl: url)])
     opt.start { response in
         if let error = response.error {
@@ -413,12 +418,12 @@ Swift has a lot of great JSON parsing libraries, but I made one specifically des
 
 ## Requirements
 
-SwiftHTTP works with iOS 7/OSX 10.9 or above. It is recommended to use iOS 8/10.10 or above for Cocoapods/framework support.
+SwiftHTTP works with iOS 7/OSX 10.10 or above. It is recommended to use iOS 8/10.10 or above for CocoaPods/framework support.
 To use SwiftHTTP with a project targeting iOS 7, you must include all Swift files directly in your project.
 
 ## Installation
 
-### Cocoapods
+### CocoaPods
 
 Check out [Get Started](https://guides.cocoapods.org/using/getting-started.html) tab on [cocoapods.org](http://cocoapods.org/).
 
@@ -428,7 +433,7 @@ To use SwiftHTTP in your project add the following 'Podfile' to your project
 	platform :ios, '8.0'
 	use_frameworks!
 
-	pod 'SwiftHTTP', '~> 1.0.0'
+	pod 'SwiftHTTP', '~> 2.0.0'
 
 Then run:
 
@@ -450,7 +455,7 @@ $ brew install carthage
 To integrate SwiftHTTP into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```
-github "daltoniam/SwiftHTTP" >= 1.0.0
+github "daltoniam/SwiftHTTP" >= 2.0.0
 ```
 
 ### Rogue
@@ -477,6 +482,7 @@ If you are running this in an OSX app or on a physical iOS device you will need 
 
 ## TODOs
 
+- [ ] Linux support?
 - [ ] Add more unit tests
 
 ## License

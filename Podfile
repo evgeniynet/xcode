@@ -1,5 +1,8 @@
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'SwiftHTTP', '~> 1.0.2’
-pod 'JSONJoy-Swift', '~> 1.0.0'
+target ’Sherpadesk’ do
+pod 'SwiftHTTP', '~> 2.0.0’
+pod 'JSONJoy-Swift', '~> 3.0.0’
+end

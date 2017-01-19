@@ -9,7 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods.xcscheme</key>
+		<key>Pods-Sherpadesk.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>74D746023527F3EEA56BFD71F01F77C1</key>
+		<key>C24CE125111B29D726D1F84ECCFADF36</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>785DBE1B0528FA9D0A969E07DA03D22B</key>
+		<key>E9E710F048A759A9EA647A7C0BDAA1F6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C7A2EA875D5E6517CBBF6BC6813586D6</key>
+		<key>F05F12C8558FD965CDB8C96BEEE34026</key>
 		<dict>
 			<key>primary</key>
 			<true/>
