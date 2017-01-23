@@ -31,16 +31,16 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         var subject: String
         var key: String
         var org: String
-        //init() {
-        //}
         
         init(_ decoder: JSONDecoder) throws {
-            number = try decoder["number"].get()
-            subject = try decoder["subject"].get()//.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            let num : Int = try decoder["number"].get()
+            number = String(num)
+            subject = try decoder["subject"].get()
+            subject = subject.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             key = try decoder["key"].get()
             org = ""
         }
-        init(_ array: AnyObject) {
+        init(_ array: NSDictionary) {
             number = (array["number"] as? String)!
             subject = (array["subject"] as? String)!
             key = (array["key"] as? String)!
@@ -49,40 +49,22 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     struct Records : JSONJoy {
-        var records: NSMutableArray = []
+        var records: Array<Record> = []
         init() {
         }
         init(_ decoder: JSONDecoder) throws {
-            //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
-            /*do {
-                var user = try User(decoder)
-                print("key is: \(user.addresses[0].key)")
-                //That's it! The object has all the appropriate properties mapped.
-            } catch {
-                print("unable to parse the JSON")
-            }
-             if let dict = value as? NSDictionary {
-             if let value: Any = dict[key] {
-             return value as! JSONDecoder
-             }
-             }
-             */
-            //print(decoder[0]["key"].getOptional()!)
-            let arr = decoder.getOptionalArray()!
-            //let i = arr.count
+            let arr: Array<Record> = try decoder.get()
                 records = []
-                for rDecoder in arr {
-                    //print(rDecoder["key"])
-                    //if let  dict = rDecoder as? [NSDictionary] {
-                    //    if let value: Any = dict[0]["key"] {
-                    //        print(value as! String)
-                    //    }
-                    //}
-                    //var number: String = (rDecoder["number"] as? String)!
-                    //let rec = Record(rDecoder)
-                    //print(rDecoder.number)
-                    records.add([ "number" : rDecoder["number"], "subject" : rDecoder["subject"], "key" : rDecoder["key"], "org" : Properties.org])
+                for val in arr {
+                    let dictionary: NSDictionary = ["number" : val.number, "subject" : val.subject, "key" : val.key, "org" : Properties.org]
+                    records.append(Record(dictionary))
                 }
+        }
+        init(_ array: Array<NSDictionary>) {
+            records = []
+            for val in array {
+                records.append(Record(val))
+            }
         }
     }
     
@@ -92,7 +74,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         static var org = ""
     }
     
-    var tickets: NSMutableArray = []
+    var tickets: Array<Record> = []
     
     var updateResult:NCUpdateResult = NCUpdateResult.noData
     
@@ -119,10 +101,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                         let resp = try Records(JSONDecoder(response.data))
                         if resp.records.count > 0 {
                             self.tickets = resp.records
-                            print("sting during post: \(self.tickets.count)")
+                            //print("sting during post: \(self.tickets.count)")
                             //self.defaults.set(self.tickets, forKey: "tickets")
                             self.showTickets(self.tickets)
-                            print(resp.records)
+                            //print(resp.records)
                         }
                     } catch {
                         print("unable to parse the JSON")
@@ -165,21 +147,20 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
         //print(Properties.org)
         if !Properties.org.isEmpty{
-            print(defaults.object(forKey: "tickets") as? NSMutableArray)
-            if let tkts:NSMutableArray = defaults.object(forKey: "tickets") as? NSMutableArray
+            //print(defaults.object(forKey: "tickets") as? Array<NSDictionary>)
+            if let tkts:Array<NSDictionary> = defaults.object(forKey: "tickets") as? Array<NSDictionary>
             {
                 if tkts.count>0 {
-                    if let org = tkts.object(at: 0) as? NSDictionary {
+                    let org = tkts[0]
                         if let torg = org.object(forKey: "org") as? String
                     {
                         //print("org\(org)prop\(Properties.org)")
                         if (torg == Properties.org){
-                            self.tickets = tkts
+                            self.tickets = Records(tkts).records
                             //print("set\(self.tickets.count)")
                             return
                         }
                     }
-                  }
                 }
             }
             showMessage("No recent tickets yet ...")
@@ -203,12 +184,12 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         self.tLine.isHidden = true
     }
     
-    func showTickets(_ jsonResult : NSMutableArray)
+    func showTickets(_ jsonResult : Array<Record>)
     {
         DispatchQueue.main.async(execute: {
         //print("show: \(jsonResult.count)")
         if jsonResult.count>0{
-            var rec = Record(jsonResult[0] as AnyObject)
+            var rec = jsonResult[0]
             self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.fill;
             self.fTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
             self.fTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
@@ -216,14 +197,14 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             self.fLine.isHidden = false
             
             if jsonResult.count>1{
-                rec = Record((jsonResult.object(at: 1) as? AnyObject)!)
+                rec = jsonResult[1]
                 self.sTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
                 self.sTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
                 self.sTicket.isHidden = false
                 self.sLine.isHidden = false
                 
                 if jsonResult.count>2{
-                    rec = Record((jsonResult.object(at: 2) as? AnyObject)!)
+                    rec = jsonResult[2]
                     self.tTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
                     self.tTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
                     self.tTicket.isHidden = false
@@ -240,24 +221,42 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         //currentSize.height = 120.0
 //        self.preferredContentSize = currentSize
         getOrg()
-        print("viewWillAppear")
+        //print("viewWillAppear")
         self.updateWidget()
     }
     
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
-        print("viewDidAppear")
+        //print("viewDidAppear")
         getOrg()
      }
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    self.preferredContentSize = CGSize(width:self.view.frame.size.width, height:80)
+    
+    if #available(iOSApplicationExtension 10.0, *) { // Xcode would suggest you implement this.
+        extensionContext?.widgetLargestAvailableDisplayMode = .expanded
+    } else {
+        preferredContentSize = CGSize(width: CGFloat(0), height: CGFloat(205.0))
+    }
     //defaults.setObject([], forKey: "tickets")
     // Do any additional setup after loading the view from its nib.
     //print("widget view did load")
-            preferredContentSize = CGSize(width: CGFloat(0), height: CGFloat(205.0))
+    
   }
+    
+    @available(iOS 10.0, *)
+    @available(iOSApplicationExtension 10.0, *)
+    func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
+        if activeDisplayMode == .expanded {
+            self.preferredContentSize = CGSize(width: self.view.frame.size.width, height: 180)
+        }else if activeDisplayMode == .compact{
+            self.preferredContentSize = CGSize(width: maxSize.width, height: 80)
+        }
+    }
   
     @IBAction func OpenUrl(_ sender: AnyObject) {
         let page =  "add_time.html"

@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="M4Y-Lb-cyx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="HelveticaNeue.ttc">
+        <array key="HelveticaNeue.ttc">
             <string>HelveticaNeue</string>
-        </mutableArray>
+        </array>
     </customFonts>
     <scenes>
         <!--Today View Controller-->
@@ -35,7 +39,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="page" value=""/>
@@ -49,7 +53,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="page" value=""/>
@@ -66,7 +70,7 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="Login to SherpaDesk app please">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="page" value=""/>
@@ -87,14 +91,14 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcL-FH-zPp">
-                                        <rect key="frame" x="74" y="0.0" width="77" height="78"/>
+                                        <rect key="frame" x="73.5" y="0.0" width="77" height="78"/>
                                         <state key="normal" image="Create Ticket"/>
                                         <connections>
                                             <action selector="AddTicket:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="hQR-ia-oON"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWB-hH-euI">
-                                        <rect key="frame" x="157" y="0.0" width="74" height="81"/>
+                                        <rect key="frame" x="157.5" y="0.0" width="74" height="81"/>
                                         <state key="normal" image="My Tickets"/>
                                         <connections>
                                             <action selector="MyTickets:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="pQc-t2-nVK"/>
@@ -123,7 +127,7 @@
                             <constraint firstItem="GM5-2z-j5f" firstAttribute="top" secondItem="0cT-pM-S1a" secondAttribute="baseline" constant="10" id="S1i-Fw-21O"/>
                             <constraint firstItem="0cT-pM-S1a" firstAttribute="top" secondItem="FWE-zA-WHC" secondAttribute="bottom" constant="8" id="VDm-Uc-oaK"/>
                             <constraint firstItem="FWE-zA-WHC" firstAttribute="top" secondItem="v4O-7y-8wT" secondAttribute="bottom" constant="4" id="VgW-oG-TNr"/>
-                            <constraint firstItem="v4O-7y-8wT" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="93" id="YeD-ar-Cd9"/>
+                            <constraint firstItem="v4O-7y-8wT" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="88" id="YeD-ar-Cd9"/>
                             <constraint firstItem="a7Z-5Y-dW1" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="afk-Xn-K6C"/>
                             <constraint firstItem="FWE-zA-WHC" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="isk-jw-GPx"/>
                             <constraint firstItem="GM5-2z-j5f" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="mfQ-v7-y5F"/>
@@ -156,4 +160,9 @@
         <image name="My Tickets" width="74" height="81"/>
         <image name="line" width="1440" height="2"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>
