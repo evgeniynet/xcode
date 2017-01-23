@@ -141,7 +141,7 @@ class InterfaceController: WKInterfaceController {
             do {
                 let command = "time"
                 let params = ["limit":"25"]
-                let urlPath: String = "http://" + Properties.org +
+                let urlPath: String = "https://" + Properties.org +
                     "@api.sherpadesk.com/" + command
                 
                 let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])

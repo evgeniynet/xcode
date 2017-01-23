@@ -1,3 +1,348 @@
+
+//
+//  TodayViewController.swift
+//  todayClockWidget
+//
+//  Created by Christina Moulton on 2015-05-21.
+//  Copyright (c) 2015 Teak Mobile Inc. All rights reserved.
+//
+
+class MyButton: UIButton {
+    var page: String?
+}
+
+import UIKit
+import NotificationCenter
+
+class TodayViewController: UIViewController, NCWidgetProviding {
+    
+    @IBOutlet weak var fTicket: UIButton!
+    @IBOutlet weak var fLine: UIImageView!
+    
+    @IBOutlet weak var sTicket: UIButton!
+    @IBOutlet weak var sLine: UIImageView!
+    
+    @IBOutlet weak var tTicket: UIButton!
+    @IBOutlet weak var tLine: UIImageView!
+    
+    
+    struct Record : JSONJoy {
+        var number: String
+        var subject: String
+        var key: String
+        var org: String
+        //init() {
+        //}
+        
+        init(_ decoder: JSONDecoder) throws {
+            number = try decoder["number"].get()
+            subject = try decoder["subject"].get()//.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            key = try decoder["key"].get()
+            org = ""
+        }
+        init(_ array: AnyObject) {
+            number = (array["number"] as? String)!
+            subject = (array["subject"] as? String)!
+            key = (array["key"] as? String)!
+            org = (array["org"] as? String)!
+        }
+    }
+    
+    struct Records : JSONJoy {
+        var records: NSMutableArray = []
+        init() {
+        }
+        init(_ decoder: JSONDecoder) throws {
+            //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
+            /*do {
+                var user = try User(decoder)
+                print("key is: \(user.addresses[0].key)")
+                //That's it! The object has all the appropriate properties mapped.
+            } catch {
+                print("unable to parse the JSON")
+            }
+             if let dict = value as? NSDictionary {
+             if let value: Any = dict[key] {
+             return value as! JSONDecoder
+             }
+             }
+             */
+            //print(decoder[0]["key"].getOptional()!)
+            let arr = decoder.getOptionalArray()!
+            //let i = arr.count
+                records = []
+                for rDecoder in arr {
+                    //print(rDecoder["key"])
+                    //if let  dict = rDecoder as? [NSDictionary] {
+                    //    if let value: Any = dict[0]["key"] {
+                    //        print(value as! String)
+                    //    }
+                    //}
+                    //var number: String = (rDecoder["number"] as? String)!
+                    //let rec = Record(rDecoder)
+                    //print(rDecoder.number)
+                    records.add([ "number" : rDecoder["number"], "subject" : rDecoder["subject"], "key" : rDecoder["key"], "org" : Properties.org])
+                }
+        }
+    }
+    
+    var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
+    
+    struct Properties {
+        static var org = ""
+    }
+    
+    var tickets: NSMutableArray = []
+    
+    var updateResult:NCUpdateResult = NCUpdateResult.noData
+    
+    func updateWidget()
+    {
+        print("1"+Properties.org)
+        if !Properties.org.isEmpty
+        {
+            showTickets(self.tickets)
+            
+            do {
+                let command = "tickets" + "?status=open&role=user&limit=3&sort_by=updated"
+                let params = ["", ""]
+                let urlPath: String = "https://" + Properties.org +
+                    "@api.sherpadesk.com/" + command
+                
+                let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])
+                opt.start { response in
+                    if let err = response.error {
+                        print("error: \(err.localizedDescription)")
+                        return //also notify app of failure as needed
+                    }
+                    do {
+                        let resp = try Records(JSONDecoder(response.data))
+                        if resp.records.count > 0 {
+                            self.tickets = resp.records
+                            print("sting during post: \(self.tickets.count)")
+                            //self.defaults.set(self.tickets, forKey: "tickets")
+                            self.showTickets(self.tickets)
+                            print(resp.records)
+                        }
+                    } catch {
+                        print("unable to parse the JSON")
+                    }
+                }
+            } catch let error {
+                print("got an error creating the request: \(error)")
+            }
+        }
+    }
+    
+    func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
+        //print("widgetPerformUpdateWithCompletionHandler")
+        // Perform any setup necessary in order to update the view.
+        // If an error is encountered, use NCUpdateResult.Failed
+        // If there's no update required, use NCUpdateResult.NoData
+        // If there's an update, use NCUpdateResult.NewData
+        //updateWidget()
+        getOrg()
+        return
+        if !Properties.org.isEmpty
+        {
+          completionHandler(NCUpdateResult.newData)
+    
+        }
+        else {
+            //completionHandler(NCUpdateResult.NoData)
+        }
+    }
+    
+    func getOrg(){
+        defaults.synchronize()
+        if let org:String = defaults.object(forKey: "org") as? String
+        {
+            Properties.org = org
+        }
+        else
+        {
+            Properties.org = "zwoja4-ms2asm:re36rym3mjqxm8ej2cscfajmxpsew33m"
+        }
+        //print(Properties.org)
+        if !Properties.org.isEmpty{
+            print(defaults.object(forKey: "tickets") as? NSMutableArray)
+            if let tkts:NSMutableArray = defaults.object(forKey: "tickets") as? NSMutableArray
+            {
+                if tkts.count>0 {
+                    if let org = tkts.object(at: 0) as? NSDictionary {
+                        if let torg = org.object(forKey: "org") as? String
+                    {
+                        //print("org\(org)prop\(Properties.org)")
+                        if (torg == Properties.org){
+                            self.tickets = tkts
+                            //print("set\(self.tickets.count)")
+                            return
+                        }
+                    }
+                  }
+                }
+            }
+            showMessage("No recent tickets yet ...")
+        }
+        else
+        {showMessage("Login to SherpaDesk app first")}
+        self.tickets = []
+        defaults.set([], forKey: "tickets")
+        //print("unset\(self.tickets.count)")
+        
+    }
+    
+    func showMessage(_ message : String ){
+        self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.center;
+        self.fTicket.setTitle(message, for: UIControlState())
+        self.fTicket.setValue("index.html", forKeyPath: "page")
+        self.fLine.isHidden = true
+        self.sTicket.isHidden = true
+        self.sLine.isHidden = true
+        self.tTicket.isHidden = true
+        self.tLine.isHidden = true
+    }
+    
+    func showTickets(_ jsonResult : NSMutableArray)
+    {
+        DispatchQueue.main.async(execute: {
+        //print("show: \(jsonResult.count)")
+        if jsonResult.count>0{
+            var rec = Record(jsonResult[0] as AnyObject)
+            self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.fill;
+            self.fTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
+            self.fTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
+            self.fTicket.isHidden = false
+            self.fLine.isHidden = false
+            
+            if jsonResult.count>1{
+                rec = Record((jsonResult.object(at: 1) as? AnyObject)!)
+                self.sTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
+                self.sTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
+                self.sTicket.isHidden = false
+                self.sLine.isHidden = false
+                
+                if jsonResult.count>2{
+                    rec = Record((jsonResult.object(at: 2) as? AnyObject)!)
+                    self.tTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
+                    self.tTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
+                    self.tTicket.isHidden = false
+                    self.tLine.isHidden = false
+                }
+            }
+        }
+            })
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        //var currentSize: CGSize = self.preferredContentSize
+        //currentSize.height = 120.0
+//        self.preferredContentSize = currentSize
+        getOrg()
+        print("viewWillAppear")
+        self.updateWidget()
+    }
+    
+    override func viewDidAppear(_ animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        print("viewDidAppear")
+        getOrg()
+     }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    //defaults.setObject([], forKey: "tickets")
+    // Do any additional setup after loading the view from its nib.
+    //print("widget view did load")
+            preferredContentSize = CGSize(width: CGFloat(0), height: CGFloat(205.0))
+  }
+  
+    @IBAction func OpenUrl(_ sender: AnyObject) {
+        let page =  "add_time.html"
+        OpenApp(page)
+    }
+    
+    @IBAction func AddTicket(_ sender: AnyObject) {
+        let page =  "add_tickets.html"
+        OpenApp(page)
+    }
+    
+    @IBAction func MyTickets(_ sender: AnyObject) {
+        let page =  "ticket_list.html#tab=my"
+        OpenApp(page)
+    }
+    
+    @IBAction func AllTickets(_ sender: AnyObject) {
+        let page =  "ticket_list.html#tab=all"
+        OpenApp(page)
+    }
+    @IBAction func Ticket1(_ sender: AnyObject) {
+        let page = (sender as! UIButton).value(forKeyPath: "page") as! String
+        //let page =  "index.html#ticket=zcmkjo"
+        OpenApp(page)
+    }
+    @IBAction func Ticket2(_ sender: AnyObject) {
+        let page = (sender as! UIButton).value(forKeyPath: "page") as! String
+        //let page =  "index.html#ticket=evbcak"
+        //defaults.setObject([], forKey: "tickets")
+        OpenApp(page)
+    }
+    @IBAction func Ticket3(_ sender: AnyObject) {
+        let page = (sender as! UIButton).value(forKeyPath: "page") as! String
+        //let page =  "index.html#ticket=k3n0hk"
+        //defaults.setValue("", forKey: "org")
+        OpenApp(page)
+    }
+    
+    func OpenApp(_ _page : String) {
+        //print(_page)
+        let sherpaHooks = "sherpadesk://"
+        let url = URL(string: sherpaHooks + _page);
+        extensionContext!.open(url!, completionHandler: nil)
+    }
+
+    
+    func widgetMarginInsets(forProposedMarginInsets defaultMarginInsets: UIEdgeInsets) -> UIEdgeInsets {
+        let newInsets = UIEdgeInsets(top: defaultMarginInsets.top, left: defaultMarginInsets.left-30,
+            bottom: defaultMarginInsets.bottom, right: defaultMarginInsets.right)
+        return newInsets
+    }
+
+    override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
+  }
+    /*
+    func getApiWithCommand(command: String, params: Dictionary<String, String> = [:])
+    {
+    do {
+    let urlPath: String = "http://" + Properties.org +
+    //u0diuk-b95s6o:fzo3fkthioj5xi696jzocabuojekpb5o
+    "@api.beta.sherpadesk.com/" + command
+    //tickets?status=open&role=user&limit=3&sort_by=updated"
+    let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])
+    opt.start { response in
+    if let err = response.error {
+    print("error: \(err.localizedDescription)")
+    return //also notify app of failure as needed
+    }
+    var resp = Records(JSONDecoder(response.data))
+    if resp.records != nil &&  resp.records!.count > 0 {
+    resp.records?[0].org = Properties.org
+    //print(resp.records!.count)
+    }
+    //print("opt finished: \(response.description)")
+    //print("data is: \(response.data)") access the response of the data with response.data
+    }
+    } catch let error {
+    print("got an error creating the request: \(error)")
+    }
+    }
+    */
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //  JSONJoy.swift
@@ -1706,317 +2051,3 @@ open class HTTPSecurity {
     
 }
 
-
-//
-//  TodayViewController.swift
-//  todayClockWidget
-//
-//  Created by Christina Moulton on 2015-05-21.
-//  Copyright (c) 2015 Teak Mobile Inc. All rights reserved.
-//
-
-class MyButton: UIButton {
-    var page: String?
-}
-
-import UIKit
-import NotificationCenter
-
-class TodayViewController: UIViewController, NCWidgetProviding {
-    
-    @IBOutlet weak var fTicket: UIButton!
-    @IBOutlet weak var fLine: UIImageView!
-    
-    @IBOutlet weak var sTicket: UIButton!
-    @IBOutlet weak var sLine: UIImageView!
-    
-    @IBOutlet weak var tTicket: UIButton!
-    @IBOutlet weak var tLine: UIImageView!
-    
-    
-    struct Record : JSONJoy {
-        var number: String
-        var subject: String
-        var key: String
-        var org: String
-        //init() {
-        //}
-        
-        init(_ decoder: JSONDecoder) throws {
-            number = try decoder["number"].get()
-            subject = try decoder["subject"].get()//.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            key = try decoder["key"].get()
-            org = ""
-        }
-        init(_ array: AnyObject) {
-            number = (array["number"] as? String)!
-            subject = (array["subject"] as? String)!
-            key = (array["key"] as? String)!
-            org = (array["org"] as? String)!
-        }
-    }
-    
-    struct Records : JSONJoy {
-        var records: NSMutableArray = []
-        init() {
-        }
-        init(_ decoder: JSONDecoder) {
-            //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
-            /*if let recrds = decoder.array {
-                records = []
-                for rDecoder in recrds {
-                    let rec = Record(rDecoder)
-                    records.add([ "number" : rec.number, "subject" : rec.subject, "key" : rec.key, "org" : Properties.org])
-                }
-            }*/
-        }
-    }
-    
-    var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
-    
-    struct Properties {
-        static var org = ""
-    }
-    
-    var tickets: NSMutableArray = []
-    
-    var updateResult:NCUpdateResult = NCUpdateResult.noData
-    
-    func updateWidget()
-    {
-        if !Properties.org.isEmpty
-        {
-            showTickets(self.tickets)
-            
-            do {
-                let command = "tickets" + "?status=open&role=user&limit=3&sort_by=updated"
-                let params = ["", ""]
-                let urlPath: String = "http://" + Properties.org +
-                    "@api.sherpadesk.com/" + command
-                
-                let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])
-                opt.start { response in
-                    if let err = response.error {
-                        print("error: \(err.localizedDescription)")
-                        return //also notify app of failure as needed
-                    }
-                    let resp = Records(JSONDecoder(response.data))
-                    if resp.records.count > 0 {
-                        self.tickets = resp.records
-                        //print("sting during post: \(self.tickets.count)")
-                        self.defaults.set(self.tickets, forKey: "tickets")
-                        self.showTickets(self.tickets)
-                        //print(resp.records)
-                    }
-                }
-            } catch let error {
-                print("got an error creating the request: \(error)")
-            }
-        }
-    }
-    
-    func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-        //print("widgetPerformUpdateWithCompletionHandler")
-        // Perform any setup necessary in order to update the view.
-        // If an error is encountered, use NCUpdateResult.Failed
-        // If there's no update required, use NCUpdateResult.NoData
-        // If there's an update, use NCUpdateResult.NewData
-        //updateWidget()
-        getOrg()
-        return
-        if !Properties.org.isEmpty
-        {
-          completionHandler(NCUpdateResult.newData)
-    
-        }
-        else {
-            //completionHandler(NCUpdateResult.NoData)
-        }
-    }
-    
-    func getOrg(){
-        defaults.synchronize()
-        if let org:String = defaults.object(forKey: "org") as? String
-        {
-            Properties.org = org
-        }
-        else
-        {
-            Properties.org = ""
-        }
-        //print(Properties.org)
-        if !Properties.org.isEmpty{
-            if let tkts:NSMutableArray = defaults.object(forKey: "tickets") as? NSMutableArray
-            {
-                if tkts.count>0 {
-                    if let org = tkts.object(at: 0) as? NSDictionary {
-                        if let torg = org.object(forKey: "org") as? String
-                    {
-                        //print("org\(org)prop\(Properties.org)")
-                        if (torg == Properties.org){
-                            self.tickets = tkts
-                            //print("set\(self.tickets.count)")
-                            return
-                        }
-                    }
-                  }
-                }
-            }
-            showMessage("No recent tickets yet ...")
-        }
-        else
-        {showMessage("Login to SherpaDesk app first")}
-        self.tickets = []
-        defaults.set([], forKey: "tickets")
-        //print("unset\(self.tickets.count)")
-        
-    }
-    
-    func showMessage(_ message : String ){
-        self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.center;
-        self.fTicket.setTitle(message, for: UIControlState())
-        self.fTicket.setValue("index.html", forKeyPath: "page")
-        self.fLine.isHidden = true
-        self.sTicket.isHidden = true
-        self.sLine.isHidden = true
-        self.tTicket.isHidden = true
-        self.tLine.isHidden = true
-    }
-    
-    func showTickets(_ jsonResult : NSMutableArray)
-    {
-        DispatchQueue.main.async(execute: {
-        //print("show: \(jsonResult.count)")
-        if jsonResult.count>0{
-            var rec = Record(jsonResult[0] as AnyObject)
-            self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.fill;
-            self.fTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
-            self.fTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
-            self.fTicket.isHidden = false
-            self.fLine.isHidden = false
-            
-            if jsonResult.count>1{
-                rec = Record((jsonResult.object(at: 1) as? AnyObject)!)
-                self.sTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
-                self.sTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
-                self.sTicket.isHidden = false
-                self.sLine.isHidden = false
-                
-                if jsonResult.count>2{
-                    rec = Record((jsonResult.object(at: 2) as? AnyObject)!)
-                    self.tTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
-                    self.tTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
-                    self.tTicket.isHidden = false
-                    self.tLine.isHidden = false
-                }
-            }
-        }
-            })
-    }
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
-        //var currentSize: CGSize = self.preferredContentSize
-        //currentSize.height = 120.0
-//        self.preferredContentSize = currentSize
-        getOrg()
-        self.updateWidget()
-    }
-    
-    override func viewDidAppear(_ animated: Bool)
-    {
-        super.viewDidAppear(animated)
-        getOrg()
-     }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    //defaults.setObject([], forKey: "tickets")
-    // Do any additional setup after loading the view from its nib.
-    //print("widget view did load")
-            preferredContentSize = CGSize(width: CGFloat(0), height: CGFloat(205.0))
-  }
-  
-    @IBAction func OpenUrl(_ sender: AnyObject) {
-        let page =  "add_time.html"
-        OpenApp(page)
-    }
-    
-    @IBAction func AddTicket(_ sender: AnyObject) {
-        let page =  "add_tickets.html"
-        OpenApp(page)
-    }
-    
-    @IBAction func MyTickets(_ sender: AnyObject) {
-        let page =  "ticket_list.html#tab=my"
-        OpenApp(page)
-    }
-    
-    @IBAction func AllTickets(_ sender: AnyObject) {
-        let page =  "ticket_list.html#tab=all"
-        OpenApp(page)
-    }
-    @IBAction func Ticket1(_ sender: AnyObject) {
-        let page = (sender as! UIButton).value(forKeyPath: "page") as! String
-        //let page =  "index.html#ticket=zcmkjo"
-        OpenApp(page)
-    }
-    @IBAction func Ticket2(_ sender: AnyObject) {
-        let page = (sender as! UIButton).value(forKeyPath: "page") as! String
-        //let page =  "index.html#ticket=evbcak"
-        //defaults.setObject([], forKey: "tickets")
-        OpenApp(page)
-    }
-    @IBAction func Ticket3(_ sender: AnyObject) {
-        let page = (sender as! UIButton).value(forKeyPath: "page") as! String
-        //let page =  "index.html#ticket=k3n0hk"
-        //defaults.setValue("", forKey: "org")
-        OpenApp(page)
-    }
-    
-    func OpenApp(_ _page : String) {
-        //print(_page)
-        let sherpaHooks = "sherpadesk://"
-        let url = URL(string: sherpaHooks + _page);
-        extensionContext!.open(url!, completionHandler: nil)
-    }
-
-    
-    func widgetMarginInsets(forProposedMarginInsets defaultMarginInsets: UIEdgeInsets) -> UIEdgeInsets {
-        let newInsets = UIEdgeInsets(top: defaultMarginInsets.top, left: defaultMarginInsets.left-30,
-            bottom: defaultMarginInsets.bottom, right: defaultMarginInsets.right)
-        return newInsets
-    }
-
-    override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-    /*
-    func getApiWithCommand(command: String, params: Dictionary<String, String> = [:])
-    {
-    do {
-    let urlPath: String = "http://" + Properties.org +
-    //u0diuk-b95s6o:fzo3fkthioj5xi696jzocabuojekpb5o
-    "@api.beta.sherpadesk.com/" + command
-    //tickets?status=open&role=user&limit=3&sort_by=updated"
-    let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])
-    opt.start { response in
-    if let err = response.error {
-    print("error: \(err.localizedDescription)")
-    return //also notify app of failure as needed
-    }
-    var resp = Records(JSONDecoder(response.data))
-    if resp.records != nil &&  resp.records!.count > 0 {
-    resp.records?[0].org = Properties.org
-    //print(resp.records!.count)
-    }
-    //print("opt finished: \(response.description)")
-    //print("data is: \(response.data)") access the response of the data with response.data
-    }
-    } catch let error {
-    print("got an error creating the request: \(error)")
-    }
-    }
-    */
-}
