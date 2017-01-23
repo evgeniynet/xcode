@@ -102,7 +102,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                         if resp.records.count > 0 {
                             self.tickets = resp.records
                             //print("sting during post: \(self.tickets.count)")
-                            //self.defaults.set(self.tickets, forKey: "tickets")
+                            //let encodedData = NSKeyedArchiver.archivedData(withRootObject: self.tickets)
+                            //UserDefaults.standard().set(encodedData, forKey: "people")
+                            
+                            //self.defaults.set(encodedData, forKey: "tickets")
                             self.showTickets(self.tickets)
                             //print(resp.records)
                         }
