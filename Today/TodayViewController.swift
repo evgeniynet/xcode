@@ -49,7 +49,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     struct Records : JSONJoy {
-        var records: Array<Record> = []
+        var records: Array<NSDictionary> = []
         init() {
         }
         init(_ decoder: JSONDecoder) throws {
@@ -57,14 +57,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 records = []
                 for val in arr {
                     let dictionary: NSDictionary = ["number" : val.number, "subject" : val.subject, "key" : val.key, "org" : Properties.org]
-                    records.append(Record(dictionary))
+                    records.append(dictionary)
                 }
-        }
-        init(_ array: Array<NSDictionary>) {
-            records = []
-            for val in array {
-                records.append(Record(val))
-            }
         }
     }
     
@@ -74,7 +68,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         static var org = ""
     }
     
-    var tickets: Array<Record> = []
+    var tickets: Array<NSDictionary> = []
     
     var updateResult:NCUpdateResult = NCUpdateResult.noData
     
@@ -101,11 +95,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                         let resp = try Records(JSONDecoder(response.data))
                         if resp.records.count > 0 {
                             self.tickets = resp.records
-                            //print("sting during post: \(self.tickets.count)")
-                            //let encodedData = NSKeyedArchiver.archivedData(withRootObject: self.tickets)
-                            //UserDefaults.standard().set(encodedData, forKey: "people")
-                            
-                            //self.defaults.set(encodedData, forKey: "tickets")
+                            self.defaults.set(resp.records, forKey: "tickets")
                             self.showTickets(self.tickets)
                             //print(resp.records)
                         }
@@ -159,7 +149,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                     {
                         //print("org\(org)prop\(Properties.org)")
                         if (torg == Properties.org){
-                            self.tickets = Records(tkts).records
+                            self.tickets = tkts
                             //print("set\(self.tickets.count)")
                             return
                         }
@@ -187,12 +177,12 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         self.tLine.isHidden = true
     }
     
-    func showTickets(_ jsonResult : Array<Record>)
+    func showTickets(_ jsonResult : Array<NSDictionary>)
     {
         DispatchQueue.main.async(execute: {
         //print("show: \(jsonResult.count)")
         if jsonResult.count>0{
-            var rec = jsonResult[0]
+            var rec = Record(jsonResult[0])
             self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.fill;
             self.fTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
             self.fTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
@@ -200,14 +190,14 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             self.fLine.isHidden = false
             
             if jsonResult.count>1{
-                rec = jsonResult[1]
+                rec = Record(jsonResult[1])
                 self.sTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
                 self.sTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
                 self.sTicket.isHidden = false
                 self.sLine.isHidden = false
                 
                 if jsonResult.count>2{
-                    rec = jsonResult[2]
+                    rec = Record(jsonResult[2])
                     self.tTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
                     self.tTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
                     self.tTicket.isHidden = false

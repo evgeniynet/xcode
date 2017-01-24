@@ -83,7 +83,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="298" height="81"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="43E-1O-3Ok">
-                                        <rect key="frame" x="0.0" y="0.0" width="67" height="78"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="65" height="79"/>
                                         <state key="normal" backgroundImage="Add Time"/>
                                         <state key="selected" backgroundImage="Add Time"/>
                                         <connections>
@@ -91,21 +91,21 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcL-FH-zPp">
-                                        <rect key="frame" x="73.5" y="0.0" width="77" height="78"/>
+                                        <rect key="frame" x="75" y="0.0" width="74" height="79"/>
                                         <state key="normal" image="Create Ticket"/>
                                         <connections>
                                             <action selector="AddTicket:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="hQR-ia-oON"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWB-hH-euI">
-                                        <rect key="frame" x="157.5" y="0.0" width="74" height="81"/>
+                                        <rect key="frame" x="160" y="0.0" width="72" height="81"/>
                                         <state key="normal" image="My Tickets"/>
                                         <connections>
                                             <action selector="MyTickets:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="pQc-t2-nVK"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rgh-bQ-Dnt">
-                                        <rect key="frame" x="238" y="0.0" width="60" height="81"/>
+                                        <rect key="frame" x="242" y="0.0" width="56" height="81"/>
                                         <state key="normal" image="All Open"/>
                                         <connections>
                                             <action selector="AllTickets:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="xm4-d8-4KM"/>
@@ -154,11 +154,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Add Time" width="67" height="78"/>
-        <image name="All Open" width="60" height="81"/>
-        <image name="Create Ticket" width="77" height="78"/>
-        <image name="My Tickets" width="74" height="81"/>
-        <image name="line" width="1440" height="2"/>
+        <image name="Add Time" width="65" height="79"/>
+        <image name="All Open" width="56" height="81"/>
+        <image name="Create Ticket" width="74" height="79"/>
+        <image name="My Tickets" width="72" height="81"/>
+        <image name="line" width="1440" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
