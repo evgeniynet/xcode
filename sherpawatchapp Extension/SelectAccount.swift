@@ -17,45 +17,33 @@ class SelectAccountInterfaceController: WKInterfaceController {
         var id: Int
         var name: String
         var org: String
-        //init() {
-        //}
         
         init(_ decoder: JSONDecoder) throws {
-            id = try decoder["id"].get()
-            name = try decoder["name"].get()//.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            id = try decoder["time_id"].get()
+            name = try decoder["user_name"].get()
+            name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             org = ""
         }
-        init(_ array: AnyObject) {
-            /*
-            if let userDict = array as? NSDictionary {
-                id = (userDict["id"] as? Int)!
-                name = (userDict["name"] as? String)!
-                org = (userDict["org"] as? String)!
-            }*/
-            id = 1
-            name = ""
-            org = ""
+        init(_ array: NSDictionary) {
+            id = (array["id"] as? Int)!
+            name = (array["name"] as? String)!
+            org = (array["org"] as? String)!
         }
     }
     
+    
     struct Records : JSONJoy {
-        var records: NSMutableArray = []
+        var records: Array<NSDictionary> = []
         init() {
         }
-        init(_ decoder: JSONDecoder) {
-            //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
-            /*
-            if let recrds = decoder.array {
-                records = []
-                if recrds.count < 1 {
-                    records.add(["id" : -1, "name" : "Default", "org" : Properties.org])
-                }
-                for rDecoder in recrds {
-                    let rec = Record(rDecoder)
-                    records.add([ "id" : rec.id, "name" : rec.name, "org" : Properties.org])
-                }
+        init(_ decoder: JSONDecoder) throws {
+            records = []
+            let arr: Array<Record> = try decoder.get()
+            records = []
+            for val in arr {
+                let dictionary: NSDictionary = ["id" : val.id, "name" : val.name, "org" : Properties.org]
+                records.append(dictionary)
             }
- */
         }
     }
 
@@ -74,10 +62,9 @@ class SelectAccountInterfaceController: WKInterfaceController {
         "isaccount": "true"
     ]
     
-    var accounts: NSMutableArray = []
+    var accounts: Array<NSDictionary> = []
     
     func getOrg(){
-        /*
         defaults.synchronize()
         if let org:String = defaults.object(forKey: "org") as? String
         {
@@ -89,7 +76,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
         }
         //print(Properties.org)
         if !Properties.org.isEmpty{
-            if let accts:NSMutableArray = defaults.object(forKey: "accounts") as? NSMutableArray
+            if let accts:Array<NSDictionary> = defaults.object(forKey: "accounts") as? Array<NSDictionary>
             {
                 if accts.count>0 {
                     if let org = accts[0]["org"] as? String
@@ -112,15 +99,13 @@ class SelectAccountInterfaceController: WKInterfaceController {
         self.accounts = []
         defaults.set([], forKey: "accounts")
         //print("unset\(self.tickets.count)")
-        */
     }
     
     func updateWidget()
     {
-        /*
         if !Properties.org.isEmpty
         {
-            loadTableData()
+            //loadTableData()
             
             do {
                 let command = "accounts" + "?is_with_statistics=false"
@@ -134,19 +119,20 @@ class SelectAccountInterfaceController: WKInterfaceController {
                         print("error: \(err.localizedDescription)")
                         return //also notify app of failure as needed
                     }
-                    let resp = Records(JSONDecoder(response.data as AnyObject))
+                    do {
+                    let resp = try Records(JSONDecoder(response.data))
                     if resp.records.count > 0 {
                         let oldcount =  self.accounts.count
                         var oldorg = false;
                         if oldcount > 0 {
-                            if let org = self.accounts(at: 0) as? NSDictionary {
+                            let org = self.accounts[0]
                             if let torg = org.object(forKey: "org") as? String
                             {
                                 if (torg != Properties.org){
                                     oldorg = true
                                 }
                             }
-                        }
+                        
                         self.accounts = resp.records
                         //print("sting during post: \(self.tickets.count)")
                         self.defaults.set(self.accounts, forKey: "accounts")
@@ -159,14 +145,18 @@ class SelectAccountInterfaceController: WKInterfaceController {
                             self.AddTimeData["account"] = String(Record(resp.records[0]).id)
                             self.AddTimeData["org"] = Properties.org
                             self.pushController(withName: "ProjectList", context: self.AddTimeData)
+                            }
+                        }
                         }
                     }
-                }
-            }; catch let error {
+                    catch {
+                            print("unable to parse the JSON")
+                        }
+                    }
+            } catch let error {
                 print("got an error creating the request: \(error)")
             }
         }
- */
     }
 
     
@@ -175,17 +165,16 @@ class SelectAccountInterfaceController: WKInterfaceController {
         for (index, account) in accounts.enumerated() {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! RecordTableRowController
-            //let rec = Record(account)
-            //row.recordLabel.setText(rec.name)
+            let rec = Record(account)
+            row.recordLabel.setText(rec.name)
         }
     }
-}
 
-/*
+
     override func contextForSegue(withIdentifier segueIdentifier: String,
         in table: WKInterfaceTable, rowIndex: Int) -> Any? {
             let sequeId = "ToProject"
-            let acc  = accounts as NSMutableArray
+            let acc  = accounts as Array<NSDictionary>
             if segueIdentifier == sequeId {
                 let rec = Record(acc[rowIndex])
                 AddTimeData["account"] = String(rec.id)
@@ -220,5 +209,6 @@ class SelectAccountInterfaceController: WKInterfaceController {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
-   */
+}
+ 
 
