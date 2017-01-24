@@ -9,6 +9,7 @@
 import WatchKit
 import Foundation
 
+
 class InterfaceController: WKInterfaceController {
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
@@ -18,16 +19,14 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var Login: WKInterfaceButton!
     
     
-    
-    
     @IBAction func phoneBtnTapped() {
         let url = URL(string: "tel:")!
         WKExtension.shared().openSystemURL(url)
     }
     
     func displayDetailScene(_ index: Int) {
-      pushController(withName: "AccountList",
-            context: index)
+        pushController(withName: "AccountList",
+                       context: index)
     }
     
     struct Record : JSONJoy {
@@ -49,9 +48,9 @@ class InterfaceController: WKInterfaceController {
             name = (array["name"] as? String)!
             hours = (array["hours"] as? Float)!
             org = (array["org"] as? String)!
-            }
+        }
     }
-
+    
     
     struct Records : JSONJoy {
         var records: Array<NSDictionary> = []
@@ -73,7 +72,7 @@ class InterfaceController: WKInterfaceController {
     struct Properties {
         static var org = ""
     }
-
+    
     var timelogs: Array<NSDictionary> = []
     
     func getOrg(){
@@ -93,7 +92,7 @@ class InterfaceController: WKInterfaceController {
             {
                 if timelgs.count>0 {
                     let org = timelgs[0]
-                        if let torg = org.object(forKey: "org") as? String
+                    if let torg = org.object(forKey: "org") as? String
                     {
                         //print("org\(org)prop\(Properties.org)")
                         if (torg == Properties.org){
@@ -101,22 +100,23 @@ class InterfaceController: WKInterfaceController {
                             print("set\(self.timelogs.count)")
                             return
                         }
-                    
+                        
+                    }
                 }
+                //showMessage("No recent tickets yet ...")
             }
-            //showMessage("No recent tickets yet ...")
+            else
+            {
+                button.setEnabled(false);
+                timeTable.setNumberOfRows(1, withRowType: "TextTableRowController")
+                let row = timeTable.rowController(at: 0) as! TextTableRowController
+                row.nameLabel.setText("Login to SherpaDesk")
+            }
+            self.timelogs = []
+            defaults.set([], forKey: "timelogs")
+            //print("unset\(self.tickets.count)")
+            
         }
-        else
-        {
-            button.setEnabled(false);
-            timeTable.setNumberOfRows(1, withRowType: "TextTableRowController")
-            let row = timeTable.rowController(at: 0) as! TextTableRowController
-            row.nameLabel.setText("Login to SherpaDesk")
-        }
-        self.timelogs = []
-        defaults.set([], forKey: "timelogs")
-        //print("unset\(self.tickets.count)")
-        
     }
     
     func updateWidget()
@@ -143,7 +143,7 @@ class InterfaceController: WKInterfaceController {
                         if resp.records.count > 0 {
                             self.timelogs = resp.records
                             self.defaults.set(resp.records, forKey: "timelogs")
-                            loadTableData()
+                            self.loadTableData()
                             //print(resp.records)
                         }
                     } catch {
@@ -166,51 +166,52 @@ class InterfaceController: WKInterfaceController {
             row.hoursLabel.setText(String(format: "%2.2f", rec.hours))
         }
     }
-}
     
-        override func awake(withContext context: Any?) {
-            super.awake(withContext: context)
-            
-            /*if let text = context as? String {
-             let indexSet = NSMutableIndexSet()
-             indexSet.addIndex(0)
-             
-             timeTable.insertRowsAtIndexes(indexSet,
-             withRowType: "TextTableRowController")
-             let row = timeTable.rowControllerAtIndex(0) as! TextTableRowController
-             row.nameLabel.setText("Jon Vickers\nbigWebApps")
-             row.hoursLabel.setText(text)
-             }
-             */
-        }
-        
-        override func willActivate() {
-            // This method is called when watch view controller is about to be visible to user
-            super.willActivate()
-            getOrg()
-            updateWidget()
-        }
-        
-        override func didDeactivate() {
-            // This method is called when watch view controller is no longer visible
-            super.didDeactivate()
-        }
+    
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
+        /*if let text = context as? String {
+         let indexSet = NSMutableIndexSet()
+         indexSet.addIndex(0)
+         
+         timeTable.insertRowsAtIndexes(indexSet,
+         withRowType: "TextTableRowController")
+         let row = timeTable.rowControllerAtIndex(0) as! TextTableRowController
+         row.nameLabel.setText("Jon Vickers\nbigWebApps")
+         row.hoursLabel.setText(text)
+         }
+         */
+        // Configure interface objects here.
     }
-
     
-    /*init() {
-        //super.init()
-        /*let z = [Int](1...40)
-        
-        var test = z.map({
-            (number: Int) -> Float in
-            let result =  Float(number) * Float(0.25)
-            return result
-        })
-        
-        print(test) */
-    }*/
+    override func willActivate() {
+        // This method is called when watch view controller is about to be visible to user
+        super.willActivate()
+        getOrg()
+        updateWidget()
+    }
+    
+    override func didDeactivate() {
+        // This method is called when watch view controller is no longer visible
+        super.didDeactivate()
+    }
+    
+}
 
-   
+
+/*init() {
+ //super.init()
+ /*let z = [Int](1...40)
+ 
+ var test = z.map({
+ (number: Int) -> Float in
+ let result =  Float(number) * Float(0.25)
+ return result
+ })
+ 
+ print(test) */
+ }*/
+
+
 
 
