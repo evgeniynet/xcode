@@ -35,47 +35,36 @@ class InterfaceController: WKInterfaceController {
         var name: String
         var hours: Float
         var org: String
-        //init() {
-        //}
         
         init(_ decoder: JSONDecoder) throws {
             id = try decoder["time_id"].get()
             name = try decoder["user_name"].get()
-                /*.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\n" + try decoder["account_name"].get().replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)*/
+            let acc: String = try decoder["account_name"].get()
+            name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\n" + acc.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             hours = try decoder["hours"].get()
             org = ""
         }
-        init(_ array: AnyObject) {
-            id = 1
-            name = ""
-            hours = 0
-            org = ""
-            if let userDict = array as? NSDictionary {
-            id = (userDict["id"] as? Int)!
-            name = (userDict["name"] as? String)!
-            hours = (userDict["hours"] as? Float)!
-            org = (userDict["org"] as? String)!
+        init(_ array: NSDictionary) {
+            id = (array["id"] as? Int)!
+            name = (array["name"] as? String)!
+            hours = (array["hours"] as? Float)!
+            org = (array["org"] as? String)!
             }
-        }
     }
 
     
     struct Records : JSONJoy {
-        var records: NSMutableArray = []
+        var records: Array<NSDictionary> = []
         init() {
         }
         init(_ decoder: JSONDecoder) throws {
-            //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
             records = []
-            /*
-                var recrds: NSMutableArray
-                recrds = try decoder.get()
-                records = []
-                for rDecoder in recrds {
-                    let rec = Record(rDecoder)
-                    records.add([ "id" : rec.id, "name" : rec.name, "hours" : rec.hours, "org" : Properties.org])
-                }
- */
+            let arr: Array<Record> = try decoder.get()
+            records = []
+            for val in arr {
+                let dictionary: NSDictionary = ["id" : val.id, "name" : val.name, "hours" : val.hours, "org" : Properties.org]
+                records.append(dictionary)
+            }
         }
     }
     
@@ -85,7 +74,7 @@ class InterfaceController: WKInterfaceController {
         static var org = ""
     }
 
-    var timelogs: NSMutableArray = []
+    var timelogs: Array<NSDictionary> = []
     
     func getOrg(){
         defaults.synchronize()
@@ -97,15 +86,13 @@ class InterfaceController: WKInterfaceController {
         {
             Properties.org = ""
         }
-        //defaults.setObject(Properties.org, forKey: "org")
-        //print(Properties.org)
         if !Properties.org.isEmpty{
             button.setEnabled(true);
             
-            if let timelgs:NSMutableArray = defaults.object(forKey: "timelogs") as? NSMutableArray
+            if let timelgs:Array<NSDictionary> = defaults.object(forKey: "timelogs") as? Array<NSDictionary>
             {
                 if timelgs.count>0 {
-                    if let org = timelgs.object(at: 0) as? NSDictionary {
+                    let org = timelgs[0]
                         if let torg = org.object(forKey: "org") as? String
                     {
                         //print("org\(org)prop\(Properties.org)")
@@ -114,7 +101,7 @@ class InterfaceController: WKInterfaceController {
                             print("set\(self.timelogs.count)")
                             return
                         }
-                    }
+                    
                 }
             }
             //showMessage("No recent tickets yet ...")
@@ -150,16 +137,18 @@ class InterfaceController: WKInterfaceController {
                         print("error: \(err.localizedDescription)")
                         return //also notify app of failure as needed
                     }
-                    /*
-                    let resp = Records(JSONDecoder(response.data as AnyObject))
-                    if resp.records.count > 0 {
-                        self.timelogs = resp.records
-                        //print("sting during post: \(self.tickets.count)")
-                        self.defaults.set(self.timelogs, forKey: "timelogs")
-                        loadTableData()
-                        //print(resp.records)
+                    
+                    do {
+                        let resp = try Records(JSONDecoder(response.data))
+                        if resp.records.count > 0 {
+                            self.timelogs = resp.records
+                            self.defaults.set(resp.records, forKey: "timelogs")
+                            loadTableData()
+                            //print(resp.records)
+                        }
+                    } catch {
+                        print("unable to parse the JSON")
                     }
- */
                 }
             } catch let error {
                 print("got an error creating the request: \(error)")
@@ -172,7 +161,7 @@ class InterfaceController: WKInterfaceController {
         for (index, timelgs) in timelogs.enumerated() {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! TextTableRowController
-            let rec = Record(timelgs as AnyObject)
+            let rec = Record(timelgs)
             row.nameLabel.setText(rec.name)
             row.hoursLabel.setText(String(format: "%2.2f", rec.hours))
         }
@@ -199,7 +188,7 @@ class InterfaceController: WKInterfaceController {
             // This method is called when watch view controller is about to be visible to user
             super.willActivate()
             getOrg()
-            //updateWidget()
+            updateWidget()
         }
         
         override func didDeactivate() {

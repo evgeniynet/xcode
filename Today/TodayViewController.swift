@@ -50,8 +50,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     struct Records : JSONJoy {
         var records: Array<NSDictionary> = []
-        init() {
-        }
         init(_ decoder: JSONDecoder) throws {
             let arr: Array<Record> = try decoder.get()
                 records = []
