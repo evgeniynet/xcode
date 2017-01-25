@@ -97,7 +97,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
              self.pushController(withName: "Main1", context: nil)
         }
         self.projects = []
-        defaults.set([], forKey: "projects")
+        defaults.set([], forKey: "projects"+AddTimeData["account"]!)
         //print("unset\(self.tickets.count)")
     }
     
@@ -126,7 +126,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
                     self.defaults.set(self.projects, forKey: "projects"+self.AddTimeData["account"]!)
                     self.loadTableData()
                     if resp.records.count < 2 {
-                        self.AddTimeData["project"] = String(Record(resp.records[0]).id)
+                        self.AddTimeData["project"] = String(0) //Record(resp.records[0]).id
                         self.pushController(withName: "TypesList", context: self.AddTimeData)
                         }
                     }
@@ -165,7 +165,6 @@ class SelectProjectInterfaceController: WKInterfaceController {
     
     override init() {
         super.init()
-        getOrg()
     }
     
     override func awake(withContext context: Any?) {
@@ -176,6 +175,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
             AddTimeData = dict!
             print(AddTimeData["account"]!)
         }
+        getOrg()
         updateWidget()
     }
     

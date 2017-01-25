@@ -96,7 +96,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
 //self.pushController(withName: "Main1", context: nil)
         }
         self.tasktypes = []
-        defaults.set([], forKey: "tasktypes")
+        defaults.set([], forKey: "tasktypes"+AddTimeData["account"]!+"_"+"tasktypes"+AddTimeData["project"]!)
         //print("unset\(self.tickets.count)")
         
     }
@@ -126,7 +126,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
                         self.defaults.set(self.tasktypes, forKey: "tasktypes"+self.AddTimeData["account"]!+"_"+"tasktypes"+self.AddTimeData["project"]!)
                         self.loadTableData()
                     if resp.records.count < 2 {
-                        self.AddTimeData["tasktype"] = String(Record(resp.records[0]).id)
+                        self.AddTimeData["tasktype"] = String(0) //Record(resp.records[0]).id
                         self.pushController(withName: "AddTime", context: self.AddTimeData)
                     }
                     }
@@ -165,7 +165,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
     override init() {
         super.init()
 
-        getOrg()
+        //getOrg()
     }
     
     override func awake(withContext context: Any?) {
@@ -176,6 +176,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
             AddTimeData = dict!
             print(AddTimeData["project"]!)
         }
+        getOrg()
         updateWidget()
     }
     
