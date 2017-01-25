@@ -52,7 +52,6 @@
 		FA1173571BF9DC6E00D430C8 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1173561BF9DC6E00D430C8 /* InterfaceController.swift */; };
 		FA1173591BF9DC6E00D430C8 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1173581BF9DC6E00D430C8 /* ExtensionDelegate.swift */; };
 		FA11735B1BF9DC6E00D430C8 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA11735A1BF9DC6E00D430C8 /* NotificationController.swift */; };
-		FA11735D1BF9DC6E00D430C8 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA11735C1BF9DC6E00D430C8 /* GlanceController.swift */; };
 		FA11735F1BF9DC6E00D430C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA11735E1BF9DC6E00D430C8 /* Assets.xcassets */; };
 		FA1173631BF9DC6E00D430C8 /* sherpawatchapp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FA1173431BF9DC6D00D430C8 /* sherpawatchapp.app */; };
 		FA65C5CE1B70EA2D004E6CCD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6009679A53DE46318BAF2499 /* SystemConfiguration.framework */; };
@@ -224,7 +223,6 @@
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = Sherpadesk/config.xml; sourceTree = "<group>"; };
-		FA0C1E351E2CFECF008B8941 /* SwiftHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHTTP.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/SherpaDesk-fmgnlwzwnejkedhbfplaidywjbna/Build/Products/Debug-iphonesimulator/SwiftHTTP/SwiftHTTP.framework"; sourceTree = "<group>"; };
 		FA1173431BF9DC6D00D430C8 /* sherpawatchapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sherpawatchapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA1173461BF9DC6D00D430C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		FA1173481BF9DC6D00D430C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -234,13 +232,10 @@
 		FA1173561BF9DC6E00D430C8 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
 		FA1173581BF9DC6E00D430C8 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		FA11735A1BF9DC6E00D430C8 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
-		FA11735C1BF9DC6E00D430C8 /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
 		FA11735E1BF9DC6E00D430C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA1173601BF9DC6E00D430C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA11736B1BF9EF0D00D430C8 /* sherpawatchapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = sherpawatchapp.entitlements; sourceTree = "<group>"; };
 		FA11736C1BF9EF2800D430C8 /* sherpawatchapp Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "sherpawatchapp Extension.entitlements"; sourceTree = "<group>"; };
-		FA2208821E27D8D8002094C7 /* Pods_Sherpadesk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_Sherpadesk.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/SherpaDesk-fmgnlwzwnejkedhbfplaidywjbna/Build/Products/Debug-iphonesimulator/Pods_Sherpadesk.framework"; sourceTree = "<group>"; };
-		FA2208861E27D957002094C7 /* JSONJoy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONJoy.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/SherpaDesk-fmgnlwzwnejkedhbfplaidywjbna/Build/Products/Debug-iphonesimulator/JSONJoy-Swift/JSONJoy.framework"; sourceTree = "<group>"; };
 		FA93E68E1B71203F00BE50F1 /* Today.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Today.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA93E68F1B71203F00BE50F1 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		FA93E6921B71203F00BE50F1 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -375,9 +370,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FA0C1E351E2CFECF008B8941 /* SwiftHTTP.framework */,
-				FA2208861E27D957002094C7 /* JSONJoy.framework */,
-				FA2208821E27D8D8002094C7 /* Pods_Sherpadesk.framework */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
@@ -508,7 +500,6 @@
 				FA1173561BF9DC6E00D430C8 /* InterfaceController.swift */,
 				FA1173581BF9DC6E00D430C8 /* ExtensionDelegate.swift */,
 				FA11735A1BF9DC6E00D430C8 /* NotificationController.swift */,
-				FA11735C1BF9DC6E00D430C8 /* GlanceController.swift */,
 				FA11735E1BF9DC6E00D430C8 /* Assets.xcassets */,
 				FA1173601BF9DC6E00D430C8 /* Info.plist */,
 				FA1173541BF9DC6E00D430C8 /* Supporting Files */,
@@ -543,7 +534,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Sherpadesk" */;
 			buildPhases = (
-				84714EEC46AA7E438CAA23B2 /* [CP] Check Pods Manifest.lock */,
 				304B58A110DAC018002A0835 /* Copy www directory */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -551,8 +541,6 @@
 				FA93E67E1B70FC8600BE50F1 /* Embed Watch Content */,
 				FA93E69E1B71203F00BE50F1 /* Embed App Extensions */,
 				FAD258E21BC2EE1400711F10 /* Embed Frameworks */,
-				BCC0D249FB8BEB90196D7E2F /* [CP] Embed Pods Frameworks */,
-				5C7C88820B77ACB3DBF551F6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -796,51 +784,6 @@
 			shellScript = "cordova/lib/copy-www-build-step.sh";
 			showEnvVarsInLog = 0;
 		};
-		5C7C88820B77ACB3DBF551F6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sherpadesk/Pods-Sherpadesk-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84714EEC46AA7E438CAA23B2 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		BCC0D249FB8BEB90196D7E2F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sherpadesk/Pods-Sherpadesk-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -880,7 +823,6 @@
 				FAE88D371BF9FFE6000FC37A /* AddTime.swift in Sources */,
 				FAE88D391BF9FFE6000FC37A /* SelectProject.swift in Sources */,
 				FAE88D3A1BF9FFE6000FC37A /* SelectType.swift in Sources */,
-				FA11735D1BF9DC6E00D430C8 /* GlanceController.swift in Sources */,
 				FAE88D381BF9FFE6000FC37A /* SelectAccount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -956,8 +898,6 @@
 					"$(inherited)",
 					"Sherpadesk/Plugins/cordova-plugin-webserver",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/JSONJoy-Swift",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/SwiftHTTP",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1014,8 +954,6 @@
 					"$(inherited)",
 					"Sherpadesk/Plugins/cordova-plugin-webserver",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/JSONJoy-Swift",
-					"$(PROJECT_DIR)/build/Debug-iphoneos/SwiftHTTP",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sherpadesk/Sherpadesk-Prefix.pch";

@@ -72,7 +72,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     func updateWidget()
     {
-        print("1"+Properties.org)
         if !Properties.org.isEmpty
         {
             showTickets(self.tickets)

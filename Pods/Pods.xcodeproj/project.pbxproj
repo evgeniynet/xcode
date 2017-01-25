@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 47;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -51,14 +51,14 @@
 		57EBFC38433638E94706B206ADB45732 /* JSONJoy-Swift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSONJoy-Swift-prefix.pch"; sourceTree = "<group>"; };
 		639DF328F32C6DEF858D46B6A3FF3528 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Source/Request.swift; sourceTree = "<group>"; };
 		6522EB7B9BBAC4D10F6EB6226056A33B /* Pods-Sherpadesk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sherpadesk.release.xcconfig"; sourceTree = "<group>"; };
-		692CCA34EDF33C30FAB4A555511E29EC /* JSONJoy-Swift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "JSONJoy-Swift.modulemap"; sourceTree = "<group>"; };
+		692CCA34EDF33C30FAB4A555511E29EC /* JSONJoy-Swift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "JSONJoy-Swift.modulemap"; sourceTree = "<group>"; };
 		69F719C6A014630F440639113358BDAF /* Pods-Sherpadesk-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Sherpadesk-resources.sh"; sourceTree = "<group>"; };
-		708C12D42999B273FDF281A040A67E5B /* Pods_Sherpadesk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Sherpadesk.framework; path = "Pods-Sherpadesk.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		708C12D42999B273FDF281A040A67E5B /* Pods_Sherpadesk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sherpadesk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7245BE7819912042828C60FE8FB61364 /* JSONJoy-Swift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JSONJoy-Swift-dummy.m"; sourceTree = "<group>"; };
-		783E482CAFC99CB12509BE7C58E7B35D /* SwiftHTTP.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SwiftHTTP.modulemap; sourceTree = "<group>"; };
+		783E482CAFC99CB12509BE7C58E7B35D /* SwiftHTTP.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftHTTP.modulemap; sourceTree = "<group>"; };
 		89C401E0EC2E12611DEC76CE1FA77375 /* Upload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Upload.swift; path = Source/Upload.swift; sourceTree = "<group>"; };
 		92BD39C36D6D654A49CFE1260B12DE15 /* SwiftHTTP-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftHTTP-umbrella.h"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		95057FCB1CB952BD6EDCBA8E16509DC0 /* Operation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Operation.swift; path = Source/Operation.swift; sourceTree = "<group>"; };
 		97E8EE182ADC1755DE58D96557007CAE /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A607ED1EBE67ED9D2675A3D098DD321F /* Pods-Sherpadesk-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Sherpadesk-umbrella.h"; sourceTree = "<group>"; };
@@ -68,11 +68,11 @@
 		B49BFBCEACDAFD5D3BE141A5A936AE72 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B77A08677E3E1E9D219988DA289B6AC5 /* Pods-Sherpadesk-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Sherpadesk-dummy.m"; sourceTree = "<group>"; };
 		BA9649B0F02A5AB3D24BB02245B8E03F /* Pods-Sherpadesk-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Sherpadesk-frameworks.sh"; sourceTree = "<group>"; };
-		BCB19026A1872EDFC5E86C83A58BC66D /* JSONJoy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = JSONJoy.framework; path = "JSONJoy-Swift.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCB19026A1872EDFC5E86C83A58BC66D /* JSONJoy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JSONJoy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		CD1AC49F983E769AA2559FD32CF31334 /* Pods-Sherpadesk.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Sherpadesk.modulemap"; sourceTree = "<group>"; };
+		CD1AC49F983E769AA2559FD32CF31334 /* Pods-Sherpadesk.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Sherpadesk.modulemap"; sourceTree = "<group>"; };
 		CEA006E3243C5382D71A48AACFE50BCC /* SwiftHTTP-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftHTTP-dummy.m"; sourceTree = "<group>"; };
-		DCE18DBD811FE1D345D38E9BD502EE75 /* SwiftHTTP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftHTTP.framework; path = SwiftHTTP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCE18DBD811FE1D345D38E9BD502EE75 /* SwiftHTTP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftHTTP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE37DFCFC15E9416955E132464175816 /* Pods-Sherpadesk-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Sherpadesk-acknowledgements.plist"; sourceTree = "<group>"; };
 		FD7C7001AD007B4EA0F703BBD450AA43 /* JSONJoy-Swift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSONJoy-Swift-umbrella.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,7 +121,6 @@
 				2AA12422E862A2081265C0BC2B880F42 /* JSONJoy.swift */,
 				4FA74E9BA91AE73B291588D4D3BE99D4 /* Support Files */,
 			);
-			name = "JSONJoy-Swift";
 			path = "JSONJoy-Swift";
 			sourceTree = "<group>";
 		};
@@ -225,7 +224,6 @@
 				89C401E0EC2E12611DEC76CE1FA77375 /* Upload.swift */,
 				B04453115D12F4D14977403C7F756A49 /* Support Files */,
 			);
-			name = SwiftHTTP;
 			path = SwiftHTTP;
 			sourceTree = "<group>";
 		};
