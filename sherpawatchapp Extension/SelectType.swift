@@ -17,44 +17,33 @@ class SelectTypeInterfaceController: WKInterfaceController {
         var id: Int
         var name: String
         var org: String
-        //init() {
-        //}
         
         init(_ decoder: JSONDecoder) throws  {
             id = try decoder["id"].get()
-            name = try decoder["name"].get()//.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            name = try decoder["name"].get()
+            name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             org = ""
         }
-        init(_ array: AnyObject) {
-            id = 1
-            name = ""
-            org = ""
-            if let userDict = array as? NSDictionary {
-                id = (userDict["id"] as? Int)!
-                name = (userDict["name"] as? String)!
-                org = (userDict["org"] as? String)!
-            }
+        init(_ array: NSDictionary) {
+                id = (array["id"] as? Int)!
+                name = (array["name"] as? String)!
+                org = (array["org"] as? String)!
         }
     }
     
     struct Records : JSONJoy {
-        var records: NSMutableArray = []
+        var records: Array<NSDictionary> = []
         init() {
         }
-        init(_ decoder: JSONDecoder) {
-            //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
+        init(_ decoder: JSONDecoder) throws {
             records = []
-            /*if let recrds = decoder.array {
-                records = []
-                if recrds.count < 1 {
-                    records.add(["id" : 0, "name" : "Default", "org" : Properties.org])
-                }
-                for rDecoder in recrds {
-                    let rec = Record(rDecoder)
-                    records.add([ "id" : rec.id, "name" : rec.name, "org" : Properties.org])
-                }
+            let arr: Array<Record> = try decoder.get()
+            records = []
+            for val in arr {
+                let dictionary: NSDictionary = ["id" : val.id, "name" : val.name, "org" : Properties.org]
+                records.append(dictionary)
             }
-        }*/
+        }
     }
     
     var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
@@ -71,9 +60,9 @@ class SelectTypeInterfaceController: WKInterfaceController {
         "isaccount": "true"
     ]
     
-    var tasktypes: NSMutableArray = []
+    var tasktypes: Array<NSDictionary> = []
     
-    mutating func getOrg(){
+    func getOrg(){
         defaults.synchronize()
         if let org:String = defaults.object(forKey: "org") as? String
         {
@@ -85,9 +74,8 @@ class SelectTypeInterfaceController: WKInterfaceController {
         }
         //print(Properties.org)
         if !Properties.org.isEmpty{
-            if let tasktps:NSMutableArray = defaults.object(forKey: "tasktypes") as? NSMutableArray
+            if let tasktps:Array<NSDictionary> = defaults.object(forKey: "tasktypes") as? Array<NSDictionary>
             {
-                /*
                 if tasktps.count>0 {
                     if let org = tasktps[0]["org"] as? String
                     {
@@ -98,7 +86,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
                             return
                         }
                     }
-                }*/
+                }
  
             }
             //showMessage("No recent tickets yet ...")
@@ -132,15 +120,18 @@ class SelectTypeInterfaceController: WKInterfaceController {
                         print("error: \(err.localizedDescription)")
                         return //also notify app of failure as needed
                     }
-                    /*let resp = Records(JSONDecoder(response.data))
+                    do {
+                        let resp = try Records(JSONDecoder(response.data))
                         self.tasktypes = resp.records
                         self.loadTableData()
                     if resp.records.count < 2 {
                         self.AddTimeData["tasktype"] = String(Record(resp.records[0]).id)
                         self.pushController(withName: "AddTime", context: self.AddTimeData)
                     }
- */
-                    
+                    }
+                    catch {
+                        print("unable to parse the JSON")
+                    }
                 }
             } catch let error {
                 print("got an error creating the request: \(error)")
@@ -149,7 +140,6 @@ class SelectTypeInterfaceController: WKInterfaceController {
     }
     
     func loadTableData() {
-        /*
         timeTable.setNumberOfRows(tasktypes.count, withRowType: "TypeTableRowController")
         for (index, project) in tasktypes.enumerated() {
             //print(blogName)
@@ -157,21 +147,17 @@ class SelectTypeInterfaceController: WKInterfaceController {
             let rec = Record(project)
             row.recordLabel.setText(rec.name)
         }
- */
-    }
     }
     
     override func contextForSegue(withIdentifier segueIdentifier: String,
         in table: WKInterfaceTable, rowIndex: Int) -> Any? {
-        /*
             let sequeId = "ToAddTime"
-            let tasktps  = tasktypes as NSMutableArray
+            let tasktps  = tasktypes as Array<NSDictionary>
             if segueIdentifier == sequeId {
                 let rec = Record(tasktps[rowIndex])
                 AddTimeData["tasktype"] = String(rec.id)
                 return AddTimeData
             }
-          */
             return nil
     }
     

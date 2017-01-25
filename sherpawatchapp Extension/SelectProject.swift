@@ -22,39 +22,29 @@ class SelectProjectInterfaceController: WKInterfaceController {
         
         init(_ decoder: JSONDecoder) throws {
             id = try decoder["id"].get()
-            name = try decoder["name"].get()//.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            name = try decoder["name"].get()
+            name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             org = ""
         }
-        init(_ array: AnyObject) {
-            /*
+        init(_ array: NSDictionary) {
             id = (array["id"] as? Int)!
             name = (array["name"] as? String)!
             org = (array["org"] as? String)!
- */
-            id = 1
-            name = ""
-            org = ""
         }
     }
     
     struct Records : JSONJoy {
-        var records: NSMutableArray = []
+        var records: Array<NSDictionary> = []
         init() {
         }
-        init(_ decoder: JSONDecoder) {
-            //we check if the array is valid then alloc our array and loop through it, creating the new address objects.
-            /*
-            if let recrds = decoder.array {
-                records = []
-                if recrds.count < 1 {
-                    records.add(["id" : 0, "name" : "Default", "org" : Properties.org])
-                }
-                for rDecoder in recrds {
-                    let rec = Record(rDecoder)
-                    records.add([ "id" : rec.id, "name" : rec.name, "org" : Properties.org])
-                }
+        init(_ decoder: JSONDecoder) throws {
+            records = []
+            let arr: Array<Record> = try decoder.get()
+            records = []
+            for val in arr {
+                let dictionary: NSDictionary = ["id" : val.id, "name" : val.name, "org" : Properties.org]
+                records.append(dictionary)
             }
- */
         }
     }
     
@@ -72,10 +62,9 @@ class SelectProjectInterfaceController: WKInterfaceController {
         "isaccount": "true"
     ]
     
-    var projects: NSMutableArray = []
+    var projects: Array<NSDictionary> = []
     
     func getOrg(){
-        /*
         defaults.synchronize()
         if let org:String = defaults.object(forKey: "org") as? String
         {
@@ -87,7 +76,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
         }
         //print(Properties.org)
         if !Properties.org.isEmpty{
-            if let accts:NSMutableArray = defaults.object(forKey: "projects") as? NSMutableArray
+            if let accts:Array<NSDictionary> = defaults.object(forKey: "projects") as? Array<NSDictionary>
             {
                 if accts.count>0 {
                     if let org = accts[0]["org"] as? String
@@ -110,8 +99,6 @@ class SelectProjectInterfaceController: WKInterfaceController {
         self.projects = []
         defaults.set([], forKey: "projects")
         //print("unset\(self.tickets.count)")
- */
-        
     }
     
     func updateWidget()
@@ -133,14 +120,18 @@ class SelectProjectInterfaceController: WKInterfaceController {
                         print("error: \(err.localizedDescription)")
                         return //also notify app of failure as needed
                     }
-                    let resp = Records(JSONDecoder(response.data))
+                    do {
+                        let resp = try Records(JSONDecoder(response.data))
                     self.projects = resp.records
                     self.loadTableData()
-                    /*if resp.records.count < 2 {
+                    if resp.records.count < 2 {
                         self.AddTimeData["project"] = String(Record(resp.records[0]).id)
                         self.pushController(withName: "TypesList", context: self.AddTimeData)
+                        }
                     }
- */
+                    catch {
+                        print("unable to parse the JSON")
+                    }
                 }
             } catch let error {
                 print("got an error creating the request: \(error)")
@@ -153,21 +144,20 @@ class SelectProjectInterfaceController: WKInterfaceController {
         for (index, project) in projects.enumerated() {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! ProjectTableRowController
-            //let rec = Record(project)
-            //row.recordLabel.setText(rec.name)
+            let rec = Record(project)
+            row.recordLabel.setText(rec.name)
         }
     }
     
     override func contextForSegue(withIdentifier segueIdentifier: String,
         in table: WKInterfaceTable, rowIndex: Int) -> Any? {
             let sequeId = "ToTaskType"
-            let prj  = projects as NSMutableArray
-            /*if segueIdentifier == sequeId {
+            let prj  = projects as Array<NSDictionary>
+            if segueIdentifier == sequeId {
                 let rec = Record(prj[rowIndex])
                 AddTimeData["project"] = String(rec.id)
                 return AddTimeData
             }
- */
             
             return nil
     }

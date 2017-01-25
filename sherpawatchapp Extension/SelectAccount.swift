@@ -19,8 +19,8 @@ class SelectAccountInterfaceController: WKInterfaceController {
         var org: String
         
         init(_ decoder: JSONDecoder) throws {
-            id = try decoder["time_id"].get()
-            name = try decoder["user_name"].get()
+            id = try decoder["id"].get()
+            name = try decoder["name"].get()
             name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             org = ""
         }
@@ -105,7 +105,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
     {
         if !Properties.org.isEmpty
         {
-            //loadTableData()
+            loadTableData()
             
             do {
                 let command = "accounts" + "?is_with_statistics=false"
@@ -132,7 +132,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
                                     oldorg = true
                                 }
                             }
-                        
+                        }
                         self.accounts = resp.records
                         //print("sting during post: \(self.tickets.count)")
                         self.defaults.set(self.accounts, forKey: "accounts")
@@ -146,7 +146,6 @@ class SelectAccountInterfaceController: WKInterfaceController {
                             self.AddTimeData["org"] = Properties.org
                             self.pushController(withName: "ProjectList", context: self.AddTimeData)
                             }
-                        }
                         }
                     }
                     catch {
