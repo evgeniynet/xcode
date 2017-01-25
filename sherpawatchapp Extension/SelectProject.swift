@@ -76,7 +76,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
         }
         //print(Properties.org)
         if !Properties.org.isEmpty{
-            if let accts:Array<NSDictionary> = defaults.object(forKey: "projects") as? Array<NSDictionary>
+            if let accts:Array<NSDictionary> = defaults.object(forKey: "projects"+AddTimeData["account"]!) as? Array<NSDictionary>
             {
                 if accts.count>0 {
                     if let org = accts[0]["org"] as? String
@@ -123,6 +123,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
                     do {
                         let resp = try Records(JSONDecoder(response.data))
                     self.projects = resp.records
+                    self.defaults.set(self.projects, forKey: "projects"+self.AddTimeData["account"]!)
                     self.loadTableData()
                     if resp.records.count < 2 {
                         self.AddTimeData["project"] = String(Record(resp.records[0]).id)

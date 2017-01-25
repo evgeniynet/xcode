@@ -74,7 +74,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
         }
         //print(Properties.org)
         if !Properties.org.isEmpty{
-            if let tasktps:Array<NSDictionary> = defaults.object(forKey: "tasktypes") as? Array<NSDictionary>
+            if let tasktps:Array<NSDictionary> = defaults.object(forKey: "tasktypes"+AddTimeData["account"]!+"_"+"tasktypes"+AddTimeData["project"]!) as? Array<NSDictionary>
             {
                 if tasktps.count>0 {
                     if let org = tasktps[0]["org"] as? String
@@ -123,6 +123,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
                     do {
                         let resp = try Records(JSONDecoder(response.data))
                         self.tasktypes = resp.records
+                        self.defaults.set(self.tasktypes, forKey: "tasktypes"+self.AddTimeData["account"]!+"_"+"tasktypes"+self.AddTimeData["project"]!)
                         self.loadTableData()
                     if resp.records.count < 2 {
                         self.AddTimeData["tasktype"] = String(Record(resp.records[0]).id)
@@ -164,18 +165,18 @@ class SelectTypeInterfaceController: WKInterfaceController {
     override init() {
         super.init()
 
-        //getOrg()
+        getOrg()
     }
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        /*let dict = context as? [String : String]
+        let dict = context as? [String : String]
         if dict != nil {
             AddTimeData = dict!
             print(AddTimeData["project"]!)
         }
-        updateWidget()*/
+        updateWidget()
     }
     
     override func willActivate() {
