@@ -133,9 +133,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
         else
         {
-            Properties.org = "zwoja4-ms2asm:re36rym3mjqxm8ej2cscfajmxpsew33m"
+            Properties.org = ""
         }
-        //print(Properties.org)
+        print(Properties.org)
         if !Properties.org.isEmpty{
             //print(defaults.object(forKey: "tickets") as? Array<NSDictionary>)
             if let tkts:Array<NSDictionary> = defaults.object(forKey: "tickets") as? Array<NSDictionary>
@@ -182,21 +182,21 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             var rec = Record(jsonResult[0])
             self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.fill;
             self.fTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
-            self.fTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
+            self.fTicket.setValue("ticket:"+rec.key, forKeyPath: "page")
             self.fTicket.isHidden = false
             self.fLine.isHidden = false
             
             if jsonResult.count>1{
                 rec = Record(jsonResult[1])
                 self.sTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
-                self.sTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
+                self.sTicket.setValue("ticket:"+rec.key, forKeyPath: "page")
                 self.sTicket.isHidden = false
                 self.sLine.isHidden = false
                 
                 if jsonResult.count>2{
                     rec = Record(jsonResult[2])
                     self.tTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
-                    self.tTicket.setValue("index.html#ticket="+rec.key, forKeyPath: "page")
+                    self.tTicket.setValue("ticket:"+rec.key, forKeyPath: "page")
                     self.tTicket.isHidden = false
                     self.tLine.isHidden = false
                 }
@@ -249,22 +249,22 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
   
     @IBAction func OpenUrl(_ sender: AnyObject) {
-        let page =  "add_time.html"
+        let page =  "add_time:1"
         OpenApp(page)
     }
     
     @IBAction func AddTicket(_ sender: AnyObject) {
-        let page =  "add_tickets.html"
+        let page =  "add_tkt:1"
         OpenApp(page)
     }
     
     @IBAction func MyTickets(_ sender: AnyObject) {
-        let page =  "ticket_list.html#tab=my"
+        let page =  "list:my"
         OpenApp(page)
     }
     
     @IBAction func AllTickets(_ sender: AnyObject) {
-        let page =  "ticket_list.html#tab=all"
+        let page =  "list:all"
         OpenApp(page)
     }
     @IBAction func Ticket1(_ sender: AnyObject) {
