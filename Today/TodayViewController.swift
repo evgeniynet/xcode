@@ -259,7 +259,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     @IBAction func MyTickets(_ sender: AnyObject) {
-        let page =  "list:my"
+        let page =  "list:tech"
         OpenApp(page)
     }
     
