@@ -237,15 +237,17 @@ class SelectAccountInterfaceController: WKInterfaceController {
     {
         AddTimeData["account"] = String(rec.id)
         AddTimeData["org"] = Properties.org
-        if rec.projects.count < 2 {
-            self.AddTimeData["project"] = String( rec.projects.count == 1 ? rec.projects[0].id : 0)
-            if rec.task_types.count < 2 {
-                self.AddTimeData["tasktype"] = String(rec.task_types.count == 1 ? rec.task_types[0].id : 0)
-                self.pushController(withName: "AddTime", context: self.AddTimeData)
+        if (accounts_ready){
+            if rec.projects.count < 2 {
+                self.AddTimeData["project"] = String( rec.projects.count == 1 ? rec.projects[0].id : 0)
+                if rec.task_types.count < 2 {
+                    self.AddTimeData["tasktype"] = String(rec.task_types.count == 1 ? rec.task_types[0].id : 0)
+                    self.pushController(withName: "AddTime", context: self.AddTimeData)
+                    return nil
+                }
+                self.pushController(withName: "TypesList", context: self.AddTimeData)
                 return nil
             }
-            self.pushController(withName: "TypesList", context: self.AddTimeData)
-            return nil
         }
         return AddTimeData
     }
