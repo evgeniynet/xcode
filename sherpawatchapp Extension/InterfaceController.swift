@@ -83,8 +83,7 @@ class InterfaceController: WKInterfaceController {
         }
         else
         {
-            Properties.org = "zwoja4-ms2asm:re36rym3mjqxm8ej2cscfajmxpsew33m"
-            defaults.set(Properties.org, forKey: "org")
+            Properties.org = ""
         }
         if !Properties.org.isEmpty{
             button.setEnabled(true);
