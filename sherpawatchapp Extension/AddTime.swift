@@ -18,7 +18,7 @@ class AddTimeInterfaceController: WKInterfaceController {
     
     @IBOutlet var picker: WKInterfacePicker!
     
-    var AddTimeData = ["org" : "",
+    var AddTimeData: Dictionary<String, String> = ["org" : "",
         "account": "-1",
         "project": "0",
         "tasktype": "0",
@@ -98,11 +98,11 @@ class AddTimeInterfaceController: WKInterfaceController {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        let dict = context as? [String : String]
+        let dict = context as? pass
         if dict != nil {
-            AddTimeData = dict!
+            AddTimeData = dict!.data
             Properties.org = AddTimeData["org"]!
-            
+            print(AddTimeData)
         }
     }
     

@@ -97,7 +97,7 @@ class InterfaceController: WKInterfaceController {
                         //print("org\(org)prop\(Properties.org)")
                         if (torg == Properties.org){
                             self.timelogs = timelgs
-                            print("set\(self.timelogs.count)")
+                            //print("set\(self.timelogs.count)")
                             return
                         }
                         

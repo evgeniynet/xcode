@@ -9,59 +9,81 @@
 import WatchKit
 import Foundation
 
+public struct pass {
+    var data: Dictionary<String, String>
+    var acc: Record
+
+    public init(_ data1: Dictionary<String, String>, _ acc1: Record) {
+        data = data1
+        acc = acc1
+    }
+}
+
+public struct Record : JSONJoy {
+    var id: Int
+    var name: String
+    var org: String
+    var projects: Array<Record1> = []
+    var task_types: Array<Record1> = []
+    
+    public init()
+    {
+       id = 0
+       name = ""
+       org = ""
+    }
+    
+    public init(_ decoder: JSONDecoder) throws {
+        id = try decoder["id"].get()
+        name = try decoder["name"].get()
+        name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        org = ""
+        do {
+            projects = try decoder["projects"].get()
+        } catch {
+        }
+        do {
+            task_types = try decoder["task_types"].get()
+        } catch {
+        }
+    }
+    public init(_ array: NSDictionary) {
+        id = (array["id"] as? Int)!
+        name = (array["name"] as? String)!
+        org = (array["org"] as? String)!
+    }
+}
+
+public struct Record1 : JSONJoy {
+    var id: Int
+    var name: String
+    
+    public init()
+    {
+        id = 0
+        name = "Default"
+    }
+    
+    public init(_ decoder: JSONDecoder) throws {
+        id = try decoder["id"].get()
+        name = try decoder["name"].get()
+        name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+    }
+    public init(_ array: NSDictionary) {
+        id = (array["id"] as? Int)!
+        name = (array["name"] as? String)!
+    }
+}
+
 class SelectAccountInterfaceController: WKInterfaceController {
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
     
-    struct Record1 : JSONJoy {
-        var id: Int
-        var name: String
-        
-        init(_ decoder: JSONDecoder) throws {
-            id = try decoder["id"].get()
-            name = try decoder["name"].get()
-            name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        }
-        init(_ array: NSDictionary) {
-            id = (array["id"] as? Int)!
-            name = (array["name"] as? String)!
-        }
-    }
-    
-    struct Record : JSONJoy {
-        var id: Int
-        var name: String
-        var org: String
-        var projects: Array<Record1> = []
-        var task_types: Array<Record1> = []
-        
-        init(_ decoder: JSONDecoder) throws {
-            id = try decoder["id"].get()
-            name = try decoder["name"].get()
-            name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            org = ""
-            do {
-                projects = try decoder["projects"].get()
-            } catch {
-            }
-            do {
-                task_types = try decoder["task_types"].get()
-            } catch {
-            }
-        }
-        init(_ array: NSDictionary) {
-            id = (array["id"] as? Int)!
-            name = (array["name"] as? String)!
-            org = (array["org"] as? String)!
-        }
-    }
-    
-    
-    struct Records : JSONJoy {
+    public struct Records : JSONJoy {
         var records: Array<NSDictionary> = []
-        init() {
+        public init() {
         }
-        init(_ decoder: JSONDecoder) throws {
+        public init(_ decoder: JSONDecoder) throws {
             records = []
             let arr: Array<Record> = try decoder.get()
             records = []
@@ -72,14 +94,13 @@ class SelectAccountInterfaceController: WKInterfaceController {
         }
     }
     
-    
     var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
     
     struct Properties {
         static var org = ""
     }
     
-    var AddTimeData = ["org" : "",
+    var AddTimeData: Dictionary<String, String> = ["org" : "",
                        "account": "-1",
                        "project": "0",
                        "tasktype": "0",
@@ -155,6 +176,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
                     do {
                         
                         if oldcount == 0 {
+                            print("done request")
                             self.getrequest("accounts?is_watch_info=true&is_with_statistics=false&limit=500")
                         }
                         else
@@ -210,7 +232,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
             self.acc = try JSONDecoder(data).get()
             if self.acc.count > 0 {
                 self.accounts_ready = true
-                print("done: \(self.acc.count)")
+                print("done1: \(self.acc.count)")
                 //self.defaults.set(self.accounts, forKey: "accounts")
                 if self.acc.count < 2 {
                     self.test(self.acc[0])
@@ -242,14 +264,14 @@ class SelectAccountInterfaceController: WKInterfaceController {
                 self.AddTimeData["project"] = String( rec.projects.count == 1 ? rec.projects[0].id : 0)
                 if rec.task_types.count < 2 {
                     self.AddTimeData["tasktype"] = String(rec.task_types.count == 1 ? rec.task_types[0].id : 0)
-                    self.pushController(withName: "AddTime", context: self.AddTimeData)
+                    self.pushController(withName: "AddTime", context: pass(AddTimeData, rec))
                     return nil
                 }
-                self.pushController(withName: "TypesList", context: self.AddTimeData)
+                self.pushController(withName: "TypesList", context: pass(AddTimeData, rec))
                 return nil
             }
         }
-        return AddTimeData
+        return pass(AddTimeData, rec)
     }
     
     
@@ -267,14 +289,12 @@ class SelectAccountInterfaceController: WKInterfaceController {
     
     override init() {
         super.init()
-        
         getOrg()
         updateWidget()
     }
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
-        
         // Configure interface objects here.
     }
     

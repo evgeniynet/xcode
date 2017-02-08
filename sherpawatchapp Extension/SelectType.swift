@@ -13,24 +13,6 @@ class SelectTypeInterfaceController: WKInterfaceController {
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
     
-    struct Record : JSONJoy {
-        var id: Int
-        var name: String
-        var org: String
-        
-        init(_ decoder: JSONDecoder) throws  {
-            id = try decoder["id"].get()
-            name = try decoder["name"].get()
-            name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            org = ""
-        }
-        init(_ array: NSDictionary) {
-                id = (array["id"] as? Int)!
-                name = (array["name"] as? String)!
-                org = (array["org"] as? String)!
-        }
-    }
-    
     struct Records : JSONJoy {
         var records: Array<NSDictionary> = []
         init() {
@@ -52,7 +34,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
         static var org = ""
     }
     
-    var AddTimeData = ["org" : "",
+    var AddTimeData: Dictionary<String, String> = ["org" : "",
         "account": "-1",
         "project": "0",
         "tasktype": "0",
@@ -60,7 +42,9 @@ class SelectTypeInterfaceController: WKInterfaceController {
         "isaccount": "true"
     ]
     
-    var tasktypes: Array<NSDictionary> = []
+    var tasktypes: Array<Record1> = []
+    
+    var acc : Record = Record()
     
     func getOrg(){
         defaults.synchronize()
@@ -73,40 +57,16 @@ class SelectTypeInterfaceController: WKInterfaceController {
             Properties.org = ""
         }
         //print(Properties.org)
-        if !Properties.org.isEmpty{
-            if let tasktps:Array<NSDictionary> = defaults.object(forKey: "tasktypes"+AddTimeData["account"]!+"_"+"tasktypes"+AddTimeData["project"]!) as? Array<NSDictionary>
-            {
-                if tasktps.count>0 {
-                    if let org = tasktps[0]["org"] as? String
-                    {
-                        //print("org\(org)prop\(Properties.org)")
-                        if (org == Properties.org){
-                            self.tasktypes = tasktps
-                            //print("set\(self.tickets.count)")
-                            return
-                        }
-                    }
-                }
- 
-            }
-            //showMessage("No recent tickets yet ...")
+        if Properties.org.isEmpty{
+            self.pushController(withName: "Main1", context: nil)
         }
-        else
-        {//showMessage("Login to SherpaDesk app first")
-//self.pushController(withName: "Main1", context: nil)
-        }
-        self.tasktypes = []
-        defaults.set([], forKey: "tasktypes"+AddTimeData["account"]!+"_"+"tasktypes"+AddTimeData["project"]!)
-        //print("unset\(self.tickets.count)")
-        
+        self.tasktypes = acc.task_types
     }
     
     func updateWidget()
     {
         if !Properties.org.isEmpty
-        {
-            loadTableData()
-            
+        {            
             do {
                 let command = "task_types"
                 let params = ["account": AddTimeData["account"]!, "project" : AddTimeData["project"]!]
@@ -121,14 +81,14 @@ class SelectTypeInterfaceController: WKInterfaceController {
                         return //also notify app of failure as needed
                     }
                     do {
-                        let resp = try Records(JSONDecoder(response.data))
-                        self.tasktypes = resp.records
-                        self.defaults.set(self.tasktypes, forKey: "tasktypes"+self.AddTimeData["account"]!+"_"+"tasktypes"+self.AddTimeData["project"]!)
+                        self.tasktypes = try JSONDecoder(response.data).get()
+                        if self.tasktypes.count == 0 {
+                            self.tasktypes = [Record1()]
+                        }
                         self.loadTableData()
-                    if resp.records.count < 2 {
-                        self.AddTimeData["tasktype"] = String(0) //Record(resp.records[0]).id
-                        self.pushController(withName: "AddTime", context: self.AddTimeData)
-                    }
+                        if self.tasktypes.count == 1 {
+                            self.test(self.tasktypes[0])
+                        }
                     }
                     catch {
                         print("unable to parse the JSON")
@@ -140,26 +100,35 @@ class SelectTypeInterfaceController: WKInterfaceController {
         }
     }
     
+    func test(_ rec: Record1) -> Any?
+    {
+        self.AddTimeData["tasktype"] = String(rec.id)
+        if (tasktypes.count == 1)
+        {
+            self.pushController(withName: "AddTime", context: pass(AddTimeData, Record()))
+                return nil
+        }
+        return pass(AddTimeData, self.acc)
+    }
+    
     func loadTableData() {
         timeTable.setNumberOfRows(tasktypes.count, withRowType: "TypeTableRowController")
         for (index, project) in tasktypes.enumerated() {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! TypeTableRowController
-            let rec = Record(project)
-            row.recordLabel.setText(rec.name)
+            row.recordLabel.setText(project.name)
         }
     }
     
     override func contextForSegue(withIdentifier segueIdentifier: String,
         in table: WKInterfaceTable, rowIndex: Int) -> Any? {
             let sequeId = "ToAddTime"
-            let tasktps  = tasktypes as Array<NSDictionary>
-            if segueIdentifier == sequeId {
-                let rec = Record(tasktps[rowIndex])
-                AddTimeData["tasktype"] = String(rec.id)
-                return AddTimeData
-            }
-            return nil
+        let rec = acc.task_types.count > 0 ? acc.task_types[rowIndex] : tasktypes[rowIndex]
+        if segueIdentifier == sequeId {
+            return test(rec)
+        }
+        
+        return nil
     }
     
     override init() {
@@ -171,13 +140,26 @@ class SelectTypeInterfaceController: WKInterfaceController {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        let dict = context as? [String : String]
+        let dict = context as? pass
         if dict != nil {
-            AddTimeData = dict!
-            print(AddTimeData["project"]!)
+            AddTimeData = dict!.data
+            self.acc = dict!.acc
+            print(AddTimeData)
+            //print(self.acc[0].name)
         }
         getOrg()
-        updateWidget()
+        if self.tasktypes.count > 0 {
+            if (self.tasktypes.count < 2) {
+                self.test(self.acc.task_types[0])
+            }
+            else{
+                loadTableData()
+            }
+        }
+        else
+        {
+            updateWidget()
+        }
     }
     
     override func willActivate() {

@@ -13,26 +13,6 @@ class SelectProjectInterfaceController: WKInterfaceController {
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
     
-    struct Record : JSONJoy {
-        var id: Int
-        var name: String
-        var org: String
-        //init() {
-        //}
-        
-        init(_ decoder: JSONDecoder) throws {
-            id = try decoder["id"].get()
-            name = try decoder["name"].get()
-            name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            org = ""
-        }
-        init(_ array: NSDictionary) {
-            id = (array["id"] as? Int)!
-            name = (array["name"] as? String)!
-            org = (array["org"] as? String)!
-        }
-    }
-    
     struct Records : JSONJoy {
         var records: Array<NSDictionary> = []
         init() {
@@ -54,15 +34,17 @@ class SelectProjectInterfaceController: WKInterfaceController {
         static var org = ""
     }
     
-    var AddTimeData = ["org" : "",
-        "account": "-1",
-        "project": "0",
-        "tasktype": "0",
-        "isproject": "true",
-        "isaccount": "true"
+    var AddTimeData: Dictionary<String, String> = ["org" : "",
+                                                   "account": "-1",
+                                                   "project": "0",
+                                                   "tasktype": "0",
+                                                   "isproject": "true",
+                                                   "isaccount": "true"
     ]
     
-    var projects: Array<NSDictionary> = []
+    var projects: Array<Record1> = []
+    
+    var acc : Record = Record()
     
     func getOrg(){
         defaults.synchronize()
@@ -75,29 +57,10 @@ class SelectProjectInterfaceController: WKInterfaceController {
             Properties.org = ""
         }
         //print(Properties.org)
-        if !Properties.org.isEmpty{
-            if let accts:Array<NSDictionary> = defaults.object(forKey: "projects"+AddTimeData["account"]!) as? Array<NSDictionary>
-            {
-                if accts.count>0 {
-                    if let org = accts[0]["org"] as? String
-                    {
-                        //print("org\(org)prop\(Properties.org)")
-                        if (org == Properties.org){
-                            self.projects = accts
-                            //print("set\(self.tickets.count)")
-                            return
-                        }
-                    }
-                }
-            }
-            //showMessage("No recent tickets yet ...")
+        if Properties.org.isEmpty{
+            self.pushController(withName: "Main1", context: nil)
         }
-        else
-        {//showMessage("Login to SherpaDesk app first")
-             self.pushController(withName: "Main1", context: nil)
-        }
-        self.projects = []
-        defaults.set([], forKey: "projects"+AddTimeData["account"]!)
+        self.projects = self.acc.projects
         //print("unset\(self.tickets.count)")
     }
     
@@ -105,12 +68,9 @@ class SelectProjectInterfaceController: WKInterfaceController {
     {
         if !Properties.org.isEmpty
         {
-            loadTableData()
-            
             do {
-                let command = "projects"
+                let command = "projects?is_with_statistics=false"
                 let params = ["account" : AddTimeData["account"]!]
-                print(params)
                 let urlPath: String = "http://" + Properties.org +
                     "@api.sherpadesk.com/" + command
                 
@@ -121,13 +81,13 @@ class SelectProjectInterfaceController: WKInterfaceController {
                         return //also notify app of failure as needed
                     }
                     do {
-                        let resp = try Records(JSONDecoder(response.data))
-                    self.projects = resp.records
-                    self.defaults.set(self.projects, forKey: "projects"+self.AddTimeData["account"]!)
-                    self.loadTableData()
-                    if resp.records.count < 2 {
-                        self.AddTimeData["project"] = String(0) //Record(resp.records[0]).id
-                        self.pushController(withName: "TypesList", context: self.AddTimeData)
+                        self.projects = try JSONDecoder(response.data).get()
+                        if self.projects.count == 0 {
+                            self.projects = [Record1()]
+                        }
+                        self.loadTableData()
+                        if self.projects.count == 1 {
+                            self.test(self.projects[0])
                         }
                     }
                     catch {
@@ -139,28 +99,41 @@ class SelectProjectInterfaceController: WKInterfaceController {
             }
         }
     }
-
+    
+    func test(_ rec: Record1) -> Any?
+    {
+        self.AddTimeData["project"] = String(rec.id)
+        if (projects.count == 1)
+        {
+            if acc.task_types.count == 1 {
+                self.AddTimeData["tasktype"] = String(acc.task_types.count < 2 ? acc.task_types[0].id : 0)
+                self.pushController(withName: "AddTime", context: pass(AddTimeData, Record()))
+                return nil
+            }
+            self.pushController(withName: "TypesList", context: pass(AddTimeData, self.acc))
+            return nil
+        }
+        return pass(AddTimeData, self.acc)
+    }
+    
     func loadTableData() {
         timeTable.setNumberOfRows(projects.count, withRowType: "ProjectTableRowController")
         for (index, project) in projects.enumerated() {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! ProjectTableRowController
-            let rec = Record(project)
-            row.recordLabel.setText(rec.name)
+            row.recordLabel.setText(project.name)
         }
     }
     
     override func contextForSegue(withIdentifier segueIdentifier: String,
-        in table: WKInterfaceTable, rowIndex: Int) -> Any? {
-            let sequeId = "ToTaskType"
-            let prj  = projects as Array<NSDictionary>
-            if segueIdentifier == sequeId {
-                let rec = Record(prj[rowIndex])
-                AddTimeData["project"] = String(rec.id)
-                return AddTimeData
-            }
-            
-            return nil
+                                  in table: WKInterfaceTable, rowIndex: Int) -> Any? {
+        let sequeId = "ToTaskType"
+         let rec = acc.projects.count > 0 ? acc.projects[rowIndex] : projects[rowIndex]
+        if segueIdentifier == sequeId {
+            return test(rec)
+        }
+        
+        return nil
     }
     
     override init() {
@@ -170,13 +143,26 @@ class SelectProjectInterfaceController: WKInterfaceController {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        let dict = context as? [String : String]
+        let dict = context as? pass
         if dict != nil {
-            AddTimeData = dict!
-            print(AddTimeData["account"]!)
+            AddTimeData = dict!.data
+            self.acc = dict!.acc
+            print(AddTimeData)
+            //print(self.acc[0].name)
         }
         getOrg()
+        if self.projects.count > 0 {
+            if (self.projects.count < 2) {
+                self.test(self.acc.projects[0])
+            }
+            else{
+                loadTableData()
+            }
+        }
+        else
+        {
         updateWidget()
+        }
     }
     
     override func willActivate() {
