@@ -13,34 +13,21 @@ class SelectProjectInterfaceController: WKInterfaceController {
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
     
-    struct Records : JSONJoy {
-        var records: Array<NSDictionary> = []
-        init() {
-        }
-        init(_ decoder: JSONDecoder) throws {
-            records = []
-            let arr: Array<Record> = try decoder.get()
-            records = []
-            for val in arr {
-                let dictionary: NSDictionary = ["id" : val.id, "name" : val.name, "org" : Properties.org]
-                records.append(dictionary)
-            }
-        }
-    }
-    
     var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
     
     struct Properties {
         static var org = ""
+        static var AddTimeData: Dictionary<String, String> = ["org" : "",
+                                                              "account": "",
+                                                              "account_id": "-1",
+                                                              "project": "",
+                                                              "project_id": "0",
+                                                              "tasktype": "",
+                                                              "tasktype_id": "0",
+                                                              "isproject": "true",
+                                                              "isaccount": "true"
+        ]
     }
-    
-    var AddTimeData: Dictionary<String, String> = ["org" : "",
-                                                   "account": "-1",
-                                                   "project": "0",
-                                                   "tasktype": "0",
-                                                   "isproject": "true",
-                                                   "isaccount": "true"
-    ]
     
     var projects: Array<Record1> = []
     
@@ -70,7 +57,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
         {
             do {
                 let command = "projects?is_with_statistics=false"
-                let params = ["account" : AddTimeData["account"]!]
+                let params = ["account" : Properties.AddTimeData["account_id"]!]
                 let urlPath: String = "http://" + Properties.org +
                     "@api.sherpadesk.com/" + command
                 
@@ -85,10 +72,12 @@ class SelectProjectInterfaceController: WKInterfaceController {
                         if self.projects.count == 0 {
                             self.projects = [Record1()]
                         }
-                        self.loadTableData()
                         if self.projects.count == 1 {
                             self.test(self.projects[0])
+                            return
                         }
+                        self.setRecent()
+                        self.loadTableData()
                     }
                     catch {
                         print("unable to parse the JSON")
@@ -100,20 +89,34 @@ class SelectProjectInterfaceController: WKInterfaceController {
         }
     }
     
+    func setRecent(){
+        if self.projects.count > 1 && Properties.AddTimeData["project"] != "" && self.projects[0].id != Int(Properties.AddTimeData["project_id"]!) {
+            for (index, val) in self.projects.enumerated() {
+                if Int(Properties.AddTimeData["project_id"]!) == val.id  {
+                    self.projects.insert(self.projects.remove(at: index), at: 0);
+                }
+            }
+        }
+    }
+    
     func test(_ rec: Record1) -> Any?
     {
-        self.AddTimeData["project"] = String(rec.id)
+        Properties.AddTimeData["project_id"] = String(rec.id)
+        Properties.AddTimeData["project"] = rec.name
+        //remove
+        //self.defaults.set(Properties.AddTimeData, forKey: "recent")
         if (projects.count == 1)
         {
             if acc.task_types.count == 1 {
-                self.AddTimeData["tasktype"] = String(acc.task_types.count < 2 ? acc.task_types[0].id : 0)
-                self.pushController(withName: "AddTime", context: pass(AddTimeData, Record()))
+             Properties.AddTimeData["tasktype"] = acc.task_types.count == 1 ? acc.task_types[0].name : ""
+                Properties.AddTimeData["tasktype_id"] = String(acc.task_types.count < 2 ? acc.task_types[0].id : 0)
+                self.pushController(withName: "AddTime", context: pass(Properties.AddTimeData, Record()))
                 return nil
             }
-            self.pushController(withName: "TypesList", context: pass(AddTimeData, self.acc))
+            self.pushController(withName: "TypesList", context: pass(Properties.AddTimeData, self.acc))
             return nil
         }
-        return pass(AddTimeData, self.acc)
+        return pass(Properties.AddTimeData, self.acc)
     }
     
     func loadTableData() {
@@ -121,7 +124,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
         for (index, project) in projects.enumerated() {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! ProjectTableRowController
-            row.recordLabel.setText(project.name)
+            row.recordLabel.setText((Properties.AddTimeData["project"] != "" && index == 0 ? "✅ " : "") + project.name)
         }
     }
     
@@ -145,17 +148,18 @@ class SelectProjectInterfaceController: WKInterfaceController {
         
         let dict = context as? pass
         if dict != nil {
-            AddTimeData = dict!.data
+            Properties.AddTimeData = dict!.data
             self.acc = dict!.acc
-            print(AddTimeData)
+            print(Properties.AddTimeData)
             //print(self.acc[0].name)
         }
         getOrg()
         if self.projects.count > 0 {
-            if (self.projects.count < 2) {
+            if (self.projects.count == 1) {
                 self.test(self.acc.projects[0])
             }
             else{
+                setRecent()
                 loadTableData()
             }
         }

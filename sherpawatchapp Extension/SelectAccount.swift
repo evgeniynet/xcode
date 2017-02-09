@@ -50,7 +50,7 @@ public struct Record : JSONJoy {
     public init(_ array: NSDictionary) {
         id = (array["id"] as? Int)!
         name = (array["name"] as? String)!
-        org = (array["org"] as? String)!
+        org = (array["org"] as? String) ?? ""
     }
 }
 
@@ -87,9 +87,27 @@ class SelectAccountInterfaceController: WKInterfaceController {
             records = []
             let arr: Array<Record> = try decoder.get()
             records = []
+            let add_recent: Bool = Properties.AddTimeData["account"] != "" && arr.count>1 && arr[0].id != Int(Properties.AddTimeData["account_id"]!)
             for val in arr {
                 let dictionary: NSDictionary = ["id" : val.id, "name" : val.name, "org" : Properties.org]
-                records.append(dictionary)
+                
+                if add_recent && Int(Properties.AddTimeData["account_id"]!) == val.id  {
+                    records.insert(dictionary, at: 0);
+                }
+                else {
+                    records.append(dictionary)
+                }
+            }
+        }
+    }
+    
+    func setRecent(){
+        if accounts.count > 1 && Properties.AddTimeData["account"] != "" && accounts[0]["id"]  as! Int != Int(Properties.AddTimeData["account_id"]!) {
+            for (index, val) in accounts.enumerated() {
+                if Int(Properties.AddTimeData["account_id"]!) == val["id"] as! Int
+                {
+                    accounts.insert(accounts.remove(at: index), at: 0)
+                }
             }
         }
     }
@@ -98,15 +116,16 @@ class SelectAccountInterfaceController: WKInterfaceController {
     
     struct Properties {
         static var org = ""
+        static var AddTimeData: Dictionary<String, String> = ["org" : "",
+                                                              "account": "",
+                                                              "account_id": "-1",
+                                                              "project": "",
+                                                              "project_id": "0",
+                                                              "tasktype": "",
+                                                              "tasktype_id": "0",
+                                                              "isproject": "true",
+                                                              "isaccount": "true"]
     }
-    
-    var AddTimeData: Dictionary<String, String> = ["org" : "",
-                       "account": "-1",
-                       "project": "0",
-                       "tasktype": "0",
-                       "isproject": "true",
-                       "isaccount": "true"
-    ]
     
     var accounts: Array<NSDictionary> = []
     
@@ -124,6 +143,10 @@ class SelectAccountInterfaceController: WKInterfaceController {
         {
             Properties.org = ""
         }
+        if let recent:NSDictionary = defaults.object(forKey: "recent") as? NSDictionary
+        {
+            Properties.AddTimeData = recent as! Dictionary<String, String>
+        }
         //print(Properties.org)
         if !Properties.org.isEmpty{
             if let accts:Array<NSDictionary> = defaults.object(forKey: "accounts") as? Array<NSDictionary>
@@ -134,15 +157,15 @@ class SelectAccountInterfaceController: WKInterfaceController {
                         //print("org\(org)prop\(Properties.org)")
                         if (org == Properties.org){
                             self.accounts = accts
+                            setRecent()
+                            return
                             //if 1=1
                             //    self.accounts_ready=true
                             //print("set\(self.tickets.count)")
-                            return
                         }
                     }
                 }
             }
-            //showMessage("No recent tickets yet ...")
         }
         else
         {//showMessage("Login to SherpaDesk app first")
@@ -152,6 +175,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
         defaults.set([], forKey: "accounts")
         //print("unset\(self.tickets.count)")
     }
+    
     
     func updateWidget()
     {
@@ -189,6 +213,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
                             self.accounts = resp.records
                             //print("sting during post: \(self.tickets.count)")
                             self.defaults.set(self.accounts, forKey: "accounts")
+                            //self.setRecent()
                             if oldcount !=  self.accounts.count
                             {
                                 print("doubleupdate")
@@ -230,12 +255,19 @@ class SelectAccountInterfaceController: WKInterfaceController {
     {
         do {
             self.acc = try JSONDecoder(data).get()
+            
             if self.acc.count > 0 {
                 self.accounts_ready = true
                 print("done1: \(self.acc.count)")
-                //self.defaults.set(self.accounts, forKey: "accounts")
+                //self.defaults.set(self.acc, forKey: "accounts")
                 if self.acc.count < 2 {
                     self.test(self.acc[0])
+                } else if self.acc.count > 1 && Properties.AddTimeData["account"] != "" && self.acc[0].id != Int(Properties.AddTimeData["account_id"]!) {
+                    for (index, val) in self.acc.enumerated() {
+                        if Int(Properties.AddTimeData["account_id"]!) == val.id  {
+                            self.acc.insert(self.acc.remove(at: index), at: 0);
+                        }
+                    }
                 }
             }
         }
@@ -251,27 +283,31 @@ class SelectAccountInterfaceController: WKInterfaceController {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! RecordTableRowController
             let rec = Record(account)
-            row.recordLabel.setText(rec.name)
+            row.recordLabel.setText((Properties.AddTimeData["account"] != "" && index == 0 ? "✅ " : "") + rec.name)
         }
     }
     
     func test(_ rec: Record) -> Any?
     {
-        AddTimeData["account"] = String(rec.id)
-        AddTimeData["org"] = Properties.org
+        Properties.AddTimeData["account"] = rec.name
+        Properties.AddTimeData["account_id"] = String(rec.id)
+        self.defaults.set(Properties.AddTimeData , forKey: "recent")
+        Properties.AddTimeData["org"] = Properties.org
         if (accounts_ready){
             if rec.projects.count < 2 {
-                self.AddTimeData["project"] = String( rec.projects.count == 1 ? rec.projects[0].id : 0)
+                Properties.AddTimeData["project"] = rec.projects.count == 1 ? rec.projects[0].name : ""
+                Properties.AddTimeData["project_id"] = String( rec.projects.count == 1 ? rec.projects[0].id : 0)
                 if rec.task_types.count < 2 {
-                    self.AddTimeData["tasktype"] = String(rec.task_types.count == 1 ? rec.task_types[0].id : 0)
-                    self.pushController(withName: "AddTime", context: pass(AddTimeData, rec))
+                    Properties.AddTimeData["tasktype"] = rec.task_types.count == 1 ? rec.task_types[0].name : ""
+                    Properties.AddTimeData["tasktype_id"] = String(rec.task_types.count == 1 ? rec.task_types[0].id : 0)
+                    self.pushController(withName: "AddTime", context: pass(Properties.AddTimeData, rec))
                     return nil
                 }
-                self.pushController(withName: "TypesList", context: pass(AddTimeData, rec))
+                self.pushController(withName: "TypesList", context: pass(Properties.AddTimeData, rec))
                 return nil
             }
         }
-        return pass(AddTimeData, rec)
+        return pass(Properties.AddTimeData, rec)
     }
     
     

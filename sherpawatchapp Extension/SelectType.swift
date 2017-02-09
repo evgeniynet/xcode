@@ -32,15 +32,18 @@ class SelectTypeInterfaceController: WKInterfaceController {
     
     struct Properties {
         static var org = ""
+        static var AddTimeData: Dictionary<String, String> = ["org" : "",
+                                                              "account": "",
+                                                              "account_id": "-1",
+                                                              "project": "",
+                                                              "project_id": "0",
+                                                              "tasktype": "",
+                                                              "tasktype_id": "0",
+                                                              "isproject": "true",
+                                                              "isaccount": "true"
+        ]
     }
     
-    var AddTimeData: Dictionary<String, String> = ["org" : "",
-        "account": "-1",
-        "project": "0",
-        "tasktype": "0",
-        "isproject": "true",
-        "isaccount": "true"
-    ]
     
     var tasktypes: Array<Record1> = []
     
@@ -69,8 +72,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
         {            
             do {
                 let command = "task_types"
-                let params = ["account": AddTimeData["account"]!, "project" : AddTimeData["project"]!]
-                print(params)
+                let params = ["account": Properties.AddTimeData["account_id"]!]
                 let urlPath: String = "http://" + Properties.org +
                     "@api.sherpadesk.com/" + command
                 
@@ -85,10 +87,12 @@ class SelectTypeInterfaceController: WKInterfaceController {
                         if self.tasktypes.count == 0 {
                             self.tasktypes = [Record1()]
                         }
-                        self.loadTableData()
                         if self.tasktypes.count == 1 {
                             self.test(self.tasktypes[0])
+                            return
                         }
+                        self.setRecent()
+                        self.loadTableData()
                     }
                     catch {
                         print("unable to parse the JSON")
@@ -100,15 +104,26 @@ class SelectTypeInterfaceController: WKInterfaceController {
         }
     }
     
+    func setRecent(){
+        if self.tasktypes.count > 1 && Properties.AddTimeData["tasktype"] != "" && self.tasktypes[0].id != Int(Properties.AddTimeData["tasktype_id"]!) {
+            for (index, val) in self.tasktypes.enumerated() {
+                if Int(Properties.AddTimeData["tasktype_id"]!) == val.id  {
+                    self.tasktypes.insert(self.tasktypes.remove(at: index), at: 0);
+                }
+            }
+        }
+    }
+    
     func test(_ rec: Record1) -> Any?
     {
-        self.AddTimeData["tasktype"] = String(rec.id)
+        Properties.AddTimeData["tasktype_id"] = String(rec.id)
+        Properties.AddTimeData["tasktype"] = rec.name
         if (tasktypes.count == 1)
         {
-            self.pushController(withName: "AddTime", context: pass(AddTimeData, Record()))
+            self.pushController(withName: "AddTime", context: pass(Properties.AddTimeData, Record()))
                 return nil
         }
-        return pass(AddTimeData, self.acc)
+        return pass(Properties.AddTimeData, self.acc)
     }
     
     func loadTableData() {
@@ -116,7 +131,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
         for (index, project) in tasktypes.enumerated() {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! TypeTableRowController
-            row.recordLabel.setText(project.name)
+            row.recordLabel.setText((Properties.AddTimeData["tasktype"] != "" && index == 0 ? "✅ " : "") + project.name)
         }
     }
     
@@ -142,17 +157,18 @@ class SelectTypeInterfaceController: WKInterfaceController {
         
         let dict = context as? pass
         if dict != nil {
-            AddTimeData = dict!.data
+            Properties.AddTimeData = dict!.data
             self.acc = dict!.acc
-            print(AddTimeData)
+            print(Properties.AddTimeData)
             //print(self.acc[0].name)
         }
         getOrg()
         if self.tasktypes.count > 0 {
-            if (self.tasktypes.count < 2) {
+            if (self.tasktypes.count == 1) {
                 self.test(self.acc.task_types[0])
             }
             else{
+                setRecent()
                 loadTableData()
             }
         }

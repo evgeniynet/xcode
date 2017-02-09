@@ -18,19 +18,24 @@ class AddTimeInterfaceController: WKInterfaceController {
     
     @IBOutlet var picker: WKInterfacePicker!
     
-    var AddTimeData: Dictionary<String, String> = ["org" : "",
-        "account": "-1",
-        "project": "0",
-        "tasktype": "0",
-        "isproject": "true",
-        "isaccount": "true"
-    ]
+    var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
+    
     
     var  sliderValue:Float = 0.25
     var  pickerIndex:Int = 0
     
     struct Properties {
         static var org = ""
+        static var AddTimeData: Dictionary<String, String> = ["org" : "",
+                                                       "account": "",
+                                                       "account_id": "-1",
+                                                       "project": "",
+                                                       "project_id": "0",
+                                                       "tasktype": "",
+                                                       "tasktype_id": "0",
+                                                       "isproject": "true",
+                                                       "isaccount": "true"
+        ]
     }
 
     func updateWidget()
@@ -40,13 +45,13 @@ class AddTimeInterfaceController: WKInterfaceController {
             do {
                 let command = "time"
                 let params = [
-                    "account_id": AddTimeData["account"]!,
-                    "project_id" : AddTimeData["project"]!,
+                    "account_id": Properties.AddTimeData["account_id"]!,
+                    "project_id" : Properties.AddTimeData["project_id"]!,
                     "tech_id" : "0",
                     "is_project_log": "true",
                     "ticket_key": "0",
                     "note_text": "added by iWatch",
-                    "task_type_id": AddTimeData["tasktype"]!,
+                    "task_type_id": Properties.AddTimeData["tasktype_id"]!,
                     "hours": String(format: "%2.2f", sliderValue),
                     "is_billable": "true"
                 ]
@@ -100,9 +105,10 @@ class AddTimeInterfaceController: WKInterfaceController {
         
         let dict = context as? pass
         if dict != nil {
-            AddTimeData = dict!.data
-            Properties.org = AddTimeData["org"]!
-            print(AddTimeData)
+            Properties.AddTimeData = dict!.data
+            Properties.org = Properties.AddTimeData["org"]!
+            print(Properties.AddTimeData)
+            self.defaults.set(Properties.AddTimeData, forKey: "recent")
         }
     }
     
