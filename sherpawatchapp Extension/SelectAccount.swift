@@ -9,6 +9,20 @@
 import WatchKit
 import Foundation
 
+class Global {
+    
+    // Now Global.sharedGlobal is your singleton, no need to use nested or other classes
+    static let sharedGlobal = Global()
+    
+    var testString: String="Test" //for debugging
+    
+    var acc: Array<Record> = []
+    
+}
+
+// Use the singleton like this
+let singleton = Global.sharedGlobal
+
 public struct pass {
     var data: Dictionary<String, String>
     var acc: Record
@@ -61,7 +75,7 @@ public struct Record1 : JSONJoy {
     public init()
     {
         id = 0
-        name = "Default"
+        name = ""
     }
     
     public init(_ decoder: JSONDecoder) throws {
@@ -112,6 +126,16 @@ class SelectAccountInterfaceController: WKInterfaceController {
         }
     }
     
+    func setRecentG(){
+        if singleton.acc.count > 1 && Properties.AddTimeData["account"] != "" && singleton.acc[0].id != Int(Properties.AddTimeData["account_id"]!) {
+            for (index, val) in singleton.acc.enumerated() {
+                if Int(Properties.AddTimeData["account_id"]!) == val.id  {
+                    singleton.acc.insert(singleton.acc.remove(at: index), at: 0);
+                }
+            }
+        }
+    }
+    
     var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
     
     struct Properties {
@@ -128,8 +152,6 @@ class SelectAccountInterfaceController: WKInterfaceController {
     }
     
     var accounts: Array<NSDictionary> = []
-    
-    var acc : Array<Record> = []
     
     var accounts_ready: Bool = false
     
@@ -254,21 +276,16 @@ class SelectAccountInterfaceController: WKInterfaceController {
     func getrequest_logic (_ data: Any)
     {
         do {
-            self.acc = try JSONDecoder(data).get()
+            singleton.acc = try JSONDecoder(data).get()
             
-            if self.acc.count > 0 {
+            if singleton.acc.count > 0 {
                 self.accounts_ready = true
-                print("done1: \(self.acc.count)")
+                print("done1: \(singleton.acc.count)")
                 //self.defaults.set(self.acc, forKey: "accounts")
-                if self.acc.count < 2 {
-                    self.test(self.acc[0])
-                } else if self.acc.count > 1 && Properties.AddTimeData["account"] != "" && self.acc[0].id != Int(Properties.AddTimeData["account_id"]!) {
-                    for (index, val) in self.acc.enumerated() {
-                        if Int(Properties.AddTimeData["account_id"]!) == val.id  {
-                            self.acc.insert(self.acc.remove(at: index), at: 0);
-                        }
-                    }
+                if singleton.acc.count < 2 {
+                    self.test(singleton.acc[0])
                 }
+                setRecentG()
             }
         }
         catch {
@@ -283,7 +300,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! RecordTableRowController
             let rec = Record(account)
-            row.recordLabel.setText((Properties.AddTimeData["account"] != "" && index == 0 ? "✅ " : "") + rec.name)
+            row.recordLabel.setText((Properties.AddTimeData["account"] != "" && index == 0 ? "✅ " : "") + (rec.name.isEmpty ? "Default" : rec.name))
         }
     }
     
@@ -314,7 +331,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
     override func contextForSegue(withIdentifier segueIdentifier: String,
                                   in table: WKInterfaceTable, rowIndex: Int) -> Any? {
         let sequeId = "ToProject"
-        let rec = accounts_ready ? acc[rowIndex] : Record(accounts[rowIndex])
+        let rec = accounts_ready ? singleton.acc[rowIndex] : Record(accounts[rowIndex])
         if segueIdentifier == sequeId {
             return test(rec)
         }
@@ -325,6 +342,11 @@ class SelectAccountInterfaceController: WKInterfaceController {
     
     override init() {
         super.init()
+        if singleton.acc.count > 0 {
+            self.accounts_ready = true
+            setRecentG()
+            print(singleton.acc.count)
+        }
         getOrg()
         updateWidget()
     }

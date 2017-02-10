@@ -88,6 +88,7 @@ class SelectTypeInterfaceController: WKInterfaceController {
                             self.tasktypes = [Record1()]
                         }
                         if self.tasktypes.count == 1 {
+                            self.loadTableData()
                             self.test(self.tasktypes[0])
                             return
                         }
@@ -131,14 +132,14 @@ class SelectTypeInterfaceController: WKInterfaceController {
         for (index, project) in tasktypes.enumerated() {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! TypeTableRowController
-            row.recordLabel.setText((Properties.AddTimeData["tasktype"] != "" && index == 0 ? "✅ " : "") + project.name)
+            row.recordLabel.setText((Properties.AddTimeData["tasktype"] != "" && index == 0 ? "✅ " : "") + (project.name.isEmpty ? "Default" : project.name))
         }
     }
     
     override func contextForSegue(withIdentifier segueIdentifier: String,
         in table: WKInterfaceTable, rowIndex: Int) -> Any? {
             let sequeId = "ToAddTime"
-        let rec = acc.task_types.count > 0 ? acc.task_types[rowIndex] : tasktypes[rowIndex]
+        let rec = tasktypes[rowIndex]
         if segueIdentifier == sequeId {
             return test(rec)
         }
@@ -165,7 +166,8 @@ class SelectTypeInterfaceController: WKInterfaceController {
         getOrg()
         if self.tasktypes.count > 0 {
             if (self.tasktypes.count == 1) {
-                self.test(self.acc.task_types[0])
+                self.loadTableData()
+                self.test(self.tasktypes[0])
             }
             else{
                 setRecent()

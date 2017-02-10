@@ -73,6 +73,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
                             self.projects = [Record1()]
                         }
                         if self.projects.count == 1 {
+                            self.loadTableData()
                             self.test(self.projects[0])
                             return
                         }
@@ -124,14 +125,14 @@ class SelectProjectInterfaceController: WKInterfaceController {
         for (index, project) in projects.enumerated() {
             //print(blogName)
             let row = timeTable.rowController(at: index) as! ProjectTableRowController
-            row.recordLabel.setText((Properties.AddTimeData["project"] != "" && index == 0 ? "✅ " : "") + project.name)
+            row.recordLabel.setText((Properties.AddTimeData["project"] != "" && index == 0 ? "✅ " : "") + (project.name.isEmpty ? "Default" : project.name))
         }
     }
     
     override func contextForSegue(withIdentifier segueIdentifier: String,
                                   in table: WKInterfaceTable, rowIndex: Int) -> Any? {
         let sequeId = "ToTaskType"
-         let rec = acc.projects.count > 0 ? acc.projects[rowIndex] : projects[rowIndex]
+         let rec = projects[rowIndex]
         if segueIdentifier == sequeId {
             return test(rec)
         }
@@ -156,7 +157,8 @@ class SelectProjectInterfaceController: WKInterfaceController {
         getOrg()
         if self.projects.count > 0 {
             if (self.projects.count == 1) {
-                self.test(self.acc.projects[0])
+                loadTableData()
+                self.test(self.projects[0])
             }
             else{
                 setRecent()
