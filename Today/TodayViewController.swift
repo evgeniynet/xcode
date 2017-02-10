@@ -180,7 +180,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         //print("show: \(jsonResult.count)")
         if jsonResult.count>0{
             var rec = Record(jsonResult[0])
-            self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.fill;
+            self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left;
             self.fTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
             self.fTicket.setValue("ticket:"+rec.key, forKeyPath: "page")
             self.fTicket.isHidden = false

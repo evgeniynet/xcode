@@ -10,11 +10,6 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Today View Controller-->
         <scene sceneID="cwh-vc-ff4">
@@ -28,6 +23,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="lmV-25-uCa">
+                                <rect key="frame" x="0.0" y="90" width="1440" height="2"/>
+                            </imageView>
                             <imageView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" misplaced="YES" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="RNT-gM-kN4">
                                 <rect key="frame" x="0.0" y="130" width="1440" height="2"/>
                             </imageView>
@@ -65,10 +63,9 @@
                             <imageView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" misplaced="YES" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="GM5-2z-j5f">
                                 <rect key="frame" x="0.0" y="201" width="1440" height="2"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4O-7y-8wT" customClass="MyButton" customModule="Today" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4O-7y-8wT" customClass="MyButton" customModule="Today" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="102" width="320" height="30"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Login to SherpaDesk app please">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -91,14 +88,14 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcL-FH-zPp">
-                                        <rect key="frame" x="75" y="0.0" width="74" height="79"/>
+                                        <rect key="frame" x="75.5" y="0.0" width="74" height="79"/>
                                         <state key="normal" image="Create Ticket"/>
                                         <connections>
                                             <action selector="AddTicket:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="hQR-ia-oON"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWB-hH-euI">
-                                        <rect key="frame" x="160" y="0.0" width="72" height="81"/>
+                                        <rect key="frame" x="159.5" y="0.0" width="72" height="81"/>
                                         <state key="normal" image="My Tickets"/>
                                         <connections>
                                             <action selector="MyTickets:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="pQc-t2-nVK"/>
@@ -117,16 +114,18 @@
                         <constraints>
                             <constraint firstItem="oYP-JP-ahF" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leadingMargin" id="3Zb-wT-jv3"/>
                             <constraint firstItem="a7Z-5Y-dW1" firstAttribute="top" secondItem="FWE-zA-WHC" secondAttribute="baseline" constant="7" id="7Hr-iQ-KrH"/>
+                            <constraint firstItem="lmV-25-uCa" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="7eH-fp-E01"/>
                             <constraint firstItem="RNT-gM-kN4" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="7eH-fp-E0p"/>
                             <constraint firstItem="oYP-JP-ahF" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="98K-dW-D9b"/>
                             <constraint firstItem="0cT-pM-S1a" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="I3i-q7-Gk5"/>
                             <constraint firstItem="oYP-JP-ahF" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="5" id="IhA-VJ-7y2"/>
+                            <constraint firstItem="lmV-25-uCa" firstAttribute="top" secondItem="v4O-7y-8wT" secondAttribute="baseline" constant="-19" id="IyY-jP-OV1"/>
                             <constraint firstItem="RNT-gM-kN4" firstAttribute="top" secondItem="v4O-7y-8wT" secondAttribute="baseline" constant="6" id="IyY-jP-OV6"/>
                             <constraint firstItem="0cT-pM-S1a" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="M9N-Jo-qBF"/>
                             <constraint firstItem="v4O-7y-8wT" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="Obb-0k-cbs"/>
                             <constraint firstItem="GM5-2z-j5f" firstAttribute="top" secondItem="0cT-pM-S1a" secondAttribute="baseline" constant="10" id="S1i-Fw-21O"/>
                             <constraint firstItem="0cT-pM-S1a" firstAttribute="top" secondItem="FWE-zA-WHC" secondAttribute="bottom" constant="8" id="VDm-Uc-oaK"/>
-                            <constraint firstItem="FWE-zA-WHC" firstAttribute="top" secondItem="v4O-7y-8wT" secondAttribute="bottom" constant="4" id="VgW-oG-TNr"/>
+                            <constraint firstItem="FWE-zA-WHC" firstAttribute="top" secondItem="v4O-7y-8wT" secondAttribute="bottom" constant="3" id="VgW-oG-TNr"/>
                             <constraint firstItem="v4O-7y-8wT" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="88" id="YeD-ar-Cd9"/>
                             <constraint firstItem="a7Z-5Y-dW1" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="afk-Xn-K6C"/>
                             <constraint firstItem="FWE-zA-WHC" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="isk-jw-GPx"/>
