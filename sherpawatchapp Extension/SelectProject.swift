@@ -151,7 +151,7 @@ class SelectProjectInterfaceController: WKInterfaceController {
         if dict != nil {
             Properties.AddTimeData = dict!.data
             self.acc = dict!.acc
-            print(Properties.AddTimeData)
+            //print(Properties.AddTimeData)
             //print(self.acc[0].name)
         }
         getOrg()

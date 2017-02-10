@@ -345,7 +345,7 @@ class SelectAccountInterfaceController: WKInterfaceController {
         if singleton.acc.count > 0 {
             self.accounts_ready = true
             setRecentG()
-            print(singleton.acc.count)
+            //print(singleton.acc.count)
         }
         getOrg()
         updateWidget()

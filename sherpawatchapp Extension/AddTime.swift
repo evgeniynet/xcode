@@ -107,7 +107,7 @@ class AddTimeInterfaceController: WKInterfaceController {
         if dict != nil {
             Properties.AddTimeData = dict!.data
             Properties.org = Properties.AddTimeData["org"]!
-            print(Properties.AddTimeData)
+            //print(Properties.AddTimeData)
             self.defaults.set(Properties.AddTimeData, forKey: "recent")
         }
     }
