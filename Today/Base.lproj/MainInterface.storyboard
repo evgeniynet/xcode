@@ -125,8 +125,8 @@
                             <constraint firstItem="v4O-7y-8wT" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="Obb-0k-cbs"/>
                             <constraint firstItem="GM5-2z-j5f" firstAttribute="top" secondItem="0cT-pM-S1a" secondAttribute="baseline" constant="10" id="S1i-Fw-21O"/>
                             <constraint firstItem="0cT-pM-S1a" firstAttribute="top" secondItem="FWE-zA-WHC" secondAttribute="bottom" constant="8" id="VDm-Uc-oaK"/>
-                            <constraint firstItem="FWE-zA-WHC" firstAttribute="top" secondItem="v4O-7y-8wT" secondAttribute="bottom" constant="3" id="VgW-oG-TNr"/>
-                            <constraint firstItem="v4O-7y-8wT" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="88" id="YeD-ar-Cd9"/>
+                            <constraint firstItem="FWE-zA-WHC" firstAttribute="top" secondItem="v4O-7y-8wT" secondAttribute="bottom" constant="-1" id="VgW-oG-TNr"/>
+                            <constraint firstItem="v4O-7y-8wT" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="83" id="YeD-ar-Cd9"/>
                             <constraint firstItem="a7Z-5Y-dW1" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="afk-Xn-K6C"/>
                             <constraint firstItem="FWE-zA-WHC" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.9" id="isk-jw-GPx"/>
                             <constraint firstItem="GM5-2z-j5f" firstAttribute="width" secondItem="S3S-Oj-5AN" secondAttribute="width" multiplier="0.93" id="mfQ-v7-y5F"/>
@@ -141,6 +141,10 @@
                     <connections>
                         <outlet property="fLine" destination="RNT-gM-kN4" id="AU7-iD-Wiw"/>
                         <outlet property="fTicket" destination="v4O-7y-8wT" id="TNE-mD-ih9"/>
+                        <outlet property="lineC" destination="7eH-fp-E01" id="dIX-sz-8hs"/>
+                        <outlet property="lineF" destination="7eH-fp-E0p" id="aEc-ss-fgm"/>
+                        <outlet property="lineS" destination="afk-Xn-K6C" id="zFD-as-SdX"/>
+                        <outlet property="lineT" destination="mfQ-v7-y5F" id="aLX-x1-6fL"/>
                         <outlet property="sLine" destination="a7Z-5Y-dW1" id="IUv-Jf-2Tk"/>
                         <outlet property="sTicket" destination="FWE-zA-WHC" id="1I1-dD-QB3"/>
                         <outlet property="tLine" destination="GM5-2z-j5f" id="gsc-Sd-bnF"/>

@@ -25,6 +25,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @IBOutlet weak var tTicket: UIButton!
     @IBOutlet weak var tLine: UIImageView!
     
+    @IBOutlet weak var lineC: NSLayoutConstraint!
+    @IBOutlet weak var lineF: NSLayoutConstraint!
+    @IBOutlet weak var lineS: NSLayoutConstraint!
+    @IBOutlet weak var lineT: NSLayoutConstraint!
     
     struct Record : JSONJoy {
         var number: String
@@ -227,10 +231,19 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     self.preferredContentSize = CGSize(width:self.view.frame.size.width, height:80)
     
+    if #available(iOSApplicationExtension 10.0, *)
+    {
+        lineC.isActive = false
+        lineF.isActive = false
+        lineS.isActive = false
+        lineT.isActive = false
+
+    }
+    
     if #available(iOSApplicationExtension 10.0, *) { // Xcode would suggest you implement this.
         extensionContext?.widgetLargestAvailableDisplayMode = .expanded
     } else {
-        preferredContentSize = CGSize(width: CGFloat(0), height: CGFloat(205.0))
+        preferredContentSize = CGSize(width: CGFloat(0), height: CGFloat(180.0))
     }
     //defaults.setObject([], forKey: "tickets")
     // Do any additional setup after loading the view from its nib.
