@@ -1,52 +1,85 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="apple-touch-icon" href="img/icon.png"/>
-        <link rel="apple-touch-startup-image" href="img/profile_2.png" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-        <title>SherpaDesk</title>
-        <!-- Main stylesheet -->
-        <link rel="stylesheet" href="css/style.min.css" />
-        <!-- Media query for tablets -->
-        <link rel="stylesheet" href="css/tablet.css" />
-        <link rel="stylesheet" href="css/style_LargeScreen.css" />
-        <link rel="stylesheet" type="text/css" href="css/error.css">
-            <script src="cordova.js"></script>
-            </head>
-    <body id=body class="loginScreen" onload="onLoad()">
-        <div class="bodyContentCoverLogin">
-            <div id=logo class="bodyContent">
-                <img class="loginLogo" src="img/logo.png">
-                    <img id=preload class=Absolute-Center src=img/loading2.gif alt="Loading...">
-                        </div>
-        </div>
-    </body>
-    <script type="text/javascript">
-        
-        var Site = 'sherpadesk.com/';
-        var MobileSite = 'http://m.sherpadesk.com/';
-        var isPhonegap = false;
-        var isOnline = false;
-        var interval;
-        
-        function onLoad() {
-            document.addEventListener("offline", off,false);
-            document.addEventListener("online", on1 ,false);
-            document.addEventListener("deviceready", onDeviceReady, false);
-        }
+<head>
+    <meta charset="utf-8" />
+    <meta property="og:title" content="SherpaDesk | Track Time and Customer Support Management System">  <meta property="og:description" content="SherpaDesk is a help desk solution for all your customer support management needs. Manage tickets, track time, and send invoices easily.">
+    <link rel="apple-touch-icon" href="img/icon.png"/>
+    <link rel="apple-touch-startup-image" href="img/profile_2.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>SherpaDesk Mobile App</title>
+    <!-- Media query for tablets -->
+    <link rel="stylesheet" href="css/tablet.css" />
+    <link rel="stylesheet" href="css/style_LargeScreen.css" />
+    <link rel="stylesheet" type="text/css" href="css/error.css">
+    <link md-href="http://m.sherpadesk.com/build/css/app.md.css" rel="stylesheet">
+    <link wp-href="http://m.sherpadesk.com/build/css/app.wp.css" rel="stylesheet">
+    <style>
+
+        body {
+          background: #34495e;
+      }
+
+      @font-face{font-family:"Ionicons";src:url("build/fonts/ionicons.woff2?v=3.0.0-alpha.3") format("woff2"),url("build/fonts/ionicons.woff?v=3.0.0-alpha.3") format("woff"),url("build/fonts/ionicons.ttf?v=3.0.0-alpha.3") format("truetype");font-weight:normal;font-style:normal}
+
+
+      ion-app1 ion-page {
+        opacity: 0.4 ;
+        transition: all linear 1700ms ;
+        -webkit-transition: all linear 1700ms ;
+    }
+    ion-app1.loaded ion-page{
+        opacity: 1.0 ;
+    }
+
+    .Absolute-Center {
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+</style>
+<script src="1cordova.js"></script>
+</head>
+<body class="platform-cordova ios platform-mobile platform-ios platform-mobileweb login">
+  <ion-app>
+
+  </ion-app>
+  <ion-app1>
+    <img id=preload class=Absolute-Center src=img/loading2.gif alt="Loading...">
+</ion-app1>
+<click-block></click-block><focus-ctrl aria-hidden="true"><button tabindex="-1"></button></focus-ctrl>
+
+<script src="http://m.sherpadesk.com/build/js/app.js"></script>
+</body>
+<script type="text/javascript">
+
+    var Site = 'sherpadesk.com/';
+    var MobileSite = 'http://m.sherpadesk.com/';
+    var isPhonegap = true;
+    var isOnline = true;
+    var interval;
+
+    redirectToPage()
+
+    function onLoad() {
+        document.addEventListener("offline", off,false);
+        document.addEventListener("online", on1 ,false);
+        redirectToPage();
+        //document.addEventListener("deviceready", onDeviceReady, false);
+    }
     
     
     //If User is Offline....................................
     function off(){
         if (!document.getElementById("error")) {
-            var el = document.getElementById("body");
-            el.innerHTML =  '<div id=error class="catch-error"><div class="catch-error-description"><h2><br/>Check your internet connection!</h2><div id="ctl00_PageBody_StackTrace" class="return-button"><center><button style="width: 200px;" onclick="redirectToPage()" class="sherpadesk-button">Refresh</button></center><p /><p /><h4>P.S.  Uh... a Yeti just attacked your  camp!</h4></div></div>' + el.innerHTML;
+            var el = document.getElementsByTagName("body")[0];
+            el.innerHTML =  '<div id=error class="catch-error"><div class="catch-error-description"><h2><br/>Check your internet connection!</h2><div id="ctl00_PageBody_StackTrace" class="return-button"><center><button style="width: 200px;" onclick="redirectToPage()" class="sherpadesk-button">Refresh</button></center><p /><p /><h4>P.S.  Uh... a Yeti just attacked your  camp!</h4></div></div>';
         }
-        document.getElementById("logo").style.display = 'none';
         isOnline = false;
     };
     
@@ -54,67 +87,38 @@
     
     function on1 (){
         if (!isOnline){
-            var el = document.getElementById("error");
-            if (el)
-            el.remove();
-            document.getElementById("logo").style.display = 'block';
             setTimeout(function(){ ;
-                       document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
-                       }, 500);
+             document.location.reload(true);
+         }, 500);
         }
         isOnline = true; };
-    
-    function initOrgPreferences(value)
-    {
-        var prefs = plugins.appPreferences;
-        var suitePrefs = prefs.iosSuite("group.io.sherpadesk.mobile");
-        suitePrefs.store (ok, fail, 'org', value);
-    }
-    
-    function ok (value) { //alert(value);
-    }
-    function fail (error) {alert(error);}
-    
-    
-    
-    function onDeviceReady() {
-        /*var accounts = [{"id":1033,"name":"Test FreshBooks"},{"id":1225,"name":"Test Salesforce Account 1"},{"id":19,"name":"test112"},{"id":1247,"name":"thishouldnotexistandhopefullyitwillnot"},{"id":3,"name":"True North Design"},{"id":1038,"name":"TTTeee"},{"id":1230,"name":"United Oil & Gas Corp."},{"id":1234,"name":"United Oil & Gas, Singapore"},{"id":1233,"name":"United Oil & Gas, UK"},{"id":1232,"name":"University of Arizona"},{"id":1034,"name":"Willy's"}];
-        */
-        //initOrgPreferences("zwoja4-ms2asm:re36rym3mjqxm8ej2cscfajmxpsew33m");
-        isPhonegap = true;
-        cordova.plugins.backgroundMode.enable();
-        //alert(2);
-        redirectToPage();
-    };
-    
-    function redirectToPage() {
-        if (navigator.onLine)
-        {  if (isPhonegap) on1();
-            else
-            {
+
+        
+
+        function redirectToPage() {
+            if (navigator.onLine)
+            {       
                 var img = document.body.appendChild(document.createElement("img"));
                 img.style.display = 'none';
-                img.onload = function () {
-                    setTimeout(function(){
-                               document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
-                               }, 200);
-                };
                 img.onerror = function () {
                     off();
                 };
+                img.onload = function () {
+                    on1();
+                };
                 img.src = MobileSite + "img/select_arrow.png?rand=" + Math.random();
             }
-        }
-        else
-        {
-            off();
-        }
-    };
-    
+            else
+            {
+                off();
+            }
+        };
+
+    /*
     function handleOpenURL(url) {
         ios_action = url.substring(13);
         redirectToPage();
         //document.location.href = MobileSite + "index.html?ios_action=" + ios_action;
-    }
-    </script>
+    }*/
+</script>
 </html>
