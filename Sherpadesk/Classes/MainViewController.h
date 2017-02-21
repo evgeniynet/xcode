@@ -30,6 +30,7 @@
 #import <Cordova/CDVCommandQueue.h>
 
 @interface MainViewController : CDVViewController
+@property (weak, nonatomic) IBOutlet UIView *aboutView;
 
 @end
 

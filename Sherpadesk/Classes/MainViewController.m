@@ -103,20 +103,25 @@
 
 - (void)webViewDidFinishLoad:(UIWebView*)theWebView
 {
-    // Black base color for background matches the native apps
-    theWebView.backgroundColor = [UIColor blackColor];
-
+    [self performSelector:@selector(showAboutWebView) withObject:nil afterDelay:.05];
+    theWebView.backgroundColor = [UIColor colorWithRed:0.20 green:0.29 blue:0.37 alpha:0.5];
     return [super webViewDidFinishLoad:theWebView];
+}
+
+- (void)showAboutWebView
+{
+    self.aboutView.hidden = NO;
 }
 
 /* Comment out the block below to over-ride */
 
 /*
 
-- (void) webViewDidStartLoad:(UIWebView*)theWebView
-{
-    return [super webViewDidStartLoad:theWebView];
-}
+ - (void) webViewDidStartLoad:(UIWebView*)theWebView
+ {
+ // Black base color for background matches the native app
+ return [super webViewDidStartLoad:theWebView];
+ }
 
 - (void) webView:(UIWebView*)theWebView didFailLoadWithError:(NSError*)error
 {
