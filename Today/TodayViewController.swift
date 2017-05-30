@@ -242,6 +242,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     if #available(iOSApplicationExtension 10.0, *) { // Xcode would suggest you implement this.
         extensionContext?.widgetLargestAvailableDisplayMode = .expanded
+        self.fTicket.contentEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
     } else {
         preferredContentSize = CGSize(width: CGFloat(0), height: CGFloat(180.0))
     }
