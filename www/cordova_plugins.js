@@ -1,6 +1,13 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "file": "plugins/watchconnectivity.js",
+        "id": "cordova-plugin-watchconnectivity",
+        "clobbers": [
+            "sswc"
+        ]
+    },
+    {
         "file": "plugins/de.appplant.cordova.plugin.badge/www/badge.js",
         "id": "de.appplant.cordova.plugin.badge.Badge",
         "clobbers": [

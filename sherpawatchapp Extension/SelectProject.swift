@@ -8,9 +8,14 @@
 
 import WatchKit
 import Foundation
+import WatchConnectivity
 
-class SelectProjectInterfaceController: WKInterfaceController {
+class SelectProjectInterfaceController: WKInterfaceController, WCSessionDelegate {
     
+    var session : WCSession?
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        NSLog("%@", "activationDidCompleteWith activationState:\(activationState) error:\(error)")
+    }
     @IBOutlet weak var timeTable: WKInterfaceTable!
     
     var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
@@ -174,6 +179,9 @@ class SelectProjectInterfaceController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        session = WCSession.default()
+        session?.delegate = self
+        session?.activate()
     }
     
     override func didDeactivate() {

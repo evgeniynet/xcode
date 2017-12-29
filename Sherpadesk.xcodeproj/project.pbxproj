@@ -24,6 +24,8 @@
 		308D05391370CCF300D202BF /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308D05301370CCF300D202BF /* icon@2x.png */; };
 		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
+		46AF99A41FF67DF50042707B /* WCiOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AF99A31FF67DF50042707B /* WCiOS.m */; };
+		46AF99A61FF683150042707B /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46AF99A51FF683150042707B /* WatchConnectivity.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		774673875B684F3BAFEB2518 /* CDVReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 246B6E31D3164003B706A996 /* CDVReachability.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
@@ -189,6 +191,9 @@
 		3432174997A5489981F5FA69 /* AppDelegate+APPRegisterUserNotificationSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+APPRegisterUserNotificationSettings.h"; path = "de.appplant.cordova.common.registerusernotificationsettings/AppDelegate+APPRegisterUserNotificationSettings.h"; sourceTree = "<group>"; };
 		3748FCEA6BD142BA9D8BCBB6 /* APPBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APPBadge.h; path = de.appplant.cordova.plugin.badge/APPBadge.h; sourceTree = "<group>"; };
 		3BAEE992D3C24FDEBD598433 /* CDVDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVDevice.h; path = "cordova-plugin-device/CDVDevice.h"; sourceTree = "<group>"; };
+		46AF99A21FF67DE30042707B /* WCiOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WCiOS.h; path = "cordova-plugin-watchconnectivity/WCiOS.h"; sourceTree = "<group>"; };
+		46AF99A31FF67DF50042707B /* WCiOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WCiOS.m; path = "cordova-plugin-watchconnectivity/WCiOS.m"; sourceTree = "<group>"; };
+		46AF99A51FF683150042707B /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
 		47AD85DDBE9E4A049D9382F1 /* Foundation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		513116B38E1D4CEFB6123E0A /* AppPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppPreferences.h; path = "cordova-plugin-app-preferences/AppPreferences.h"; sourceTree = "<group>"; };
 		521699A428534A7A89ECE0DA /* libz.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -264,6 +269,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46AF99A61FF683150042707B /* WatchConnectivity.framework in Frameworks */,
 				FA65C5CE1B70EA2D004E6CCD /* SystemConfiguration.framework in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
@@ -370,6 +376,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				46AF99A51FF683150042707B /* WatchConnectivity.framework */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
@@ -395,6 +402,8 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				46AF99A31FF67DF50042707B /* WCiOS.m */,
+				46AF99A21FF67DE30042707B /* WCiOS.h */,
 				B07FAA91523A4564B66347C9 /* AppDelegate+APPRegisterUserNotificationSettings.m */,
 				3432174997A5489981F5FA69 /* AppDelegate+APPRegisterUserNotificationSettings.h */,
 				C431A57A422C404DA046B62E /* APPBadge.m */,
@@ -796,6 +805,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				46AF99A41FF67DF50042707B /* WCiOS.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				831B55F06E044B5DB83559B6 /* AppDelegate+APPRegisterUserNotificationSettings.m in Sources */,
@@ -1125,7 +1135,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Debug;
 		};
@@ -1169,7 +1179,7 @@
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Release;
 		};
@@ -1214,7 +1224,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Debug;
 		};
@@ -1256,7 +1266,7 @@
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Release;
 		};
