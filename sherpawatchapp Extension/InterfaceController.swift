@@ -18,6 +18,15 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         NSLog("%@", "activationDidCompleteWith activationState:\(activationState) error:\(error)")
     }
     
+    func session(_ session: WCSession,
+                 didReceiveMessage message: [String : Any],
+                 replyHandler: @escaping ([String : Any]) -> Void) {
+        let message = message["message"] as? String
+        defaults.set(message, forKey: "org")
+        //defaults.object(forKey: "org") as? String
+        print(message)
+    }
+    
     @IBOutlet weak var timeTable: WKInterfaceTable!
     
     @IBOutlet weak var button: WKInterfaceButton!

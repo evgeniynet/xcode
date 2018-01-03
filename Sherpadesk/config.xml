@@ -2,6 +2,10 @@
 <widget id="com.sherpadesk.mobile" version="4.1.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="BackupWebStorage" value="cloud" />
     <preference name="DisallowOverscroll" value="false" />
+    <gap:plugin name="cordova-plugin-watchconnectivity" />
+    <feature name="WatchConnectivity">
+        <param name="ios-package" value="WCiOS" />
+    </feature>
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>

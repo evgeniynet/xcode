@@ -27,7 +27,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
-#import <WatchConnectivity/WatchConnectivity.h>
+//#import <WatchConnectivity/WatchConnectivity.h>
 #import <Cordova/CDVPlugin.h>
 
 @implementation AppDelegate
