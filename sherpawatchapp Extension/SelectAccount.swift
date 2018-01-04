@@ -216,7 +216,7 @@ class SelectAccountInterfaceController: WKInterfaceController, WCSessionDelegate
             do {
                 let command = "accounts" + "?is_with_statistics=false&limit=500" + (oldcount > 0 ? "&is_watch_info=true" : "" )
                 let params = ["", ""]
-                let urlPath: String = "http://" + Properties.org +
+                let urlPath: String = "https://" + Properties.org +
                     "@api.sherpadesk.com/" + command
                 
                 let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])
@@ -263,7 +263,7 @@ class SelectAccountInterfaceController: WKInterfaceController, WCSessionDelegate
     {
         do {
             let params = ["", ""]
-            let urlPath: String = "http://" + Properties.org +
+            let urlPath: String = "https://" + Properties.org +
                 "@api.sherpadesk.com/" + command
             
             let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])

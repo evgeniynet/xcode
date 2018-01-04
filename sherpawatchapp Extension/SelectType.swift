@@ -79,7 +79,7 @@ class SelectTypeInterfaceController: WKInterfaceController, WCSessionDelegate {
             do {
                 let command = "task_types"
                 let params = ["account": Properties.AddTimeData["account_id"]!]
-                let urlPath: String = "http://" + Properties.org +
+                let urlPath: String = "https://" + Properties.org +
                     "@api.sherpadesk.com/" + command
                 
                 let opt = try HTTP.GET(urlPath, parameters: params, headers: ["Accept": "application/json"])

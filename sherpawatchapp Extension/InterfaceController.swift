@@ -22,9 +22,16 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                  didReceiveMessage message: [String : Any],
                  replyHandler: @escaping ([String : Any]) -> Void) {
         let message = message["message"] as? String
+        let old = defaults.object(forKey: "org") as? String
         defaults.set(message, forKey: "org")
         //defaults.object(forKey: "org") as? String
-        print(message)
+        //print(message)
+        //self.setTitle((message?.isEmpty)! ? "Main" : message)
+        if (message != old)
+        {
+            getOrg()
+            updateWidget()
+        }
     }
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
@@ -130,7 +137,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             self.timelogs = []
             defaults.set([], forKey: "timelogs")
             //print("unset\(self.tickets.count)")
-            
+        }
+        else
+        {
+            button.setEnabled(false);
+            timeTable.setNumberOfRows(1, withRowType: "TextTableRowController")
+            let row = timeTable.rowController(at: 0) as! TextTableRowController
+            row.nameLabel.setText("Login to SherpaDesk")
         }
     }
     

@@ -57,11 +57,10 @@ class AddTimeInterfaceController: WKInterfaceController, WCSessionDelegate {
                     "ticket_key": "0",
                     "note_text": "added by iWatch",
                     "task_type_id": Properties.AddTimeData["tasktype_id"]!,
-                    "hours": String(format: "%2.2f", sliderValue),
-                    "is_billable": "true"
+                    "hours": String(format: "%2.2f", sliderValue)
                 ]
                 print(params)
-                let urlPath: String = "http://" + Properties.org +
+                let urlPath: String = "https://" + Properties.org +
                     "@api.sherpadesk.com/" + command
                 
                 let opt = try HTTP.POST(urlPath, parameters: params, headers: ["Accept": "application/json"])
