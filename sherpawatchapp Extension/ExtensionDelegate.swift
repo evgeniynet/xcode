@@ -7,8 +7,12 @@
 //
 
 import WatchKit
+import WatchConnectivity
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
+    
+    var session : WCSession?
+    var defaults : UserDefaults = UserDefaults(suiteName: "group.io.sherpadesk.mobile")!
     
     func handleUserActivity(_ userInfo: [AnyHashable: Any]?) {
         
@@ -28,6 +32,13 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     }
 
     func applicationDidBecomeActive() {
+        session = WCSession.default()
+        session?.activate()
+        if let iPhoneContext = session?.receivedApplicationContext as? [String : Any] {
+            let message = iPhoneContext["message"] as? String
+            //let old = defaults.object(forKey: "org") as? String
+            defaults.set(message, forKey: "org")
+        }
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 

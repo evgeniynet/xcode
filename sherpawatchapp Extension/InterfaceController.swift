@@ -33,6 +33,43 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             updateWidget()
         }
     }
+    /*
+    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        DispatchQueue.main.async(execute:  {
+            self.processApplicationContext()
+        })
+    }
+    
+    func processApplicationContext() {
+        if let iPhoneContext = session?.receivedApplicationContext as? [String : Any] {
+
+            let message = iPhoneContext["message"] as? String
+            let old = defaults.object(forKey: "org") as? String
+            defaults.set(message, forKey: "org")
+            if (message != old)
+            {
+                getOrg()
+                updateWidget()
+            }
+        }
+    }
+ */
+    func session(_ session: WCSession,
+                 didReceiveApplicationContext applicationContext: [String : Any],
+                 replyHandler: @escaping ([String : Any]) -> Void) {
+        if let iPhoneContext = session.receivedApplicationContext as? [String : Any] {
+            
+            let message = iPhoneContext["message"] as? String
+            let old = defaults.object(forKey: "org") as? String
+            defaults.set(message, forKey: "org")
+            if (message != old)
+            {
+                getOrg()
+                updateWidget()
+            }
+        }
+    }
+ 
     
     @IBOutlet weak var timeTable: WKInterfaceTable!
     
@@ -132,7 +169,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 button.setEnabled(false);
                 timeTable.setNumberOfRows(1, withRowType: "TextTableRowController")
                 let row = timeTable.rowController(at: 0) as! TextTableRowController
-                row.nameLabel.setText("Login to SherpaDesk")
+                row.nameLabel.setText("Run/Login on iPhone_app")
             }
             self.timelogs = []
             defaults.set([], forKey: "timelogs")
@@ -143,7 +180,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             button.setEnabled(false);
             timeTable.setNumberOfRows(1, withRowType: "TextTableRowController")
             let row = timeTable.rowController(at: 0) as! TextTableRowController
-            row.nameLabel.setText("Login to SherpaDesk")
+            row.nameLabel.setText("Run/Login on iPhone_app")
         }
     }
     

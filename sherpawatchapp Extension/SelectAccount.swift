@@ -197,7 +197,7 @@ class SelectAccountInterfaceController: WKInterfaceController, WCSessionDelegate
         }
         else
         {//showMessage("Login to SherpaDesk app first")
-            self.pushController(withName: "Main1", context: nil)
+            self.popToRootController()
         }
         self.accounts = []
         defaults.set([], forKey: "accounts")
@@ -348,13 +348,6 @@ class SelectAccountInterfaceController: WKInterfaceController, WCSessionDelegate
     
     override init() {
         super.init()
-        if singleton.acc.count > 0 {
-            self.accounts_ready = true
-            setRecentG()
-            //print(singleton.acc.count)
-        }
-        getOrg()
-        updateWidget()
     }
     
     override func awake(withContext context: Any?) {
@@ -368,6 +361,19 @@ class SelectAccountInterfaceController: WKInterfaceController, WCSessionDelegate
         session = WCSession.default()
         session?.delegate = self
         session?.activate()
+        if let iPhoneContext = session?.receivedApplicationContext as? [String : Any] {
+            let message = iPhoneContext["message"] as? String
+            //let old = defaults.object(forKey: "org") as? String
+            defaults.set(message, forKey: "org")
+            defaults.synchronize()
+        }
+        if singleton.acc.count > 0 {
+            self.accounts_ready = true
+            setRecentG()
+            //print(singleton.acc.count)
+        }
+        getOrg()
+        updateWidget()
     }
     
     override func didDeactivate() {

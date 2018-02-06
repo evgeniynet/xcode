@@ -32,7 +32,19 @@
     if (message != nil) {
         self.messageString = message;
     }
+
+    NSError *error = nil;
+    
     NSDictionary *messageDictionary = [[NSDictionary alloc] initWithObjects:@[message] forKeys:@[@"message"]];
+    
+    if (![[WCSession defaultSession] updateApplicationContext:messageDictionary error:&error])
+    {
+        NSLog(@"An error occured during background transfer:%@", [error localizedDescription]);
+    }
+    if (error) {
+        NSLog(@"Error appContex %@", error.localizedDescription);
+    }
+    
     [[WCSession defaultSession] sendMessage:messageDictionary
                                replyHandler:^(NSDictionary *reply) {}
                                errorHandler:^(NSError *error) {}
