@@ -938,7 +938,7 @@
 					"\"$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include\"",
 				);
 				INFOPLIST_FILE = "Sherpadesk/Sherpadesk-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
@@ -998,7 +998,7 @@
 					"\"$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include\"",
 				);
 				INFOPLIST_FILE = "Sherpadesk/Sherpadesk-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
@@ -1050,7 +1050,7 @@
 					"\"$(OBJROOT)/UninstalledProducts/include\"",
 					"\"$(BUILT_PRODUCTS_DIR)\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1093,8 +1093,7 @@
 					"\"$(OBJROOT)/UninstalledProducts/include\"",
 					"\"$(BUILT_PRODUCTS_DIR)\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				ONLY_ACTIVE_ARCH = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-weak_framework",
@@ -1155,7 +1154,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Debug;
 		};
@@ -1199,7 +1198,7 @@
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Release;
 		};
@@ -1245,7 +1244,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Debug;
 		};
@@ -1287,7 +1286,7 @@
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Release;
 		};
@@ -1327,7 +1326,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = Today/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.Today;
@@ -1371,7 +1370,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = Today/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sherpadesk.mobile.Today;
