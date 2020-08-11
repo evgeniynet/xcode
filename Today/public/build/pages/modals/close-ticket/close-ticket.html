@@ -1,0 +1,52 @@
+<ion-toolbar>
+<ion-buttons start class="searchbar">
+<button (click)="dismiss()">
+    <span primary>Cancel</span>
+</button>
+</ion-buttons>
+<ion-title class="ellipsis padding-right24 padding-left87">Close {{config.current.names.ticket.s}} #{{ticket.number}} {{ticket.subject}}</ion-title>
+</ion-toolbar>
+
+
+<ion-content class="has-header">
+
+<div class="list max-width700 general-alignment">
+
+    <select-list [list]="selects.resolution" preload="true" (onChanged)='saveSelect($event)'></select-list>
+
+    <select-list [list]="selects.category" preload="true" (onChanged)='saveSelect($event)'></select-list>
+
+    <select-list [list]="selects.categories" (onChanged)='saveSelect($event)'></select-list>
+
+    <class-list [list]="selects.class" (onChanged)='saveSelect($event)'></class-list>
+
+    <select-list [list]="selects.cc" preload="true" (onChanged)='saveSelect($event)'></select-list>
+    
+
+    <div class="width100">
+    <div *ngFor="let user of users" style="padding-left: 7px;">
+    <p class="left text-toggle color width90" style="margin-top: 5px;margin-bottom: 0px;">{{user.name}}</p>
+    <button style="background-color: unset; height: 17px; width: 1.6em;" class="width10" (click)="deleteUser(user.id)">
+      <ion-icon class="invoiceCircle right" style="padding:0px !important" name="close"></ion-icon>
+    </button>
+    </div>
+    </div>
+    
+    <form #addForm="ngForm" class="response-ticket width100" style="display: block;">      
+      <template [ngIf]="config.current.is_confirmation_tracking">
+        <ion-item no-lines class="left toggle-width">
+      <ion-toggle class="toggle" [(ngModel)]="isconfirm" disabled='false'></ion-toggle>
+    </ion-item>
+
+    <p class="left width35 text-toggle color">Confirm Now?</p>
+</template>  
+    <div class="tooltips">
+        <textarea class="width100 textLogin commentText" [(ngModel)]="ticketnote" type="text" placeholder="Add closing comments" ngControl="note" #note="ngForm" maxlength="4000"></textarea>
+        <span [hidden]="note.valid || note.untouched">Note should be less 5000 chars</span></div>
+        <button secondary 
+        class="button_reply img-top right" [disabled]="!addForm.valid" (click)="onSubmit(addForm)"  type="submit">Close {{config.current.names.ticket.s}}</button>
+    </form>
+
+</div>
+
+</ion-content>

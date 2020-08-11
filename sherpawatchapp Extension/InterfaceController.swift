@@ -94,7 +94,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         var hours: Float
         var org: String
         
-        init(_ decoder: JSONDecoder) throws {
+        init(_ decoder: JSONLoader) throws {
             id = try decoder["time_id"].get()
             name = try decoder["user_name"].get()
             let acc: String = try decoder["account_name"].get()
@@ -115,7 +115,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         var records: Array<NSDictionary> = []
         init() {
         }
-        init(_ decoder: JSONDecoder) throws {
+        init(_ decoder: JSONLoader) throws {
             records = []
             let arr: Array<Record> = try decoder.get()
             records = []
@@ -204,7 +204,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                     }
                     
                     do {
-                        let resp = try Records(JSONDecoder(response.data))
+                        let resp = try Records(JSONLoader(response.data))
                         if resp.records.count > 0 {
                             self.timelogs = resp.records
                             self.defaults.set(resp.records, forKey: "timelogs")
@@ -252,7 +252,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        session = WCSession.default()
+        session = WCSession.default
         session?.delegate = self
         session?.activate()
         getOrg()

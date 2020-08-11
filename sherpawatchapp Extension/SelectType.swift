@@ -23,7 +23,7 @@ class SelectTypeInterfaceController: WKInterfaceController, WCSessionDelegate {
         var records: Array<NSDictionary> = []
         init() {
         }
-        init(_ decoder: JSONDecoder) throws {
+        init(_ decoder: JSONLoader) throws {
             records = []
             let arr: Array<Record> = try decoder.get()
             records = []
@@ -89,7 +89,7 @@ class SelectTypeInterfaceController: WKInterfaceController, WCSessionDelegate {
                         return //also notify app of failure as needed
                     }
                     do {
-                        self.tasktypes = try JSONDecoder(response.data).get()
+                        self.tasktypes = try JSONLoader(response.data).get()
                         if self.tasktypes.count == 0 {
                             self.tasktypes = [Record1()]
                         }
@@ -189,7 +189,7 @@ class SelectTypeInterfaceController: WKInterfaceController, WCSessionDelegate {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        session = WCSession.default()
+        session = WCSession.default
         session?.delegate = self
         session?.activate()
     }

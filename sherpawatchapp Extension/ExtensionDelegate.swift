@@ -32,7 +32,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     }
 
     func applicationDidBecomeActive() {
-        session = WCSession.default()
+        session = WCSession.default
         session?.activate()
         if let iPhoneContext = session?.receivedApplicationContext as? [String : Any] {
             let message = iPhoneContext["message"] as? String

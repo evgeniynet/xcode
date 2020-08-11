@@ -1,0 +1,15 @@
+
+<ion-navbar *navbar><button menuToggle><ion-icon name="menu"></ion-icon></button>
+  <ion-title>Queues</ion-title>
+  <ion-buttons end>
+    <button danger class="right transparent" (click)="toggle()"><ion-icon name="ios-search"></ion-icon></button>
+    </ion-buttons>
+</ion-navbar>
+
+<ion-content class="queues">
+	      <ion-searchbar *ngIf="test" [focuser] debounce="700" (cancel)="test = !test" (input)="searchItems($event)" [(ngModel)]="term" placeholder="Type Queues name" class="stickySearch"></ion-searchbar>
+ <p class="general-alignment"></p>
+    <queues-list margin-top [queues]="items" [simple]="true"></queues-list>
+    <span class="span-block"></span> 
+</ion-content>
+<action-button></action-button>

@@ -1,0 +1,147 @@
+
+<ion-toolbar>
+        <button (click)="close()" class="bar-button bar-button-default">
+            <span *ngIf="title?.length < 9" primary>Cancel</span>
+            <ion-icon *ngIf="title?.length > 9" primary class="invoiceCircle" name="ios-arrow-back"></ion-icon>
+        </button>
+  <ion-title class="ellipsis padding-right24">{{title}}</ion-title>
+</ion-toolbar>
+<ion-content class="timelog invoice_create">
+    <div class="list max-width700">
+
+ <div class="general-alignment2">     
+    
+    <select-list *ngIf="!data.number" ajax="true" [list]="selects.user" (onChanged)='saveSelect($event)' preload="true"></select-list>
+
+     <select-list *ngIf="!data.number" [list]="selects.account"  ajax="true" preload="true" (onChanged)='saveSelect($event)'></select-list> 
+
+     <select-list *ngIf="!data.number" [list]="selects.project" preload="true" (onChanged)='saveSelect($event)'></select-list> 
+
+     <!--<select-list *ngIf="!data.number" [list]="selects.ticket" preload="true" (onChanged)='saveSelect($event)'></select-list>-->
+
+     <!--New Contract-->
+     <select-list [list]="selects.contract" [account_id]="account_id" (onChanged)='saveSelect($event)'></select-list>
+
+     <!--New PrePaid-->
+     <select-list [list]="selects.prepaidpack" (onChanged)='saveSelect($event)'></select-list>
+     
+        </div>
+        <!--info -->
+        <div *ngIf="selects.contract.selected" class="flatfee">
+          <h3 class="text color width35 left table_account text-left">&nbsp;&nbsp;Date Range:</h3>
+          <h3 class="width65 left table">{{setDate(invoice_start_date)}} - {{setDate(invoice_end_date)}}</h3>
+          <!--
+          <h3 class="text color width35 left table_account text-left">&nbsp;&nbsp;Billing Method:</h3>
+          <h3 class="width65 left table">{{contract.billing_method}}</h3>
+          <h3 class="text color width35 left table_account text-left">&nbsp;&nbsp;Overage:</h3>
+          <h3 class="width65 left table">{{contract.overage}}</h3>
+          <h3 *ngIf="contract.flat_fee" class="text color width35 left table_account text-left">&nbsp;&nbsp;Flat Fee:</h3>
+          <h3 *ngIf="contract.flat_fee" class="width65 left table">{{contract.flat_fee}}</h3>
+          -->
+        </div>
+        <!--end info-->    
+ <!--Timelogs-->
+ <div style="border-bottom: 1px #fff solid">
+   <ion-icon (click)="addTime()" name="add-circle" role="img" class="ion-ios-add-circle item-icon" aria-label="add circle" style="font-size: 2.5em; position: relative; top: 4px; color: #64be42"></ion-icon>
+   <h3 style="display: inline-block;">&nbsp;&nbsp;Timelogs</h3>
+   <h3 *ngIf="total_hours" style="float: right; width: 40%; text-align: right; font-size: 2.5rem">{{total_hours}} <span style="font-size: 2rem">hrs</span></h3>
+ </div>
+ 
+  <div *ngIf="is_empty" class="table grey2 menu-text">No Timelogs yet</div>
+    <ion-list class="list general-alignment2" style="width: 100%" no-lines>
+        <a detail-none href=# ion-item *ngFor="let timelog of timelogs" class="margin-top0 timelogs-center" style="border-bottom: 1px #808080 solid; padding-bottom: 10px; margin-bottom: 10px;">
+
+            <div class="expenses">
+ <li class="text-left left">
+    <span class="expense-hours color" style="font-size: 2rem; display: block;">{{getFixed(timelog.hours)}} hrs</span>
+    <p>{{timelog.name}}</p>
+     <h3 class="timelogs ellipsis" *ngIf="!timelog.tktsubject">
+      <span *ngIf="timelog.ticket_project"><b>Project:</b> {{timelog.ticket_project}}</span>
+    </h3>
+     <h3 class="timelogs ellipsis" *ngIf="timelog.tktsubject">
+      <span *ngIf="timelog.ticket_project"><b>Ticket #</b>{{timelog.ticket_project}}</span>
+    </h3>
+    <h3 class="timelogs ellipsis" *ngIf="timelog.tktsubject"><b>Ticket Subject:</b> {{timelog.tktsubject}}</h3>
+     <h3 class="timelogs ellipsis color" *ngIf="timelog.note"><b>Note:</b> {{timelog.note}}</h3>
+   </li>
+      <li class="right margin font-time text-right">
+    <span class="expense-hours color">${{timelog.total}}</span><br><span *ngIf="!config.current.is_show_start_time_on_invoice"><br></span>
+    <h3 *ngIf="config.current.is_show_start_time_on_invoice && timelog.start_time" class="expense-hours color">{{setDate(timelog.start_time, false, true)}} - <br>{{setDate(timelog.end_time, false, true)}}</h3> 
+    <h3 *ngIf="config.current.is_show_start_time_on_invoice && !timelog.start_time || !config.current.is_show_start_time_on_invoice && !timelog.start_time" class="expense-hours color">{{setDate(timelog.date, timelog.time_offset)}}</h3>  
+      </li>
+    </div>
+  </a>
+        </ion-list>
+ <!-- End Timelogs-->
+
+ <!-- Exspnses-->
+ <div style="border-bottom: 1px #fff solid">
+   <ion-icon (click)="addExpense()" name="add-circle" role="img" class="ion-ios-add-circle item-icon" aria-label="add circle" style="font-size: 2.5em; position: relative; top: 4px; color: #64be42"></ion-icon>
+   <h3 style="display: inline-block;">&nbsp;&nbsp;Expenses</h3>
+   <h3 style="float: right; width: 40%; text-align: right; font-size: 2.5rem" *ngIf="exspense_total"><span style="font-size: 2rem">$</span>&nbsp;{{exspense_total}}</h3>
+ </div>
+   <div *ngIf="is_empty" class="table grey2 menu-text">No Expenses yet</div>
+    <ion-list class="list general-alignment2" style="width: 100%" no-lines>
+        <a detail-none href=# ion-item *ngFor="let expense of expenses" class="margin-top0 timelogs-center" style="border-bottom: 1px #808080 solid; padding-bottom: 9px; margin-bottom: 10px;">
+
+            <div class="expenses">
+ <li class="text-left left">
+      <h3 class="timelogs ellipsis color" *ngIf="expense.units"><b>Units:&nbsp;</b>{{expense.units}}</h3>
+    <p>{{expense.name}}</p>
+     <h3 class="timelogs ellipsis" *ngIf="!expense.tktsubject">
+      <span *ngIf="expense.ticket_project != 0"><b>Project:</b> {{expense.ticket_project}}</span>
+    </h3>
+     <h3 class="timelogs ellipsis" *ngIf="expense.tktsubject">
+      <span *ngIf="expense.ticket_project"><b>Ticket #</b>{{expense.ticket_project}}</span>
+    </h3>
+    <h3 class="timelogs ellipsis" *ngIf="expense.tktsubject"><b>Ticket Subject:</b> {{expense.tktsubject}}</h3>
+     <h3 class="timelogs ellipsis color" *ngIf="expense.note"><b>Note:&nbsp;</b>{{expense.note}}</h3>
+     </li>
+      <li class="right margin font-time text-right">
+    <span class="expense-hours color">{{getCurrency(expense.amount)}}</span><br><br>
+    <h3 class="expense-hours color">{{setDate(expense.date)}}</h3>  
+      </li>
+      
+    </div>
+  </a>
+</ion-list>
+ <!--End Exspenses -->
+
+ <!--total -->
+  <div *ngIf="total_cost" class="total_invoice">
+  <h3 style="display: inline-block; font-size: 2.5rem">Total Invoice:</h3>
+   <h3  style="float: right; width: 45%; text-align: right;"><span style="font-size: 2.5rem">$</span>{{total_cost}}</h3>
+  </div>
+ <!--end total -->
+
+ <!-- Recipients -->
+     <div class="sticky">
+      <button type="submit" (click)="onSubmit()" secondary class="disable-hover button button-default button-block img-top display">Create & Send</button>
+      <div class="stickyborder"></div>
+    </div>
+ <ion-item padding style="text-align: left; margin-top: -10px;"> 
+      <select-list *ngIf="!data.number" ajax="true" [isbutton]=true [list]="selects.recipient_user" (onChanged)='saveSelect($event)' preload="true" style="float: left"></select-list>
+    <h2 class="color" style="display: inline-block; font-size: 2.3rem; font-weight: 500; padding-left: 15px; margin-top:7px;">Recipients</h2>
+        </ion-item>
+    <ion-list class="list resipients_invoice">
+    <div *ngIf="!recipients" class="table grey2 menu-text">No recipients yet</div>
+        <div *ngFor="let recipient of recipients">
+        <div>
+      <ion-avatar class="ticketImg left recipient width23">
+   <img class="avatarInvoice margin-top10 img_avatar" [alt]="recipient.fullname" [src]="recipient.email | Gravatar"/>
+            </ion-avatar></div>
+        
+        <ion-item class="blue3 width80 invoicelist right margin" no-lines>
+      <h3 class="recipient-calc left textLogin margin-top2 ellipsis">{{recipient.email}}</h3>
+    <button fab class="red buttonInvoice right topInvoice email-invoice button-fab" (click)="changeContact(recipient)">
+      <ion-icon *ngIf="recipient.is_accounting_contact" class="invoiceCircle green" name="checkmark"></ion-icon>
+      <ion-icon *ngIf="!recipient.is_accounting_contact" class="invoiceCircle" name="close"></ion-icon>
+    </button>
+  </ion-item>
+        </div>
+
+</ion-list>
+ <!-- End Recipients -->
+
+    </div><p style="position: absolute; bottom: 0px;">&nbsp;</p>
+</ion-content>

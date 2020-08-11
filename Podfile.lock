@@ -1,15 +1,22 @@
 PODS:
-  - JSONJoy-Swift (3.0.1)
-  - SwiftHTTP (2.0.2)
+  - Capacitor (2.4.0):
+    - CapacitorCordova
+  - CapacitorCordova (2.4.0)
 
 DEPENDENCIES:
-  - JSONJoy-Swift (~> 3.0.0)
-  - SwiftHTTP (~> 2.0.0)
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
 
 SPEC CHECKSUMS:
-  JSONJoy-Swift: ef6eccdcf319412f149bbdd031b27f0430d5d576
-  SwiftHTTP: faa1a5f7670568ffc9361898229dbe84a6088468
+  Capacitor: 0bc38985fc7744924a8e1d72a53b11e93f53adb5
+  CapacitorCordova: ffb86bd6630220cf94a63306a72f13c653fb43aa
 
-PODFILE CHECKSUM: 72d1b055b303c84ce2937c37947dda653704a4da
+PODFILE CHECKSUM: 3e5622a9c55d9ac01f72a703db51e7f3d26cc0f6
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.9.3

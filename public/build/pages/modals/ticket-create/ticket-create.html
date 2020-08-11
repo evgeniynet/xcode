@@ -1,0 +1,89 @@
+
+<ion-toolbar>
+    <ion-buttons start class="searchbar">
+        <button (click)="dismissPage()">
+            <span primary>Cancel</span>
+        </button>
+    </ion-buttons>
+    <ion-title>New {{config.current.names.ticket.s}}</ion-title>
+    <!--ion-buttons end>
+        <button (click)="onSubmit()">
+            <span primary><b>Create</b></span>
+        </button>
+    </ion-buttons-->
+</ion-toolbar>
+
+<ion-content>
+    <div class="list max-width700 margin-top-5">
+    <template [ngIf]="config.current.user.is_techoradmin"> 
+        
+        <select-list ajax="true" [list]="selects.user" (onChanged)='saveSelect($event)' preload="true"></select-list>
+    
+    </template> 
+
+        <select-list [list]="selects.account" [preload]="config.current.user.is_techoradmin" [is_enabled]="config.current.user.is_techoradmin" ajax="true" (onChanged)='saveSelect($event)'></select-list>
+         
+        <location-list preload="true" [list]="selects.location" (onChanged)='saveSelect($event)'></location-list>
+        
+    <template [ngIf]="config.current.user.is_techoradmin"> 
+
+        <select-list [list]="selects.project" preload="true" (onChanged)='saveSelect($event)'></select-list>
+        
+    </template> 
+
+        <select-list [list]="selects.priority" preload="true" (onChanged)='saveSelect($event)'></select-list>
+
+        <class-list preload="true" [list]="selects.class" (onChanged)='saveSelect($event)'></class-list>
+
+        <select-list [list]="selects.submissions" preload="true" (onChanged)='saveSelect($event)'></select-list>
+
+        <select-list [list]="selects.categories" preload="true" (onChanged)='saveSelect($event)'></select-list>
+        
+    <template [ngIf]="config.current.user.is_techoradmin || config.current.is_allow_user_choose_tech"> 
+        <select-list is_me="config.current.user.is_techoradmin" [account_id]="account_id" [list]="selects.tech" ajax="true" preload="true" (onChanged)='saveSelect($event)' ></select-list>
+    </template>
+
+    <template [ngIf]="config.current.user.is_techoradmin"> 
+        <select-list [list]="selects.level" preload="true" (onChanged)='saveSelect($event)'></select-list>
+    </template>
+
+    <template [ngIf]="config.current.user.is_techoradmin && config.current.is_todos"> 
+     <multi-select [list]="selects.todos" [class_id]="class_id" preload="true" (onChanged)='saveSelect($event)' ></multi-select>
+     </template>
+
+<!-- New Contract -->
+    <select-list [list]="selects.contract" [account_id]="account_id" preload="true" (onChanged)='saveSelect($event)'></select-list>
+<!--End Contract-->
+
+ <!-- New Custom fields-->
+<hr class="color-bg" *ngIf="customfields.length">
+  <div *ngFor="let customfield of customfields">
+    <custom-field [type]="customfield.type" [id]="customfield.id" [name]="customfield.name" [value]="customfield.value" [choices]="customfield.choices" [required]="customfield.required" (onChanged)='saveCustomfield($event)'></custom-field>
+  </div>
+<!-- End Custom-fields-->
+
+    </div>
+    <form margin-top class="container_list" #addForm="ngForm">
+
+                <div class="list max-width700">
+                    <!-- Start Budgeted Time-->
+                     <template [ngIf]="config.current.is_budget_time && config.current.is_time_tracking"> 
+                    <ion-item no-lines class="labels color" style="margin-top:-10px !important;">Budgeted time:</ion-item> 
+                    <input class="width100 textLogin blue3 commentText subject-create" style="margin-bottom: 20px;" placeholder="Budgeted Time" required ngControl="budgeted_time" [ngModel]="ticket.estimated_time"/>
+                </template>
+                    <!-- end Budgeted Time-->
+                    <div class="tooltips"><input class="width100 blue3 subject-create commentText margin-bottom3" [(ngModel)]="ticket.subject" placeholder="Subject"  ngControl="subject" #subject="ngForm" required maxlength="100"/>
+                        <span [hidden]="subject.valid || subject.untouched">Subject is required and less 100 chars</span></div>
+                    <br>
+                    <textarea class="width100 textLogin commentText margin-bottom1" type="text" [(ngModel)]="ticket.initial_post" ngControl="text" #note="ngForm"  placeholder="Details..."></textarea>
+
+                <br>
+                <upload-button #u (filesUploaded)="uploadedFile($event)"   
+    (filesSelected)="selectedFile($event)"                   
+    [fileDest]="fileDest"></upload-button>
+                    
+                    <button [disabled]="!addForm.valid" secondary block (click)="onSubmit(addForm)"  type="submit" class="disable-hover button button-default button-block">Add Ticket</button>
+                    <span class="span-block"></span>
+            </div>
+    </form>
+</ion-content>

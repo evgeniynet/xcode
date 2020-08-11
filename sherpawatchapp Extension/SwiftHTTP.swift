@@ -895,7 +895,7 @@ open class HTTP: Operation {
         }
         set(newState) {
             willChangeValue(forKey: "state")
-            stateLock.withCriticalScope { Void -> Void in
+            stateLock.withCriticalScope { () -> Void in
                 guard _state != .finished else {
                     print("Invalid! - Attempted to back out of Finished State")
                     return
@@ -910,15 +910,13 @@ open class HTTP: Operation {
     /**
      creates a new HTTP request.
      */
-    public init(_ req: URLRequest, session: URLSession = SharedSession.defaultSession, isDownload: Bool = false) {
-        super.init()
+    public init(_ req: URLRequest, session: URLSession = URLSession.shared, isDownload: Bool = false) {
         if isDownload {
             task = session.downloadTask(with: req)
         } else {
             task = session.dataTask(with: req)
         }
         DelegateManager.sharedInstance.addResponseForTask(task)
-        state = .ready
     }
     
     //MARK: Subclassed NSOperation Methods
@@ -1116,7 +1114,7 @@ private func ==(lhs: HTTP.State, rhs: HTTP.State) -> Bool {
 
 // Lock for getting / setting state safely
 extension NSLock {
-    func withCriticalScope<T>(_ block: (Void) -> T) -> T {
+    func withCriticalScope<T>(_ block: () -> T) -> T {
         lock()
         let value = block()
         unlock()

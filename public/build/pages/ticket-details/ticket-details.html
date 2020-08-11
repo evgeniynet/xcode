@@ -1,0 +1,251 @@
+
+<ion-navbar *navbar><button menuToggle><ion-icon name="menu"></ion-icon></button>
+
+  <ion-title class="padding-right24">{{ticket.status}} | {{ticket.number}}</ion-title>
+  <ion-buttons end><button danger class="right transparent" (click)="getFullapplink(ticket.key)"><ion-icon name="ios-open-outline"></ion-icon></button></ion-buttons>
+</ion-navbar>
+
+<ion-content>
+  <ion-toolbar class="blue3 display_flex">
+  <div (click)="showSubjChange = !showSubjChange">
+   <h4 style="width: unset !important; max-width: 85%; margin-right: 10px">{{ticket.subject | Htmlsafe}}</h4>
+   <ion-icon name="md-create" style="font-size:1.8em; margin-top:9px" ></ion-icon>
+   <h5 *ngIf="ticket.next_step != ''" class="width90 span-left grey3_color" style="margin-top: -5px; margin-bottom: 5px; padding: 0px !important;">Next step: <span class="text-color">{{ticket.next_step}} - </span>  {{ticket.next_step_date | Daysago}}</h5>
+  </div>
+<div *ngIf="showSubjChange" class="span-left">
+   <ion-item no-lines class="labels" style="font-size: 1.5rem; background-color: transparent;">Subject:</ion-item>
+    <input  class="width90 blue3 subject-create commentText margin-bottom3"  style="background-color: rgba(255,255,255,0.1) !important;" placeholder="change Subject" required maxlength="200" (ngModelChange)="changeSubject(name1)" #name1="ngForm"  [ngModel]="ticket.subject"/>
+    <ion-item no-lines class="labels" style="font-size: 1.5rem; background-color: transparent;">Next step:</ion-item>
+    <input  class="width90 blue3 subject-create commentText margin-bottom10" style="background-color: rgba(255,255,255,0.1) !important;" placeholder="add Next step" required maxlength="200" (ngModelChange)="changeNextStep(name2)" #name2="ngForm" [ngModel]="ticket.next_step"/>
+    <button secondary class="left indent-bottom width30 cancelSubject" (click)="cancelSubject()"  type="submit">Cancel</button>
+    <button secondary class="button_reply right indent-bottom width30 ChangeSubject" (click)="ChangeSubject()"  type="submit">Save</button>
+
+</div>
+   <span no-lines class="span-left">
+    <p *ngIf="config.current.is_class_tracking && ticket.class_name"><u>Class</u>:&nbsp;{{ticket.class_name}}</p>
+    <p><u>{{config.current.names.tech.a}}</u>: {{techname}}</p>
+    <p><u>{{config.current.names.user.a}}</u>: {{username}}</p>
+    <p *ngIf="config.current.is_account_manager && ticket.account_name"><u>{{config.current.names.account.a}}</u>:&nbsp;{{ticket.account_name}}</p>
+    <p *ngIf="config.current.is_location_tracking && ticket.location_name"><u>{{config.current.names.location.a}}</u>:&nbsp;{{ticket.location_name}}</p>
+    <p *ngIf="ticket.sla_complete_date != null"><u>SLA</u>: {{setDate(ticket.sla_complete_date, false, true)}}</p>
+    <p *ngIf="config.current.is_expenses && ticket.misc_cost > 0"><u>Expenses</u>:  {{getCurrency(ticket.misc_cost)}}</p>
+  </span>
+  <span class="span-right">
+   <p><u>{{ticket.days_old_in_minutes | Daysold}}</u></p><br/>
+      <template [ngIf]="config.current.is_time_tracking && config.current.user.is_techoradmin && ticket.total_hours > 0"><p><u>{{ticket.total_hours}}</u>&nbsp;Hours</p><br/></template>
+      </span>
+ </ion-toolbar>
+ <!--% estimate and budgeded time -->   
+   <div *ngIf="ticket?.percentage_complete" class="lineblock">
+    <p class="dioitem">Complete:</p>
+     <div class="dioline">
+       <p class="complete" [style.width]="ticket?.percentage_complete + '%'">{{ticket?.percentage_complete}}%</p>
+     </div>
+  </div>
+  <div class="lineblock" *ngIf="ticket?.budget_hours">
+    <p class="dioitem" style="margin-top: 2px;">Budget:</p>
+      <div class="dioline" style="margin-top: 2px; margin-bottom: 2px;">
+     <p class="complete" style="max-width: 100%" [style.width]="percentage_budget + '%'">{{percentage_budget}}%</p>
+   </div>
+  </div>
+   <!--END % estimate and budgeded time -->  
+ <ion-segment [(ngModel)]="details_tab" *ngIf="config.current.user.is_techoradmin">
+  <ion-segment-button value="Reply">
+    Reply
+  </ion-segment-button>
+  <ion-segment-button value="Info">
+    Info
+  </ion-segment-button>
+  <ion-segment-button value="Assign">
+    Assign
+  </ion-segment-button>
+  <ion-segment-button value="Notes">
+    Notes
+  </ion-segment-button>
+  <ion-segment-button value="Files">
+    Files
+  </ion-segment-button>
+  <ion-segment-button value="Options">
+    Options
+  </ion-segment-button>
+</ion-segment>
+<div [ngSwitch]="details_tab">
+ <div class="list" [hidden]="details_tab != 'Reply'">
+
+  <ion-item no-lines class="margin-bottom10">
+    
+    <ion-label class="font-size17 text-right">Logs</ion-label><ion-toggle [(ngModel)]="is_showlogs" style="margin-left: -16px !important;"></ion-toggle></ion-item>
+   <posts-list [posts]="posts" [is_first]="true" [attachments]="attachments" [is_showlogs]="is_showlogs"></posts-list>
+
+  <form *ngIf="active" #addForm="ngForm">
+    <!-- Todo's --> 
+    <div class="todosDetail">
+  <todo-list *ngIf="config.current.is_todos" [simple]="true" [ticket]="ticket.key" user="all" class="tktTodo"></todo-list></div> 
+    <!-- End Todo's --> 
+   <div class="tooltips" style="position: inherit;">
+    <textarea class="width100 textLogin commentText" [(ngModel)]="ticketnote" type="text" placeholder="Add Response" ngControl="note" #note="ngForm" required maxlength="4000"></textarea>
+    <span [hidden]="note.valid || note.untouched">Response is required (max 5000 chars)</span></div>
+    <div class="Switcher">
+    <div *ngIf="config.current.is_waiting_on_response" (click)="waiting_response = !waiting_response;">
+      <ion-icon [ngClass]="{'ion-ios-checkmark-circle secondary' : waiting_response, 'ion-ios-radio-button-on grey2' : !waiting_response }" class="fontResp margin-top3"></ion-icon>
+      <h5>Waiting On</h5>
+    </div>
+    <div *ngIf="config.current.user.is_techoradmin" (click)="is_techs_only = !is_techs_only;" class="subSwitcher">
+      <ion-icon [ngClass]="{'ion-ios-checkmark-circle secondary' : is_techs_only, 'ion-ios-radio-button-on grey2' : !is_techs_only }" class="fontResp margin-top3"></ion-icon>
+      <h5>{{config.current.names.tech.ap}} Only</h5>
+    </div>
+  </div>
+    <button secondary class="button_reply right indent-bottom margin-left3" style="z-index: 1;" [disabled]="!addForm.valid && !files?.length" (click)="u.onUpload()"  type="submit">Reply</button>
+    <button *ngIf="!config.current.user.is_techoradmin && ticket.status != 'Closed'" secondary class="button_reply right indent-bottom margin-left3" style="z-index: 1;" (click)="u.onUpload(true)" [disabled]="!addForm.valid && !files?.length">Reply & Close</button>
+    <upload-button #u (filesUploaded)="uploadedFile($event)"   
+    (filesSelected)="selectedFile($event)"     
+    btnStyle="add-circle"               
+    [allowMultiple]="true"
+    [fileDest]="fileDest"
+    [filesExist]="attachments"
+    [logCallback]=""></upload-button>
+  </form>
+  <!-- It radio will be needing to add logic-->
+  
+  <ion-label class="text-left" style="font-size: 12px; white-space: normal; margin-top: 0px !important;
+    padding-bottom: 40px !important;">
+    <a href=# (click)="getMailTolink(ticket.key)" class="text-decor">
+    <span style="font-weight: 900;">Ticket Email Address:</span><br>{{ticket.mailto}}&nbsp;</a>
+    </ion-label>
+
+  
+   <posts-list [posts]="posts" [attachments]="attachments" class="general-alignment" [is_showlogs]="is_showlogs"></posts-list>
+  <span class="span-block"></span>
+</div>
+
+<div *ngSwitchWhen="'Info'" class="list max-width700 general-alignment">
+ 
+  <select-list [list]="selects.account" preload="true" ajax="true" (onChanged)='saveSelect($event)'></select-list>
+
+  <class-list preload="true" [list]="selects.class" (onChanged)='saveSelect($event)'></class-list>
+
+  <select-list preload="true" [list]="selects.level" (onChanged)='saveSelect($event)'></select-list>
+
+  <select-list preload="true" [list]="selects.priority" (onChanged)='saveSelect($event)'></select-list>
+
+  <location-list preload="true" [list]="selects.location" (onChanged)='saveSelect($event)'></location-list>
+
+  <select-list preload="true" [list]="selects.project" (onChanged)='saveSelect($event)'></select-list>
+
+<!-- New categories and submissions-->
+  <select-list preload="true" [list]="selects.categories" (onChanged)='saveSelect($event)'></select-list>
+  <select-list preload="true" [list]="selects.submissions" (onChanged)='saveSelect($event)'></select-list>
+<!-- End categories and submissions-->
+
+  <!-- New Contract -->
+    <select-list [list]="selects.contract" preload="true" [account_id]="account_id" (onChanged)='saveSelect($event)'></select-list>
+<!--End Contract-->
+
+<!-- New Custom fields-->
+<hr class="color-bg" *ngIf="customfields.length">
+  <div *ngFor="let customfield of customfields">
+    <custom-field [type]="customfield.type" [id]="customfield.id" [name]="customfield.name" [value]="customfield.value" [choices]="customfield.choices" [required]="customfield.required" (onChanged)='saveCustomfield($event)'></custom-field>
+  </div>
+<!-- End Custom-fields-->
+
+    <div>&nbsp;&nbsp;</div>
+  <button secondary block (click)="onUpdate()" type="submit" class="disable-hover button button-default button-block">Update</button>
+  <ion-label class="text-left" style="font-size: 12px; white-space: normal;">
+    <a href=# (click)="getMailTolink(ticket.key)" class="text-decor">
+    <span style="font-weight: 900; line-height: 20px;">Ticket Email Address:</span><br>{{ticket.mailto}}&nbsp;</a>
+    </ion-label>
+  <span class="span-block"></span>
+</div>
+
+<div *ngSwitchWhen="'Assign'" class="list max-width700 general-alignment">
+    <multi-select  preload="true" [list]="selects.alttechs" [account_id]="account_id" (onChanged)='saveSelect($event)'></multi-select>
+      <div *ngFor="let tech of technicians" class="alts">
+    <p class="left color fullname" style="width: 50%">{{tech.user_fullname2.slice(0, 23)}}</p>
+    <p *ngIf="!tech.is_primary" class="left color no-primary" style="width: 18%;">-</p>
+    <p *ngIf="tech.is_primary" class="left color primary" style="width: 18%">Primary</p>
+    <p class="left color date" style="width: 32%;">{{tech.start_date.slice(0, 10)}} {{tech.start_date.slice(12, 16)}}</p>
+  </div>
+<div>&nbsp;<br>&nbsp;</div>
+    <multi-select ajax="true" [list]="selects.altusers" [account_id]="account_id" (onChanged)='saveSelect($event)' preload="true"></multi-select>
+      <div *ngFor="let user of users" class="alts">
+    <p class="left color fullname" style="width: 50%">{{user.user_fullname2.slice(0, 23)}}</p>
+    <p *ngIf="!user.is_primary" class="left color no-primary" style="width: 18%;">-</p>
+    <p *ngIf="user.is_primary" class="left color primary" style="width: 18%">Primary</p>
+    <p class="left color date" style="width: 32%;">{{user.start_date.slice(0, 10)}} {{user.start_date.slice(12, 16)}}</p>
+  </div>
+    <div>&nbsp;&nbsp;</div>
+  <button secondary block (click)="onUpdate()" type="submit" class="disable-hover button button-default button-block">Update</button>
+  
+  <span class="span-block"></span>
+</div>
+
+
+
+<ion-list class="list general-alignment max-width700" [hidden]="details_tab != 'Notes'">
+
+  <textarea [ngModel]="ticket?.note | Htmlsafe" class="glow width100 textLogin commentText" style="resize: vertical;max-height: 300px;min-height: 110px;" #notetext type="text" placeholder="Notes:"></textarea>
+  <button secondary class="button_reply img-top right " (click)="saveNote(notetext)">{{ticket?.note?.length ? 'Save' : 'Add'}} Notes</button>
+  <span class="span-block2"></span>
+  <div [hidden]="is_editworkpad" class="width100 textLogin note-account commentText2" [innerHTML]="ticket?.workpad" type="text" (click)="is_editworkpad = true"></div>
+  <button [hidden]="is_editworkpad" secondary class="button_reply img-top right" (click)="is_editworkpad = true">Edit Workpad</button>
+  <textarea [hidden]="!is_editworkpad" [ngModel]="(ticket?.workpad || '').split('<p>').join('\n')" class="glow width100 textLogin commentText" #workpadtext type="text" placeholder="Workpad:"></textarea>
+  <button [hidden]="!is_editworkpad" secondary class="button_reply img-top right " (click)="saveWorkpad(workpadtext)">{{ticket?.workpad?.length ? 'Save' : 'Add'}} Workpad</button>
+  <span class="span-block"></span>
+</ion-list>
+
+<ion-list class="list img-top" no-lines *ngSwitchWhen="'Files'">
+ <div [hidden]="attachments?.length" class="table grey2 menu-text">No Files yet</div>
+ <ion-item *ngFor="let file of attachments">
+ <div class="left width59 tkts-table" [innerHTML]="getFileLink(file)"></div>
+      <div class="files-tkts">
+          <span class="color right text-left space-initial flex1 font-size_span subject-ticket">{{file.name}}</span>
+          <button (click)="onDelete(file)" block fab class="red buttonInvoice email-invoice button-fab position-initial button-files margin-left5">
+<ion-icon class="invoiceCircle" name="close"></ion-icon></button>
+          </div>
+    </ion-item>
+    <span class="span-block"></span>
+     <button (click)="callback($event)" hidden="true"  secondary item-right fab fab-right fab-bottom style="z-index: 2"><ion-icon class="button_circle action-but" name="md-add"></ion-icon></button>
+
+     <div hidden="true">  <button type="button" (click)="uploadedFile()"  left class="button-attach attach color"><ion-icon class="button-font action-but color" name="md-attach"></ion-icon>Add Files</button></div>
+  </ion-list>
+
+
+
+
+
+
+
+
+
+
+
+  <div *ngSwitchWhen="'Options'" class="list max-width700 general-alignment">
+    <button *ngIf="config.current.is_time_tracking" (click)="addTime()" block type="submit" class="blue2 disable-hover button button-default button-block class-margin">Add Time</button>
+    <button *ngIf="config.current.is_onhold_status" (click)="onHold()" block type="submit" class="blue2 disable-hover button button-default button-block class-margin">{{  ticket.status == "OnHold" ? ("ReOpen " + config.current.names.ticket.s) : "Place On Hold" }}</button>
+    <button *ngIf="config.current.is_expenses" (click)="addExpense()" block type="submit" class="blue2 disable-hover button button-default button-block class-margin">Add Expense</button>
+
+    <button (click)='changeUser()' *ngIf="config.current.is_transfer_ticket_to_another_user" block type="submit" class="blue2 class-margin">Change {{config.current.names.user.s}}</button>
+
+    <button (click)='transferTicket()' block type="submit" class="blue2 class-margin">Transfer {{config.current.names.ticket.s}}</button>
+
+    <button *ngIf="(ticket.technician_email || ticket.tech_email) != he.email" (click)='pickUp()' block type="submit" class="blue2 class-margin">Pick Up {{config.current.names.ticket.s}}</button>
+
+    <button *ngIf="ticket.level_escalate" (click)='Escalate(true)' block type="submit" class="blue2 class-margin">&#8679; Escalate to Level {{ticket.level_escalate}}</button>
+
+    <button *ngIf="ticket.level_deescalate" (click)='Escalate(false)' block type="submit" class="blue2 class-margin">De-Escalate to Level {{ticket.level_deescalate}} &#8681;</button>
+
+    <button (click)="closeTicket()" *ngIf="ticket.status == 'Closed' && cheakAllowsToReopen()" secondary block type="submit" class="class-margin">ReOpen&nbsp;{{config.current.names.ticket.s}}</button>
+
+    <button (click)="closeTicket()" *ngIf="ticket.status == 'Open'" secondary block type="submit" class="class-margin">Close&nbsp;{{config.current.names.ticket.s}}</button>
+
+
+    <a *ngIf="userphone" href="tel://{{userphone}}" style="text-decoration: unset;">
+      <div block secondary type="submit" class="callNow button button-secondary" ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 26px; margin-top:-5px;">
+        <path fill="#fff" d="M436.9 364.8c-14.7-14.7-50-36.8-67.4-45.1-20.2-9.7-27.6-9.5-41.9.8-11.9 8.6-19.6 16.6-33.3 13.6-13.7-2.9-40.7-23.4-66.9-49.5-26.2-26.2-46.6-53.2-49.5-66.9-2.9-13.8 5.1-21.4 13.6-33.3 10.3-14.3 10.6-21.7.8-41.9C184 125 162 89.8 147.2 75.1c-14.7-14.7-18-11.5-26.1-8.6 0 0-12 4.8-23.9 12.7-14.7 9.8-22.9 18-28.7 30.3-5.7 12.3-12.3 35.2 21.3 95 27.1 48.3 53.7 84.9 93.2 124.3l.1.1.1.1c39.5 39.5 76 66.1 124.3 93.2 59.8 33.6 82.7 27 95 21.3 12.3-5.7 20.5-13.9 30.3-28.7 7.9-11.9 12.7-23.9 12.7-23.9 2.9-8.1 6.2-11.4-8.6-26.1z"/></svg>
+        <span style="top: -7px; position: relative;">&nbsp;CALL NOW</span>
+      </div>
+    </a>
+    <span class="span-block"></span>
+  </div>
+</div>
+</ion-content>

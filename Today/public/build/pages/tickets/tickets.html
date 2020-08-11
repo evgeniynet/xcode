@@ -1,0 +1,34 @@
+<ion-navbar *navbar>
+<ion-buttons start style="margin: 0">
+    <button menuToggle><ion-icon name="menu"></ion-icon></button>
+      </ion-buttons>
+  <ion-title class="names">{{config.current.names.ticket.p}}</ion-title>
+   <ion-buttons end>
+    <button danger class="right transparent" (click)="test = !test"><ion-icon name="ios-search"></ion-icon></button>
+    </ion-buttons>
+</ion-navbar>
+
+<div class="tickets mycontent">
+<ion-searchbar *ngIf="test" [focuser] debounce="700" (cancel)="test = !test" (input)="searchItems($event)" [(ngModel)]="term" placeholder="{{config.current.names.ticket.s}} number (2 chars) or Enter to search" class="stickySearch" (search)="getSearch($event)"></ion-searchbar>
+<img *ngIf="busy" class="imglogo" src="img/loading2.gif"/>
+ <ion-list class="ajax" [hidden]="!search_results">
+        <a detail-none href=# ion-item *ngFor="let item of search_results" (click)="gotoTicket(item)">
+            <h2>{{item.status}} | #{{item.number}} - {{item.subject}} ({{item.user_firstname}} {{item.user_lastname}})</h2>
+        </a>
+    </ion-list>
+    <div *ngIf="is_tech" class="tabsTicket">
+        <ion-segment [(ngModel)]="ticket_tab">
+<ion-segment-button  value="user">{{config.current.names.user.a}}</ion-segment-button>
+<ion-segment-button value="tech">{{config.current.names.tech.a}}</ion-segment-button>
+<ion-segment-button value="closed">Closed</ion-segment-button>
+<ion-segment-button value="alt">Alt</ion-segment-button>
+<ion-segment-button value="all">All Open</ion-segment-button>
+  </ion-segment>
+</div>    
+    <tickets-list [hidden]="ticket_tab != 'user' && is_tech" [preload]="ticket_tab == 'user' ? 0 : 1500" [mode]="['user']" [count]="counts.user"></tickets-list>
+    <tickets-list *ngIf="is_tech" [hidden]="ticket_tab != 'tech'" [preload]="ticket_tab == 'tech' ? 0 : 1500" [mode]="['tech']" [count]="counts.tech"></tickets-list>
+    <tickets-list  *ngIf="is_tech" [hidden]="ticket_tab != 'closed'" [preload]="ticket_tab == 'closed' ? 0 : 1500" [mode]="['closed-tech', user_id]" [count]="counts.closed"></tickets-list>
+    <tickets-list  *ngIf="is_tech" [hidden]="ticket_tab != 'alt'" [preload]="ticket_tab == 'alt' ? 0 : 1500" [mode]="['alt']" [count]="counts.alt"></tickets-list>
+    <tickets-list  *ngIf="is_tech" [hidden]="ticket_tab != 'all'" [preload]="ticket_tab == 'all' ? 0 : 1500" [mode]="['all']" [count]="counts.all"></tickets-list>
+</div>
+<button (click)="addTicket()" secondary item-right fab fab-right fab-bottom style="z-index: 2"><ion-icon class="button_circle action-but" name="md-add"></ion-icon></button>

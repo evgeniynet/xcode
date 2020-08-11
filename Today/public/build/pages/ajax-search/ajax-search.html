@@ -1,0 +1,18 @@
+<ion-navbar *navbar><button menuToggle><ion-icon name="menu"></ion-icon></button>
+  <ion-title class="padding-right24">Search {{config.current.names.ticket.p}}</ion-title>
+</ion-navbar>
+
+<ion-content>
+  <ion-searchbar [focuser] debounce="400" [(ngModel)]="term" (input)="searchItems($event)" placeholder="Search {{config.current.names.ticket.p}} (min 4 chars)" hideCancelButton="true"></ion-searchbar>
+<img *ngIf="busy" class="imglogo img-padding" src="img/loading2.gif">
+    <ion-list class="ajax">
+        <a detail-none href=# ion-item *ngFor="let item of items" (click)="dismiss(item)">
+            <h2>#{{item.number}} ({{item.status}}) - {{item.subject}} ({{item.user_firstname}} {{item.user_lastname}})</h2>
+            <!--ion-note item-right>
+                <h2>{{item.id}}</h2>
+            </ion-note-->
+        </a>
+    </ion-list>
+<div *ngIf="is_empty" class="table grey2 search-text">No {{config.current.names.ticket.p}} found yet</div>
+
+</ion-content>

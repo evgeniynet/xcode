@@ -1,0 +1,25 @@
+<ion-content padding class="signup">
+
+  <div class="list max-width">
+  <img class="imglogo img-padding" src="img/logo.png">
+
+    <div style="margin: 0px 0 5px 0;">
+      <center>
+      <span>Finishing authorization in </span>
+      <br/><br/>
+        <img class="" src="img/skype_logo_blue.png" style="width: 220px;" alt="Google Images" title="Google Images">
+        <br/><br/>
+        <span *ngIf="!is_skype_done">Please wait a second ...</span>
+        <span *ngIf="is_skype_done">Thanks! You can continue to chat in Skype ...</span>
+        </center>
+      </div>
+      <br>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <button *ngIf="is_skype_done" class="login-margin" block secondary block onclick="location.reload()">Done. Back to App</button>
+      <br/>
+      <button *ngIf="!is_skype_done" class="login-margin grey3" block (click)="cancel_skype()">Cancel and Back to Login Page</button>
+    </div>
+  </ion-content>

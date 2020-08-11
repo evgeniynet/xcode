@@ -1,0 +1,38 @@
+
+<ion-toolbar>
+        <button (click)="close()" class="bar-button bar-button-default">
+<span *ngIf="title?.length < 15" primary>Cancel</span>
+            <ion-icon *ngIf="title?.length > 15" primary class="invoiceCircle" name="ios-arrow-back"></ion-icon>      
+    </button>
+<ion-title class="ellipsis padding-right24">Add ToDo</ion-title>
+</ion-toolbar>
+
+<ion-content class="expense-create">
+  
+<form #addForm="ngForm">
+    <ion-list class="list max-width700 general-alignment" no-lines >
+        <select-list [list]="selects.tech" preload="true" [account_id]="account_id" (onChanged)='saveSelect($event)'></select-list>
+        <select-list [list]="selects.account" [preload]="config.current.user.is_techoradmin" [is_enabled]="config.current.user.is_techoradmin" ajax="true" (onChanged)='saveSelect($event)'></select-list>
+        <select-list [list]="selects.project" preload="true" (onChanged)='saveSelect($event)'></select-list>
+        <select-list *ngIf="!todo.number" [list]="selects.ticket" preload="true" (onChanged)='saveSelect($event)'></select-list>
+
+    <div class="tooltips subject-padding"><input [(ngModel)]="todo.title" class="width100 blue3 subject-create commentText margin-bottom3" placeholder="Title" ngControl="title"  required maxlength="100"/></div>
+    <br>
+<textarea [(ngModel)]="todo.note" ngControl="note" #note="ngForm" class="width100 textLogin commentText margin" type="text" placeholder="Note"  maxlength="4000"></textarea>
+    <br>
+
+       <div class="general-alignment2">
+        <ion-item no-lines class="start-end">Due Date</ion-item>
+        <ion-item no-lines class="blue3 top0 bottom5">
+  <ion-label class="start-end2">Due Date</ion-label>
+    <ion-datetime [ngClass]="{'nocolor': !todo.due_date, 'text-color': todo.due_date}" #due_date [displayFormat]="displayFormat" [min]="setMinTime(todo.due_date)" (ngModelChange)="setStartDate($event)" [ngModel]="getStartDate(todo.due_date)"></ion-datetime> 
+            </ion-item></div> 
+        <br>
+<textarea [(ngModel)]="todo.estimated_remain" class="width100 textLogin commentText subject-create" type="text" placeholder="Est. Time hh:mm"></textarea>
+    <br>
+                <div>
+  <button (click)="onSubmit(addForm)" secondary block="" type="submit" [disabled]="!addForm.valid" class="disable-hover button button-default button-block">Add ToDo</button>
+    </div>
+    </ion-list>
+</form>
+</ion-content>

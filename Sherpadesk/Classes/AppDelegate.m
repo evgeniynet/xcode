@@ -29,6 +29,7 @@
 #import "MainViewController.h"
 //#import <WatchConnectivity/WatchConnectivity.h>
 #import <Cordova/CDVPlugin.h>
+#import <Photos/Photos.h>
 
 @implementation AppDelegate
 
@@ -87,7 +88,21 @@
     
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 sherpadeskapp", @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
-
+    
+    /*
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusNotDetermined) {
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            if (status != PHAuthorizationStatusAuthorized) {
+                
+            } else if (status == PHAuthorizationStatusAuthorized) {
+                
+            }
+        }];
+    } else if (status != PHAuthorizationStatusAuthorized) {
+    } else if (status == PHAuthorizationStatusAuthorized) {
+    }
+    */
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
 

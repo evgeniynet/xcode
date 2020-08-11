@@ -1,0 +1,18 @@
+<ion-list class="list" no-lines>
+<div *ngIf="!simple && accounts?.length" class="flexed color">
+<div detail-none>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <span [hidden]="!config.current.is_time_tracking">Hours</span>
+        <span [hidden]="!config.current.is_expenses">Expenses</span>
+        <span>{{config.current.names.ticket.ap}}</span>
+        </div></div>
+<div class="accountlist flexed">
+        <div detail-none href=# *ngFor="let account of accounts" (click)="itemTapped($event, account)">
+        <span>{{account.name}}</span>
+        <span [hidden]="simple || !config.current.is_time_tracking" [innerHTML]="account.account_statistics.hours | More:[1000]"></span>
+        <span [hidden]="simple || !config.current.is_expenses" [innerHTML]="account.account_statistics.expenses | More:[1000,'$VV']"></span>
+        <span  [innerHTML]="account.account_statistics.ticket_counts.open | More:[1000]"></span>
+        </div>
+ </div>
+</ion-list>
+<div *ngIf="is_empty && !simple" class="table grey2 menu-text">No Accounts</div>

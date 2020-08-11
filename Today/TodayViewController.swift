@@ -36,7 +36,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         var key: String
         var org: String
         
-        init(_ decoder: JSONDecoder) throws {
+        init(_ decoder: JSONLoader) throws {
             let num : Int = try decoder["number"].get()
             number = String(num)
             subject = try decoder["subject"].get()
@@ -54,7 +54,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     struct Records : JSONJoy {
         var records: Array<NSDictionary> = []
-        init(_ decoder: JSONDecoder) throws {
+        init(_ decoder: JSONLoader) throws {
             let arr: Array<Record> = try decoder.get()
                 records = []
                 for val in arr {
@@ -93,7 +93,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                         return //also notify app of failure as needed
                     }
                     do {
-                        let resp = try Records(JSONDecoder(response.data))
+                        let resp = try Records(JSONLoader(response.data))
                         if resp.records.count > 0 {
                             self.tickets = resp.records
                             self.defaults.set(resp.records, forKey: "tickets")
@@ -168,8 +168,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     func showMessage(_ message : String ){
-        self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.center;
-        self.fTicket.setTitle(message, for: UIControlState())
+        self.fTicket.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center;
+        self.fTicket.setTitle(message, for: UIControl.State())
         self.fTicket.setValue("index.html", forKeyPath: "page")
         self.fLine.isHidden = true
         self.sTicket.isHidden = true
@@ -184,22 +184,22 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         //print("show: \(jsonResult.count)")
         if jsonResult.count>0{
             var rec = Record(jsonResult[0])
-            self.fTicket.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left;
-            self.fTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
+            self.fTicket.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.left;
+            self.fTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControl.State())
             self.fTicket.setValue("ticket:"+rec.key, forKeyPath: "page")
             self.fTicket.isHidden = false
             self.fLine.isHidden = false
             
             if jsonResult.count>1{
                 rec = Record(jsonResult[1])
-                self.sTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
+                self.sTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControl.State())
                 self.sTicket.setValue("ticket:"+rec.key, forKeyPath: "page")
                 self.sTicket.isHidden = false
                 self.sLine.isHidden = false
                 
                 if jsonResult.count>2{
                     rec = Record(jsonResult[2])
-                    self.tTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControlState())
+                    self.tTicket.setTitle("#\(rec.number): \(rec.subject)", for: UIControl.State())
                     self.tTicket.setValue("ticket:"+rec.key, forKeyPath: "page")
                     self.tTicket.isHidden = false
                     self.tLine.isHidden = false
@@ -331,7 +331,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     print("error: \(err.localizedDescription)")
     return //also notify app of failure as needed
     }
-    var resp = Records(JSONDecoder(response.data))
+    var resp = Records(JSONLoader(response.data))
     if resp.records != nil &&  resp.records!.count > 0 {
     resp.records?[0].org = Properties.org
     //print(resp.records!.count)
@@ -361,7 +361,7 @@ extension String:   JSONBasicType {}
 extension Int:      JSONBasicType {}
 extension UInt:     JSONBasicType {}
 extension Double:   JSONBasicType {}
-extension Float:   	JSONBasicType {}
+extension Float:       JSONBasicType {}
 extension NSNumber: JSONBasicType {}
 extension Bool:     JSONBasicType {}
 
@@ -369,7 +369,7 @@ public enum JSONError: Error {
     case wrongType
 }
 
-open class JSONDecoder {
+open class JSONLoader {
     var value: Any?
     
     /**
@@ -392,15 +392,15 @@ open class JSONDecoder {
             }
         }
         if let array = rawObject as? NSArray {
-            var collect = [JSONDecoder]()
+            var collect = [JSONLoader]()
             for val: Any in array {
-                collect.append(JSONDecoder(val, isSub: true))
+                collect.append(JSONLoader(val, isSub: true))
             }
             value = collect as Any?
         } else if let dict = rawObject as? NSDictionary {
-            var collect = Dictionary<String,JSONDecoder>()
+            var collect = Dictionary<String,JSONLoader>()
             for (key,val) in dict {
-                collect[key as! String] = JSONDecoder(val as AnyObject, isSub: true)
+                collect[key as! String] = JSONLoader(val as AnyObject, isSub: true)
             }
             value = collect as Any?
         } else {
@@ -413,7 +413,7 @@ open class JSONDecoder {
      */
     public func get<T: JSONJoy>() throws -> [T] {
         guard let a = getOptionalArray() else { throw JSONError.wrongType }
-        return try a.reduce([T]()) { $0.0 + [try T($0.1)] }
+        return try a.reduce([T]()) { $0 + [try T($1)] }
     }
     
     /**
@@ -421,7 +421,7 @@ open class JSONDecoder {
      */
     open func get<T: JSONBasicType>() throws -> [T] {
         guard let a = getOptionalArray() else { throw JSONError.wrongType }
-        return try a.reduce([T]()) { $0.0 + [try $0.1.get()] }
+        return try a.reduce([T]()) { $0 + [try $1.get()] }
     }
     
     /**
@@ -446,8 +446,8 @@ open class JSONDecoder {
     /**
      get an array
      */
-    open func getOptionalArray() -> [JSONDecoder]? {
-        return value as? [JSONDecoder]
+    open func getOptionalArray() -> [JSONLoader]? {
+        return value as? [JSONLoader]
     }
     
     /**
@@ -455,7 +455,7 @@ open class JSONDecoder {
      */
     public func getOptional<T: JSONJoy>() -> [T]? {
         guard let a = getOptionalArray() else { return nil }
-        do { return try a.reduce([T]()) { $0.0 + [try T($0.1)] } }
+        do { return try a.reduce([T]()) { $0 + [try T($1)] } }
         catch { return nil }
     }
     
@@ -464,35 +464,35 @@ open class JSONDecoder {
      */
     public func getOptional<T: JSONBasicType>() -> [T]? {
         guard let a = getOptionalArray() else { return nil }
-        do { return try a.reduce([T]()) { $0.0 + [try $0.1.get()] } }
+        do { return try a.reduce([T]()) { $0 + [try $1.get()] } }
         catch { return nil }
     }
     
     /**
      Array access support
      */
-    open subscript(index: Int) -> JSONDecoder {
+    open subscript(index: Int) -> JSONLoader {
         get {
             if let array = value as? NSArray {
                 if array.count > index {
-                    return array[index] as! JSONDecoder
+                    return array[index] as! JSONLoader
                 }
             }
-            return JSONDecoder(createError("index: \(index) is greater than array or this is not an Array type."))
+            return JSONLoader(createError("index: \(index) is greater than array or this is not an Array type."))
         }
     }
     
     /**
      Dictionary access support
      */
-    open subscript(key: String) -> JSONDecoder {
+    open subscript(key: String) -> JSONLoader {
         get {
             if let dict = value as? NSDictionary {
                 if let value: Any = dict[key] {
-                    return value as! JSONDecoder
+                    return value as! JSONLoader
                 }
             }
-            return JSONDecoder(createError("key: \(key) does not exist or this is not a Dictionary type"))
+            return JSONLoader(createError("key: \(key) does not exist or this is not a Dictionary type"))
         }
     }
     
@@ -509,10 +509,10 @@ open class JSONDecoder {
  Implement this protocol on all objects you want to use JSONJoy with
  */
 public protocol JSONJoy {
-    init(_ decoder: JSONDecoder) throws
+    init(_ decoder: JSONLoader) throws
 }
 
-extension JSONDecoder: CustomStringConvertible {
+extension JSONLoader: CustomStringConvertible {
     public var description: String {
         if let value = value {
             return String(describing: value)
@@ -522,7 +522,7 @@ extension JSONDecoder: CustomStringConvertible {
     }
 }
 
-extension JSONDecoder: CustomDebugStringConvertible {
+extension JSONLoader: CustomDebugStringConvertible {
     public var debugDescription: String {
         if let value = value {
             return String(reflecting: value)
@@ -1429,7 +1429,7 @@ open class HTTP: Operation {
         }
         set(newState) {
             willChangeValue(forKey: "state")
-            stateLock.withCriticalScope { Void -> Void in
+            stateLock.withCriticalScope { () -> Void in
                 guard _state != .finished else {
                     print("Invalid! - Attempted to back out of Finished State")
                     return
@@ -1444,7 +1444,7 @@ open class HTTP: Operation {
     /**
      creates a new HTTP request.
      */
-    public init(_ req: URLRequest, session: URLSession = SharedSession.defaultSession, isDownload: Bool = false) {
+    public init(_ req: URLRequest, session: URLSession = URLSession.shared, isDownload: Bool = false) {
         super.init()
         if isDownload {
             task = session.downloadTask(with: req)
@@ -1650,7 +1650,7 @@ private func ==(lhs: HTTP.State, rhs: HTTP.State) -> Bool {
 
 // Lock for getting / setting state safely
 extension NSLock {
-    func withCriticalScope<T>(_ block: (Void) -> T) -> T {
+    func withCriticalScope<T>(_ block: () -> T) -> T {
         lock()
         let value = block()
         unlock()

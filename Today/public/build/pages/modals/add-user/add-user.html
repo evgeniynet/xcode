@@ -1,0 +1,45 @@
+
+<ion-toolbar>
+    <ion-buttons start class="searchbar">
+        <button (click)="dismissPage()">
+            <span primary>Cancel</span>
+        </button>
+    </ion-buttons>
+    <ion-title>Add {{data != "tech" ? config.current.names.user.a : config.current.names.tech.a}}</ion-title>
+</ion-toolbar>
+
+<ion-content>
+  <ion-list class="list">
+   <p class="general-alignment"></p>
+  <form #addForm="ngForm">
+      <div class="tooltips">
+          <input class="add-user-input" autofocus tabindex=1 type="email" [ngModel]="email_m" placeholder="Valid Email" ngControl="email" #username="ngForm" required pattern="^[^@\s]+@[^@\s]+(\.[^@\s]+)+$"/>        
+          <span *ngIf="username.dirty && !username.valid">Valid Email is required</span></div>
+          <div class="tooltips">
+          <input class="add-user-input" type="text" [ngModel]="firstname_m" placeholder="Firstname" ngControl="firstname" #firstname="ngForm" required/>        
+          <span *ngIf="firstname.dirty && !firstname.valid">Firstname cannot be empty</span></div>
+          <div class="tooltips">
+          <input class="add-user-input" type="text" [ngModel]="lastname_m" placeholder="Lastname" ngControl="lastname" #lastname="ngForm" required/>        
+          <span *ngIf="lastname.dirty && !lastname.valid">Lastname cannot be empty</span></div>
+          <!--ion-item no-lines class="left toggle-width">
+      <ion-toggle class="toggle" [(ngModel)]="ispassword"></ion-toggle>
+    </ion-item>
+        <p class="left width30 text-toggle">Send Random Password</p>
+        <div [hidden]="ispassword">
+          <div class="tooltips">
+          <input class="width100 blue3 subject-create commentText" [ngModel]="password_m" placeholder="password" ngControl="password" type="password" #password="ngForm" required/>
+          <span *ngIf="password.dirty && !password.valid">Password is required</span></div>
+        <br>
+        <div class="tooltips">
+          <input class="width100 blue3 subject-create commentText" [ngModel]="password2_m" placeholder="password confirm" ngControl="password2" type="password" #password2="ngForm" required/>
+          <span *ngIf="password2.dirty && !password2.valid">Password must match</span></div>
+       
+        </div-->
+        <div class="img-top">
+  <button [disabled]="!addForm.valid" secondary block (click)="onSubmit(addForm)"  type="submit" class="disable-hover button button-default button-block">Add New {{data != "tech" ? "User" : "Tech"}}</button>
+  <br/>
+  <button *ngIf="config.current.is_time_tracking" (click)="dismissPage()" block type="submit" class="blue2 disable-hover button button-default button-block class-margin">Cancel</button>
+</div>
+    </form>    
+</ion-list>
+</ion-content>

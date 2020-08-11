@@ -1,0 +1,31 @@
+{
+  "appId": "com.sherpadesk.mobile",
+  "appName": "SherpaDesk HelpDesk Support",
+  "bundledWebRuntime": true,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {
+    "preferences": {
+      "AllowInlineMediaPlayback": "false",
+      "BackupWebStorage": "none",
+      "EnableViewportScale": "false",
+      "KeyboardDisplayRequiresUserAction": "true",
+      "MediaPlaybackRequiresUserAction": "false",
+      "SuppressesIncrementalRendering": "false",
+      "GapBetweenPages": "0",
+      "PageLength": "0",
+      "PaginationBreakingMode": "page",
+      "PaginationMode": "unpaginated",
+      "StatusBarOverlaysWebView": "true",
+      "webviewbounce": "false",
+      "UIWebViewBounce": "false",
+      "DisallowOverscroll": "true",
+      "android-minSdkVersion": "16"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<div class="todos list general-alignment" [hidden]="is_empty_list || !config.current.user.is_techoradmin">
+        <img *ngIf="busy && !simple" class="imglogo img-padding" src="img/loading2.gif"/>
+        <div *ngIf="is_empty && !simple && !ticket" class="table grey2 menu-text">No ToDo's yet</div>
+        <div *ngIf="simple" class="blue1back alignment-bottom" style="height: 50px;" (click)="hidden = !hidden">
+            <span><ion-icon [ngClass]="{'ion-ios-arrow-down font18 margin-top3 margin-right10':!hidden, 'pr8 button-arrow ion-ios-arrow-forward padding-top5':hidden}" class="left todos-arrow padding-left15 left" role="img"></ion-icon><h5 style="color:white; padding-top: 7px;">ToDo's</h5></span>
+            <button fab class="right buttonInvoice email-invoice position-initial margin-right10 general-alignment2">{{undone}}</button></div>
+                        <block [hidden]="hidden">
+         <template ngFor let-todoList [ngForOf]="todoLists | async" let-even="even" let-odd="odd">
+         <div [ngClass]="{'': todoList.sub?.length}" (click)="todoList.hidden = !todoList.sub?.length || !todoList.hidden"> 
+                <ion-icon [style.visibility]="!todoList.sub?.length ?'hidden':'inherit'" role="img" [ngClass]="{'ion-ios-arrow-down font18  margin-right10':!todoList.hidden, 'pr8 button-arrow ion-ios-arrow-forward left':todoList.hidden}" class="todos-arrow padding-left15"></ion-icon>
+            <h5 class="color">{{todoList.name}}
+                <span *ngIf="todoList.list_ticket_id && !ticket" (click)="itemTapped(todoList)" class="ticketNumber">(Tkt #{{todoList.list_ticket_number}} <ion-icon class="outline ion-ios-open-outline" name="ios-open-outline" role="img" aria-label="open outline"></ion-icon> <span class="TktSubject">{{todoList.list_ticket_subject}}</span>)</span>
+            </h5>
+            <ion-icon (click)="AddTodo(todoList)" name="md-add" role="img" style="padding-right: 10px;" [ngClass]="{'':!todoList.sub?.length, 'color':!todoList.sub?.length}" class="ion-md-add padding-left15 todos-arrow right" aria-label="arrow down"></ion-icon>
+         </div>
+
+         <template [ngIf]="!todoList?.hidden">
+         <template ngFor let-todo [ngForOf]="todoList?.sub" let-last="last" let-even="seven" let-odd="sodd">
+         <div (click)="todo.is_completed = !todo.is_completed;setDone(todo)">
+            <ion-icon [ngClass]="{'ion-ios-checkmark-circle secondary' : todo.is_completed, 'ion-ios-radio-button-on grey2' : !todo.is_completed}" class="font18 todos-padding margin-top3"></ion-icon><h5 [ngClass]="{'color decoration_line grey3_color' : todo.is_completed, 'color' : !todo.is_completed}" class="textCopy"><span style="font-size: 1.6rem">{{todo.title}}<i *ngIf="todo.text">{{" - " + todo.text}}</i></span></h5><!--ion-icon name="md-create" role="img" class="ion-s padding-left15 todos-arrow right" aria-label="arrow down"></ion-icon--></div>
+            <div class="todos-flex right color">
+             <h6></h6> 
+                <h6 *ngIf="todo.assigned_name && !simple">{{todo.assigned_name}}</h6> 
+                <h6 *ngIf="todo.due_date">Due&nbsp;{{setDate(todo.due_date)}}</h6>
+                <h6 *ngIf="todo.estimated_remain">{{getFixed(todo.estimated_remain)}}&nbsp;hrs</h6>
+            </div>
+        <hr *ngIf="!last" class="width_calc100-40"/>
+            </template>
+            </template>
+             <hr class="width100"/>
+            </template>
+            </block>
+         </div>

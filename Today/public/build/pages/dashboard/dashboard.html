@@ -1,0 +1,57 @@
+
+<ion-navbar *navbar>
+    <button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <ion-searchbar class="searchbar-focused searchbar-left-aligned" debounce="700" [(ngModel)]="term" (input)="searchItems($event)" (search)="getSearch($event)" placeholder="Number or phrase (min 2 char)" hideCancelButton="true"></ion-searchbar>
+</ion-navbar>
+<ion-content class="dashboard">
+<img *ngIf="busy" class="imglogo" src="img/loading2.gif"/>
+ <ion-list class="ajax" [hidden]="!search_results">
+        <a detail-none href=# ion-item *ngFor="let item of search_results" (click)="gotoTicket(item)">
+            <h2>{{item.status}} | #{{item.number}} - {{item.subject}} ({{item.user_firstname}} {{item.user_lastname}})</h2>
+        </a>
+    </ion-list>
+    <ion-list class="list height235" no-lines margin-top>
+        <div class="width100 blue3">
+            <h3 class="dateDashboard">{{date}}</h3>
+        </div>
+        <div class="width50 left blue3 decoration_none">
+            <a detail-none href=# (click)="itemTappedTL({tab:'tech', count: counts.open_as_tech})" ion-item class="mainStat itemTech">{{counts.open_as_tech}}</a>
+     <a detail-none href=# (click)="itemTappedTL({tab:'tech', count: counts.open_as_tech})" ion-item class="itemTech">As {{config.current.names.tech.a}}</a>
+          </div>
+        <div class="width17 right blue3">
+            <a detail-none href=# ion-item (click)="itemTappedTL({tab:'user', count: counts.open_as_user})" class="itemTech" [innerHTML]="counts.open_as_user | More:[999,'<div class=item-inner><div class=input-wrapper><ion-label>VV</ion-label></div></div><ion-button-effect></ion-button-effect>']"></a>
+            <a detail-none href=# ion-item (click)="itemTappedTL({tab:'alt', count: counts.open_as_alttech})" class="itemTech" [innerHTML]="counts.open_as_alttech | More:[999,'<div class=item-inner><div class=input-wrapper><ion-label>VV</ion-label></div></div><ion-button-effect></ion-button-effect>']"></a>
+            <a detail-none href=# ion-item (click)="itemTappedTL({tab:'all', count: counts.open_all})" class="itemTech" [innerHTML]="counts.open_all | More:[999,'<div class=item-inner><div class=input-wrapper><ion-label>VV</ion-label></div></div><ion-button-effect></ion-button-effect>']"></a>
+         </div>
+    <div class="width33 right blue3 dashborder">
+    <a detail-none href=# ion-item (click)="itemTappedTL({tab:'user', count: counts.open_as_user})" class="itemTech dashboardRight dashboard font-size1 tkts-table">As {{config.current.names.user.a}}</a>
+    <a detail-none href=# ion-item (click)="itemTappedTL({tab:'alt', count: counts.open_as_alttech})" class="itemTech dashboardRight dashboard font-size1 tkts-table">Alt {{config.current.names.tech.a}}</a>
+    <a detail-none href=# ion-item (click)="itemTappedTL({tab:'all', count: counts.open_all})" class="itemTech dashboardRight dashboard font-size1 tkts-table">All Open</a>
+         </div>
+        <br>
+    <div class="width100 blue3">
+        <a detail-none href=# (click)="itemTapped($event)" ion-item class="itemTech dashboardRight font-size16 dashboard workinghours">Billable<ion-icon name="time" class="padding-left5 padding-right8"></ion-icon>{{working}}hr<span class="padding-left10">Non-Billable</span><ion-icon name="time-outline" class="padding-left5 padding-right8 ion-ios-clock"></ion-icon>{{non_working_hours}}hr</a>
+    </div> 
+
+         </ion-list>
+<br>
+
+    <todo-list margin-top *ngIf="config.current.is_todos" [simple]="true"></todo-list>
+
+    <queues-list margin-top class="container_list" *ngIf="config.current.is_unassigned_queue" [queues]="queues"></queues-list>
+        
+    
+    <!--ion-list class="list" *ngIf="config.current.is_account_manager">
+        <div *ngIf="accounts?.length" [class.hiddenviz]="simple" class="table">
+<span class="box1 box7 box5 box10">&nbsp;&nbsp;&nbsp;</span>
+            <span [ngClass]="{'box1 box7 box5 box10': !simple, 'box11 box7 box5 box10': simple}">&nbsp;&nbsp;&nbsp;</span>
+  <span class="box2 box7 box10">Hours</span>
+        <span class="box2 box7 box10">Expenses</span>
+        <span class="box4 box7 box6 box10">{{config.current.names.ticket.ap}}</span>
+    </div>
+        </ion-list-->
+    <accounts-list margin-top class="container_list"  *ngIf="config.current.is_account_manager" [simple]="simple" [accounts]="accounts"></accounts-list>
+    <span class="span-block"></span>
+</ion-content>
+<action-button></action-button>
+

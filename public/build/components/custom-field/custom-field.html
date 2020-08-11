@@ -1,0 +1,43 @@
+       <!-- select  -->
+    <center><div *ngIf="type == 'select'">
+    	<ion-item no-lines class="labels color width100">{{name}}</ion-item>
+        </div>
+    <button *ngIf="type == 'select'" class="blue4 width100 disable-hover button button-default button-select" (click)="openRadio()">
+        <ion-label class="{{isbutton ? 'center' : 'tkts-table'}} select-list">&nbsp;&nbsp;{{value || '&nbsp;'}}</ion-label>        <ion-icon name="arrow-down"></ion-icon>
+    </button></center>
+
+      <!-- checkbox  -->
+    <center><div *ngIf="type == 'checkbox'">
+        <ion-item no-lines class="labels color width100">{{name}}</ion-item>
+        </div>
+    <button *ngIf="type == 'checkbox'" class="blue4 width100 disable-hover button button-default button-select" (click)="openCheckbox()">
+        <ion-label class="{{isbutton ? 'center' : 'tkts-table'}} select-list">&nbsp;&nbsp;{{value || '&nbsp;'}}</ion-label>        <ion-icon name="arrow-down"></ion-icon>
+    </button></center>
+
+         <!-- date  -->
+    <div *ngIf="type == 'date'" style="font-size: 1.5rem;">
+        <ion-item no-lines class="labels color">{{name}}</ion-item>
+        <ion-item no-lines class="blue3 top0 bottom5">
+    <ion-label class="start-end2"></ion-label>
+    <ion-datetime [ngClass]="{'nocolor': value == '0001-01-01T00:00:00.0000000', 'text-color': value !='0001-01-01T00:00:00.0000000'}" class="text-color" (ngModelChange)="setStartDate($event)" [ngModel]="getStartDate(value)" [displayFormat]="displayFormat" ></ion-datetime>  
+            </ion-item>
+        </div>
+
+          <!-- text  -->
+    <div *ngIf="type == 'text'">
+    <form #loginForm="ngForm" novalidate>
+    <ion-item no-lines class="labels color" style="font-size: 1.5rem;">{{name}}</ion-item>
+    <input  class="width100 blue3 subject-create commentText margin-bottom3" placeholder="please add text" required maxlength="200" (ngModelChange)="changeText(name1)" #name1="ngForm" [ngModel]="value"/>
+    </form>
+            </div>
+
+          <!-- num  -->
+    <div *ngIf="type == 'num'">
+    <form #loginForm="ngForm" novalidate>
+    <ion-item no-lines class="labels color" style="font-size: 1.5rem;">{{name}}</ion-item>
+    <input class="width100 blue3 subject-create commentText margin-bottom3" placeholder="please add number" type="number" (ngModelChange)="changeText(name1)" #name1="ngForm" [ngModel]="value" required/>
+    </form>
+        </div>
+
+    
+ 

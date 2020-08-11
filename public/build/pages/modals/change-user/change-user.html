@@ -1,0 +1,31 @@
+<ion-toolbar>
+<ion-buttons start class="searchbar">
+<button (click)="dismiss()">
+    <span primary>Cancel</span>
+</button>
+</ion-buttons>
+<ion-title class="ellipsis padding-right24 padding-left87">Change {{config.current.names.user.s}} #{{ticket.number}} {{ticket.subject}}</ion-title>
+</ion-toolbar>
+
+
+<ion-content class="has-header">
+
+<div class="list max-width700 general-alignment">
+
+
+    <select-list  preload="true" [list]="selects.user" (onChanged)='saveSelect($event)'></select-list>
+
+    <form #addForm="ngForm" class="response-ticket">
+      <div class="tooltips">
+        <textarea class="width100 textLogin commentText" style="margin-left:2px" [(ngModel)]="ticketnote" type="text" placeholder="Add Transfer Note" ngControl="note" #note="ngForm" maxlength="4000"></textarea>
+        <span [hidden]="note.valid || note.untouched">Note should be less 5000 chars</span></div>
+      
+
+
+        <button secondary 
+        class="button_reply img-top right" [disabled]="!addForm.valid" (click)="onSubmit(addForm)"  type="submit">Change {{config.current.names.user.s}}</button>
+    </form>
+
+</div>
+
+</ion-content>

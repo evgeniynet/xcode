@@ -3,7 +3,7 @@ import WatchConnectivity
 
 class ConnectivityHandler : NSObject, WCSessionDelegate {
     
-    var session = WCSession.default()
+    var session = WCSession.default
     
     override init() {
         super.init()

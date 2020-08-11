@@ -73,7 +73,7 @@ class SelectProjectInterfaceController: WKInterfaceController, WCSessionDelegate
                         return //also notify app of failure as needed
                     }
                     do {
-                        self.projects = try JSONDecoder(response.data).get()
+                        self.projects = try JSONLoader(response.data).get()
                         if self.projects.count == 0 {
                             self.projects = [Record1()]
                         }
@@ -179,7 +179,7 @@ class SelectProjectInterfaceController: WKInterfaceController, WCSessionDelegate
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        session = WCSession.default()
+        session = WCSession.default
         session?.delegate = self
         session?.activate()
     }

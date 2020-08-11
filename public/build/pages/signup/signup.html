@@ -1,0 +1,56 @@
+<ion-content padding class="signup">
+    
+    <div class="list max-width">
+      <img class="imglogo img-padding" src="img/logo.png">
+      <form #loginForm="ngForm" novalidate>
+      <div class="tooltips">
+          <input autofocus class="width100 blue3 subject-create commentText" [ngModel]="login.name" (ngModelChange)="getUrl(name)" ngControl="name" #name="ngForm" required minlength="3" placeholder="Company name (required)"/> 
+          <span *ngIf="name.dirty && !name.valid">Name is required</span></div>
+      <div class="tooltips">
+<input class="width100 blue3 subject-create commentText" type="email" [(ngModel)]="login.email" ngControl="email" #username="ngForm" required pattern="^[^@\s]+@[^@\s]+(\.[^@\s]+)+$" placeholder="Email (required)"/>
+<span *ngIf="username.dirty && !username.valid">Valid Email is required</span></div>
+        <div class="tooltips"><div class="width21 left signup-font">https://</div>
+            <input class="width30 blue3 subject-create commentText left padding5" [(ngModel)]="login.url" ngControl="url" placeholder="Company url (optional)"/><div class="text-right right width48 signup-font ellipsis">.sherpadesk.com</div>
+         </div>
+        <div class="tooltips">
+          <input class="width100 blue3 subject-create commentText" [(ngModel)]="login.firstname" ngControl="firstname" #firstname="ngForm" required minlength="3" placeholder="First Name (required)"/> 
+         <span *ngIf="firstname.dirty && !firstname.valid">First Name is required</span></div>
+        <div class="tooltips">
+          <input class="width100 blue3 subject-create commentText" [(ngModel)]="login.lastname" ngControl="lastname" #lastname="ngForm" required minlength="3" placeholder="Last Name (required)"/> 
+         <span *ngIf="lastname.dirty && !lastname.valid">Valid Email is required</span></div>
+        <div class="tooltips">
+          <input class="width100 blue3 subject-create commentText" [(ngModel)]="login.password" ngControl="password" type="password" #password="ngForm" placeholder="Password (optional)"/> 
+         </div>
+        <div class="tooltips">
+          <input class="width100 blue3 subject-create commentText" [(ngModel)]="login.password_confirm" ngControl="password_confirm" #password_confirm="ngForm" type="password" placeholder="Confirm Pass (optional)"/> 
+          <span *ngIf="password_confirm.dirty && password.dirty && (password_confirm.value != password.value)">Passwords should match</span>
+         </div>
+        <div class="tooltips">
+          <input class="width100 blue3 subject-create commentText" [(ngModel)]="login.how" ngControl="how" placeholder="How'd You Hear About Us"/> 
+         </div>
+        <br>
+          <button [disabled]="!loginForm.valid" class="login-margin" block secondary (click)="onSignup(loginForm)">Create My Account</button>
+          <br>
+          <button class="login-margin grey3" block nav-pop>Back to Login Page</button>
+          <br>
+          By clicking the button above I agree to
+          <a href=# (click)="gotoPrivacy()">Terms of Use and Privacy Policy</a>
+          </form>
+    </div>
+</ion-content>
+
+<script>
+          var SWPX = SWPX || {};
+          SWPX.cmd = SWPX.cmd || [];
+          SWPX.cmd.push(function() {
+              SWPX.pixel.setPixel('mvc7');
+              // Uncomment the following line to place an identifer
+              SWPX.pixel.setIdentifier('121806');
+              SWPX.pixel.fire();
+          });
+      </script>
+      <script src="//px.spiceworks.com/px.js" async></script>
+
+      <noscript>
+          <img src="//px.spiceworks.com/px/mvc7" height="1" width="1">
+      </noscript>

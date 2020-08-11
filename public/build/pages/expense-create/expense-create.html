@@ -1,0 +1,50 @@
+
+<ion-toolbar>
+        <button (click)="close()" class="bar-button bar-button-default">
+<span *ngIf="title?.length < 15" primary>Cancel</span>
+            <ion-icon *ngIf="title?.length > 15" primary class="invoiceCircle" name="ios-arrow-back"></ion-icon>      
+    </button>
+<ion-title class="ellipsis padding-right24">{{title}}</ion-title>
+</ion-toolbar>
+
+<ion-content class="expense-create">
+  
+<form #addForm="ngForm">
+    <ion-list class="list max-width700 general-alignment" no-lines >
+    <ion-item no-lines class="labels color img-top">Units:</ion-item>
+<input class="width100 blue3 subject-create commentText margin-bottom3" placeholder="Units" ngControl="units" type="number" [(ngModel)]="expense.units"  required/>
+    <ion-item no-lines class="labels color img-top">Cost:</ion-item>
+<input class="width100 textLogin commentText subject-create" placeholder="Amount" required ngControl="amount" [ngModel]="expense.amount"/> 
+<ion-item no-lines class="labels color img-top">Markup:</ion-item>
+<input class="width100 blue3 subject-create commentText margin-bottom3" placeholder="Markup" ngControl="markup_value" type="number" step="0.01" [(ngModel)]="expense.markup_value"/>
+ <div class="class-margin">
+   <select-list *ngIf="!expense.number" [list]="selects.account"  ajax="true" preload="true" (onChanged)='saveSelect($event)'></select-list>
+
+   <select-list *ngIf="!expense.number" [list]="selects.project" preload="true" (onChanged)='saveSelect($event)'></select-list>
+
+   <select-list *ngIf="!expense.number" [list]="selects.ticket" preload="true" (onChanged)='saveSelect($event)'></select-list>
+
+   <select-list [list]="selects.category" preload="true" (onChanged)='saveSelect($event)'></select-list>
+
+    <select-list [list]="selects.contract" [account_id]="account_id" preload="true" (onChanged)='saveSelect($event)'></select-list>
+
+        </div>    
+<div class="tooltips"> 
+<textarea required [(ngModel)]="expense.note" ngControl="note" #note="ngForm" class="width100 textLogin commentText" type="text" placeholder="Note"  maxlength="4000"></textarea>
+<span [hidden]="note.valid || note.untouched">Note is required and less 4000 chars</span></div>
+    <br>
+<textarea [(ngModel)]="expense.vendor" class="width100 textLogin commentText subject-create" type="text" placeholder="Vendor"></textarea>
+<textarea [(ngModel)]="expense.note_internal" class="width100 textLogin commentText subject-create" type="text" placeholder="Internal Notes"></textarea>
+    <ion-item no-lines class="left toggle-width">
+<ion-toggle class="toggle" style="padding-bottom: 7px !important;" [(ngModel)]="isbillable"></ion-toggle></ion-item>
+        <p class="left width80 text-toggle color">Billable</p>
+
+        <ion-item no-lines class="left toggle-width">
+<ion-toggle class="toggle" [(ngModel)]="is_technician_payment"></ion-toggle></ion-item>
+        <p class="left width75 text-toggle color">Technician Payment</p>
+        <div>
+  <button (click)="onSubmit(addForm)" secondary block="" type="submit" [disabled]="!addForm.valid" class="disable-hover button button-default button-block">{{expense.expense_id ? 'Update' : 'Add'}} Expense</button>
+    </div>
+    </ion-list>
+</form>
+</ion-content>

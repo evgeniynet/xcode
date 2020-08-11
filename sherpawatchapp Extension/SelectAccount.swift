@@ -48,7 +48,7 @@ public struct Record : JSONJoy {
        org = ""
     }
     
-    public init(_ decoder: JSONDecoder) throws {
+    public init(_ decoder: JSONLoader) throws {
         id = try decoder["id"].get()
         name = try decoder["name"].get()
         name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -79,7 +79,7 @@ public struct Record1 : JSONJoy {
         name = ""
     }
     
-    public init(_ decoder: JSONDecoder) throws {
+    public init(_ decoder: JSONLoader) throws {
         id = try decoder["id"].get()
         name = try decoder["name"].get()
         name = name.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -103,7 +103,7 @@ class SelectAccountInterfaceController: WKInterfaceController, WCSessionDelegate
         var records: Array<NSDictionary> = []
         public init() {
         }
-        public init(_ decoder: JSONDecoder) throws {
+        public init(_ decoder: JSONLoader) throws {
             records = []
             let arr: Array<Record> = try decoder.get()
             records = []
@@ -235,7 +235,7 @@ class SelectAccountInterfaceController: WKInterfaceController, WCSessionDelegate
                         {
                             self.getrequest_logic(response.data)
                         }
-                        let resp = try Records(JSONDecoder(response.data))
+                        let resp = try Records(JSONLoader(response.data))
                         if resp.records.count > 0 {
                             
                             self.accounts = resp.records
@@ -282,7 +282,7 @@ class SelectAccountInterfaceController: WKInterfaceController, WCSessionDelegate
     func getrequest_logic (_ data: Any)
     {
         do {
-            singleton.acc = try JSONDecoder(data).get()
+            singleton.acc = try JSONLoader(data).get()
             
             if singleton.acc.count > 0 {
                 self.accounts_ready = true
@@ -358,7 +358,7 @@ class SelectAccountInterfaceController: WKInterfaceController, WCSessionDelegate
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        session = WCSession.default()
+        session = WCSession.default
         session?.delegate = self
         session?.activate()
         if let iPhoneContext = session?.receivedApplicationContext as? [String : Any] {

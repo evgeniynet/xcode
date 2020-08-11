@@ -1,0 +1,11 @@
+<div *ngIf="!list.hidden && !isbutton">
+    <ion-item no-lines class="labels color">{{name}}:&nbsp;</ion-item> 
+    <button [disabled]="!is_enabled" *ngIf="!list.hidden" (click)="open()" class="blue4 {{ is_me ? 'left button-calc' : 'width100'}} disable-hover button button-default button-select">
+        <ion-label class="tkts-table">{{list.value}}</ion-label>
+        <ion-icon name="arrow-down"></ion-icon>
+    </button>
+     </div>
+     <div *ngIf="!list.hidden && isbutton">
+    <ion-icon [disabled]="!is_enabled" *ngIf="!list.hidden" (click)="open()" name="add-circle" role="img" class="ion-ios-add-circle item-icon" aria-label="add circle" style="font-size: 1.8em; position: relative; top: 4px; color: #64be42"></ion-icon>
+    </div>
+    <button *ngIf="is_me" class="buttonTicket button-ticket attach right color" (click)="me()"><u>Me</u></button>

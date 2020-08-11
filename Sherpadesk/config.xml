@@ -1,84 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.sherpadesk.mobile" version="4.1.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <preference name="BackupWebStorage" value="cloud" />
-    <preference name="DisallowOverscroll" value="false" />
-    <gap:plugin name="cordova-plugin-watchconnectivity" />
-    <feature name="WatchConnectivity">
-        <param name="ios-package" value="WCiOS" />
-    </feature>
-    <feature name="LocalStorage">
-        <param name="ios-package" value="CDVLocalStorage" />
-    </feature>
-    <feature name="Badge">
-        <param name="ios-package" value="APPBadge" />
-    </feature>
-    <feature name="NetworkStatus">
-        <param name="ios-package" value="CDVConnection" />
-    </feature>
-    <feature name="InAppBrowser">
-        <param name="ios-package" value="CDVInAppBrowser" />
-    </feature>
-    <feature name="Cookies">
-        <param name="ios-package" value="CDVCookies" />
-    </feature>
-    <feature name="AppPreferences">
-        <param name="ios-package" value="AppPreferences" />
-    </feature>
-    <feature name="Device">
-        <param name="ios-package" value="CDVDevice" />
-    </feature>
-    <feature name="BackgroundMode">
-        <param name="ios-package" value="APPBackgroundMode" />
-    </feature>
-    <preference name="AllowInlineMediaPlayback" value="false" />
-    <preference name="BackupWebStorage" value="local" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="EnableViewportScale" value="false" />
-    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
-    <preference name="MediaPlaybackRequiresUserAction" value="false" />
-    <preference name="SuppressesIncrementalRendering" value="false" />
-    <preference name="GapBetweenPages" value="0" />
-    <preference name="PageLength" value="0" />
-    <preference name="PaginationBreakingMode" value="page" />
-    <preference name="PaginationMode" value="unpaginated" />
-    <preference name="StatusBarOverlaysWebView" value="true" />
-    <allow-intent href="itms:*" />
-    <allow-intent href="itms-apps:*" />
-    <name>Sherpadesk</name>
-    <description>
-        SherpaDesk Tote for iPhone allows you to provide awesome customer support away from your desk while you are in the field. The mobile application is an extension of the online version allowing you flexibility to create new tickets, assign time, and close out tickets all in real time. It’s a little bit of support love in your pocket. More on http://m.sherpadesk.com
-    </description>
-    <author email="support@sherpadesk.com" href="http://m.sherpadesk.com">
-        SherpaDesk
-    </author>
-    <gap:config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>4.1.8</string>
-    </gap:config-file>
-    <gap:config-file parent="CFBundleVersion" platform="ios">
-        <string>4.1.8</string>
-    </gap:config-file>
-    <gap:config-file parent="CFBundleName" platform="ios">
-        <string>Sherpadesk</string>
-    </gap:config-file>
-    <content src="index.html" />
-    <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
-    <gap:plugin name="org.apache.cordova.device" />
-    <gap:plugin name="org.apache.cordova.device-motion" />
-    <gap:plugin name="org.apache.cordova.device-orientation" />
-    <gap:plugin name="org.apache.cordova.dialogs" />
-    <gap:plugin name="org.apache.cordova.file" />
-    <gap:plugin name="org.apache.cordova.file-transfer" />
-    <gap:plugin name="org.apache.cordova.globalization" />
-    <gap:plugin name="org.apache.cordova.inappbrowser" />
-    <gap:plugin name="org.apache.cordova.media" />
-    <gap:plugin name="org.apache.cordova.network-information" />
-    <gap:plugin name="org.apache.cordova.splashscreen" />
-    <gap:plugin name="org.apache.cordova.vibration" />
-    <gap:plugin name="cordova-plugin-watchconnectivity" />
+<widget version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <access origin="*" />
+  
+  
+  <preference name="AllowInlineMediaPlayback" value="false" />
+  <preference name="BackupWebStorage" value="none" />
+  <preference name="EnableViewportScale" value="false" />
+  <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+  <preference name="MediaPlaybackRequiresUserAction" value="false" />
+  <preference name="SuppressesIncrementalRendering" value="false" />
+  <preference name="GapBetweenPages" value="0" />
+  <preference name="PageLength" value="0" />
+  <preference name="PaginationBreakingMode" value="page" />
+  <preference name="PaginationMode" value="unpaginated" />
+  <preference name="StatusBarOverlaysWebView" value="true" />
+  <preference name="webviewbounce" value="false" />
+  <preference name="UIWebViewBounce" value="false" />
+  <preference name="DisallowOverscroll" value="true" />
+  <preference name="android-minSdkVersion" value="16" />
 </widget>

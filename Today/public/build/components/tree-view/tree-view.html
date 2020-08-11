@@ -1,0 +1,16 @@
+
+    <ul class="inner">
+        <li *ngFor="let node of Nodes" class="list-tree">
+            <a detail-none href=# (click)="onSelectNode(node); onExpand(node)">
+                <span>
+                    <li class="left icon-class"><ion-icon [hidden]="node != SelectedNode" class="button-arrow margin-top-2" name="checkmark" role="img" aria-label="checkmark"></ion-icon></li>     {{node.name}}  </span>
+                <ion-icon [hidden]="!node.sub" name="ios-arrow-{{node.isExpanded ? 'down' : 'forward'}}" role="img" class="button-arrow right" aria-label="arrow"></ion-icon>  
+            </a>
+        <tree-view [Nodes]="node.sub"
+                   [SelectedNode]="SelectedNode"
+                   (onSelectedChanged)="onSelectNode($event)"
+                   *ngIf="node.isExpanded">
+            <!--(onRequestNodes)="onRequest($event)"-->
+        </tree-view>
+    </li>
+</ul>

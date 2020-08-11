@@ -1,0 +1,169 @@
+<ion-navbar *navbar><button menuToggle><ion-icon name="menu"></ion-icon></button>
+  <ion-title class="padding-right24">{{account.name}}</ion-title>
+     <ion-buttons end>
+    <button danger class="right transparent" (click)="toggle()"><ion-icon name="ios-search"></ion-icon></button>
+    </ion-buttons>
+</ion-navbar>
+
+<ion-content class="account-details">
+  <ion-searchbar *ngIf="test" [focuser] debounce="700" (cancel)="test = !test" (input)="searchItems($event)" [(ngModel)]="term" placeholder="Enter to search {{config.current.names.ticket.p}}" class="stickySearch" (search)="getSearch($event)"></ion-searchbar>
+<img *ngIf="busy" class="imglogo" src="img/loading2.gif"/>
+ <ion-list class="ajax" [hidden]="!search_results">
+        <a detail-none href=# ion-item *ngFor="let item of search_results" (click)="gotoTicket(item)">
+            <h2>{{item.status}} | #{{item.number}} - {{item.subject}} ({{item.user_firstname}} {{item.user_lastname}})</h2>
+        </a>
+    </ion-list>
+  <ion-segment [(ngModel)]="details_tab">
+    <ion-segment-button  value="Stat">{{config.current.names.account.a}} Stat</ion-segment-button>
+    <ion-segment-button value="Info">Info</ion-segment-button>
+    <ion-segment-button  *ngIf="config.current.is_project_tracking" value="Projects">Projects</ion-segment-button>
+    <ion-segment-button value="Notes">Notes</ion-segment-button>
+    <ion-segment-button value="Files">Files</ion-segment-button>
+  </ion-segment> 
+
+
+
+  <div [ngSwitch]="details_tab">
+    <div [hidden]="details_tab != 'Stat'">
+      <ion-list class="list img-top" no-lines>
+        <div class="blue1 left width65 img-top">
+          <a detail-none href=#tickets ion-item class="textLogin">Open {{config.current.names.ticket.ap}}</a>
+          <a *ngIf="config.current.is_invoice && config.current.is_time_tracking && config.current.user.is_admin" detail-none href=# ion-item (click)="openPage(0,account.account_statistics.contracts)" class="textLogin">Contracts</a>
+          <a *ngIf="config.current.is_expenses" detail-none href=# ion-item (click)="openPage(1, account.account_statistics.expenses)" class="textLogin">Expenses</a>
+          <a  *ngIf="config.current.is_time_tracking" detail-none href=# ion-item (click)="openPage(2, account.account_statistics.hours)" class="textLogin">Hours</a>
+        </div>
+        <div class="right width35 img-top">
+          <a detail-none href=#tickets ion-item class="blue2">{{account.account_statistics.ticket_counts.open || 0}}</a>
+          <a *ngIf="config.current.is_invoice && config.current.is_time_tracking && config.current.user.is_admin" detail-none href=# ion-item (click)="openPage(0,account.account_statistics.contracts)" class="blue2">{{account.account_statistics.contracts || 0}}</a>
+          <a  *ngIf="config.current.is_expenses" detail-none href=# ion-item (click)="openPage(1, account.account_statistics.expenses)" class="blue2" [innerHTML]="account.account_statistics.expenses | More:[10000,'<div class=item-inner><div class=input-wrapper><ion-label>VV$</ion-label></div></div><ion-button-effect></ion-button-effect>']"></a>
+          <a *ngIf="config.current.is_time_tracking" detail-none href=# ion-item (click)="openPage(2, account.account_statistics.hours)" class="blue2" [innerHTML]="account.account_statistics.hours | More:[10000,'<div class=item-inner><div class=input-wrapper><ion-label>VV</ion-label></div></div><ion-button-effect></ion-button-effect>']"></a>
+        </div>
+      </ion-list>
+      <ion-item></ion-item>
+      <ion-item class="margin" id="tickets">
+        <div class="list">
+          <ion-segment [(ngModel)]="tabsTicket" class="height32">
+            <ion-segment-button class="button-open" value="Open">Open {{config.current.names.ticket.ap}}</ion-segment-button>
+            <ion-segment-button class="button-open" value="Close">Closed {{config.current.names.ticket.ap}}</ion-segment-button>
+          </ion-segment>
+        </div></ion-item>
+        <br>
+        <tickets-list [hidden]="tabsTicket != 'Open'" preload="1500" [mode]="['open', account.id]"></tickets-list>
+        <tickets-list [hidden]="tabsTicket != 'Close'" preload="1500" [mode]="['closed', account.id]"></tickets-list>
+      </div>
+
+      <ion-list class="list margin-top21 info" no-lines *ngSwitchWhen="'Info'">
+        <ion-item class="margin color infolist">
+          <h3 class="left width35 text-left">&nbsp;&nbsp;BWD Acct#</h3>
+         <h3 class="right width65 ">&nbsp;{{account.bwd_number}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 tet-detxt-left">&nbsp;&nbsp;Acc#</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.number}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Ref1#</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.ref1}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Ref2#</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.ref2}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Org/Indiv</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.is_organization ? "Organization" : "Individual"}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Acc Rep</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.representative_name}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left space-initial">&nbsp;&nbsp;Internal location</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.internal_location_name}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Email Suffix</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.email_suffix}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Address 1</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.address1}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Address 2</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.address2}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;City</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.city}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Postal Code</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.zipcode}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Country</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.country}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Phone 1</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.phone1}}</h3>
+       </ion-item>
+       <ion-item class="margin color infolist">
+         <h3 class="left width35 text-left">&nbsp;&nbsp;Phone 2</h3>
+         <h3 class="right width65 tkts-table">&nbsp;{{account.phone2}}</h3>
+       </ion-item>
+       <ion-item class="color infolist" *ngFor="let customfield of account.customfields">
+        <h3 class="left width35 text-left">&nbsp;&nbsp;{{customfield.Key}}</h3>
+        <h3 class="right width65 tkts-table">&nbsp;{{customfield.Value || '&nbsp;'}}</h3>
+      </ion-item>
+    </ion-list> 
+
+    <ion-list class="list margin-top21" *ngSwitchWhen="'Projects'">
+
+      <div [hidden]="account.projects?.length" class="table grey2 menu-text">No Projects yet</div>
+
+      <ion-item *ngIf="account.projects?.length" no-lines class="margin color projecttitle">
+        <p class="text width35 text-left left">&nbsp;&nbsp;Name</p>
+        <p class="width12 left table table_account">Open</p>
+        <p class="width17 left table table_account">Logged</p>
+        <p class="width17 left table table_account">Remain</p>  
+        <p class="width19 right table table_account">Complete</p>
+      </ion-item>
+
+
+      <ion-item class="color margin projectlist" *ngFor="let project of account.projects">
+        <h3 class="text color width35 left table_account text-left">&nbsp;{{project.name}}</h3>
+        <h3 class="width12 left table">{{project.open_tickets}}</h3> 
+        <h3 class="width17 left table">{{project.logged_hours}}</h3> 
+        <h3 class="width17 left table">{{project.remaining_hours}}</h3> 
+        <h3 class="width19 right table">{{project.complete}}%</h3>
+      </ion-item>
+    </ion-list>
+
+    <ion-list class="list general-alignment max-width700" [hidden]="details_tab != 'Notes'">
+
+      <div [hidden]="is_editnote" class="width100 textLogin note-account commentText" [innerHTML]="account?.note" type="text" (click)="is_editnote = true"></div>
+
+      <button [hidden]="is_editnote" secondary class="button_reply img-top right" (click)="is_editnote = true">Edit Notes</button>
+
+      <textarea autofocus [hidden]="!is_editnote" [ngModel]="account?.note" class="glow width100 textLogin commentText" #notetext type="text" placeholder="Notes:"></textarea>
+
+      <button [hidden]="!is_editnote" secondary class="button_reply img-top right" (click)="saveNote(notetext)">{{account?.note?.length ? 'Save' : 'Add'}} Notes</button>
+    </ion-list>
+    <ion-list class="list margin-top21" no-lines *ngSwitchWhen="'Files'">
+
+     <div [hidden]="account.files?.length" class="table grey2 menu-text">No Files yet</div>
+     <ion-item *ngFor="let file of account.files">
+      <div class="left width59 tkts-table" [innerHTML]="getFileLink(file)"></div>
+         <div class="files-tkts">
+      <span class="color right text-left space-initial flex1 font-size_span">{{file.name}}</span>
+         <!--button (click)="onDelete(file)" block fab class="red buttonInvoice email-invoice button-fab position-initial button-files margin-left5">
+             <ion-icon class="invoiceCircle" name="close"></ion-icon></button--></div>
+    </ion-item>
+ <!--button (click)="addFilesButton()" secondary item-right fab fab-right fab-bottom style="z-index: 2"><ion-icon class="button_circle action-but" name="md-add"></ion-icon></button-->
+  </ion-list>
+</div>
+
+</ion-content>
+<action-button [hidden]="details_tab != 'Stat'" [data]="{'account': { id: account.id, name: account.name}}"></action-button> 
