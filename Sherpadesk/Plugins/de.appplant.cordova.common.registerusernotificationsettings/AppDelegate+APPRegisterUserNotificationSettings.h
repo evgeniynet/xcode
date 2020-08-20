@@ -19,7 +19,7 @@
  * limitations under the License.
  *
  * @APPPLANT_LICENSE_HEADER_END@
- */
+ *
 
 #import "AppDelegate.h"
 #import <Availability.h>
@@ -35,3 +35,4 @@ extern NSString* const UIApplicationRegisterUserNotificationSettings;
 #endif
 
 @end
+*/

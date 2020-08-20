@@ -152,11 +152,11 @@
 {
     NSNotificationCenter* center = [NSNotificationCenter
                                     defaultCenter];
-
+/*
     [center addObserver:self
                selector:@selector(didRegisterUserNotificationSettings:)
                    name:UIApplicationRegisterUserNotificationSettings
-                 object:nil];
+                 object:nil];*/
 }
 
 #pragma mark -

@@ -19,7 +19,7 @@
  * limitations under the License.
  *
  * @APPPLANT_LICENSE_HEADER_END@
- */
+ *
 
 #import "AppDelegate+APPRegisterUserNotificationSettings.h"
 #import <Availability.h>
@@ -32,7 +32,7 @@ NSString* const UIApplicationRegisterUserNotificationSettings = @"UIApplicationR
 /**
  * Tells the delegate what types of notifications may be used
  * to get the user’s attention.
- */
+ *
 - (void)                    application:(UIApplication*)application
     didRegisterUserNotificationSettings:(UIUserNotificationSettings*)settings
 {
@@ -46,3 +46,4 @@ NSString* const UIApplicationRegisterUserNotificationSettings = @"UIApplicationR
 #endif
 
 @end
+*/
