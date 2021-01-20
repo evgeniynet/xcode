@@ -38,6 +38,10 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widget-extension</string>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs location access</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs location access</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app needs mic access</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

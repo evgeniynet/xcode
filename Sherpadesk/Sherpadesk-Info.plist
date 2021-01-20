@@ -58,6 +58,10 @@
 	<string>This app needs media access</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs location access</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs location access</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app needs mic access</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
